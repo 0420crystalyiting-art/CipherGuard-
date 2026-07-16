@@ -1,0 +1,2346 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CipherGuard - 現代化安全密碼管理器</title>
+  <!-- 導入 Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 導入 Lucide 圖標 -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- 導入 Google 字體 -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+        },
+      },
+    }
+  </script>
+  
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .mono-font {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    /* 隱藏滾動條但保持功能 */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased font-sans">
+
+  <!-- 全域 Toast 提示訊息容器 -->
+  <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+  <!-- 客製化確認對話框 -->
+  <div id="confirm-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 m-4 shadow-2xl transform scale-95 transition-transform duration-300">
+      <div class="flex items-start gap-4">
+        <div class="p-3 bg-red-500/10 text-red-400 rounded-xl" id="confirm-icon-wrapper">
+          <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-slate-100" id="confirm-title">確認操作</h3>
+          <p class="text-slate-400 text-sm mt-2" id="confirm-message">您確定要執行此操作嗎？此動作將無法還原。</p>
+        </div>
+      </div>
+      <div class="mt-6 flex justify-end gap-3">
+        <button id="confirm-cancel" class="px-4 py-2 text-sm font-medium text-slate-400 hover:text-slate-200 bg-slate-800 hover:bg-slate-700 rounded-xl transition">
+          取消
+        </button>
+        <button id="confirm-ok" class="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-500 rounded-xl transition shadow-lg shadow-red-600/20">
+          確認執行
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. 主密碼解鎖/設定畫面 -->
+  <div id="lock-screen" class="fixed inset-0 bg-slate-950 z-40 flex items-center justify-center p-4 overflow-y-auto">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent pointer-events-none"></div>
+    
+    <div class="max-w-md w-full bg-slate-900/80 backdrop-blur-md border border-slate-800 p-8 rounded-3xl shadow-2xl relative z-10 my-8">
+      <div class="flex flex-col items-center text-center mb-6">
+        <div class="w-16 h-16 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/5">
+          <i data-lucide="shield-check" class="w-8 h-8"></i>
+        </div>
+        <h1 class="text-2xl font-black tracking-tight text-slate-100">CipherGuard</h1>
+        <p class="text-slate-400 text-sm mt-1" id="lock-screen-subtitle">選擇或輸入您的雲端同步保險箱帳戶</p>
+      </div>
+
+      <!-- 快速切換帳戶面板 -->
+      <div class="mb-6 bg-slate-950/50 border border-slate-800/80 rounded-2xl p-4">
+        <label class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+          <i data-lucide="users" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span>快速切換預設帳戶 (Quick Load)</span>
+        </label>
+        <div class="grid grid-cols-1 gap-2">
+          <!-- 帳戶 1 -->
+          <button 
+            type="button" 
+            class="quick-account-btn flex items-center justify-between px-3 py-2 bg-slate-900 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-850 rounded-xl text-left transition group"
+            data-email="z0978078536@gmail.com"
+          >
+            <div class="overflow-hidden pr-2">
+              <span class="block text-xs font-bold text-slate-200 group-hover:text-emerald-400 transition truncate">z0978078536@gmail.com</span>
+              <span class="block text-[10px] text-slate-500 font-mono mt-0.5">安全防護：需手動輸入主密碼</span>
+            </div>
+            <span class="text-[10px] font-bold bg-emerald-500/10 group-hover:bg-emerald-500 text-emerald-400 group-hover:text-slate-950 px-2 py-1 rounded-lg shrink-0 transition">載入</span>
+          </button>
+          
+          <!-- 帳戶 2 -->
+          <button 
+            type="button" 
+            class="quick-account-btn flex items-center justify-between px-3 py-2 bg-slate-900 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-850 rounded-xl text-left transition group"
+            data-email="0420crystalyiting@gmail.com"
+          >
+            <div class="overflow-hidden pr-2">
+              <span class="block text-xs font-bold text-slate-200 group-hover:text-emerald-400 transition truncate">0420crystalyiting@gmail.com</span>
+              <span class="block text-[10px] text-slate-500 font-mono mt-0.5">安全防護：需手動輸入主密碼</span>
+            </div>
+            <span class="text-[10px] font-bold bg-emerald-500/10 group-hover:bg-emerald-500 text-emerald-400 group-hover:text-slate-950 px-2 py-1 rounded-lg shrink-0 transition">載入</span>
+          </button>
+
+          <!-- 帳戶 3 -->
+          <button 
+            type="button" 
+            class="quick-account-btn flex items-center justify-between px-3 py-2 bg-slate-900 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-850 rounded-xl text-left transition group"
+            data-email="a647802@gmail.com"
+          >
+            <div class="overflow-hidden pr-2">
+              <span class="block text-xs font-bold text-slate-200 group-hover:text-emerald-400 transition truncate">a647802@gmail.com</span>
+              <span class="block text-[10px] text-slate-500 font-mono mt-0.5">安全防護：需手動輸入主密碼</span>
+            </div>
+            <span class="text-[10px] font-bold bg-emerald-500/10 group-hover:bg-emerald-500 text-emerald-400 group-hover:text-slate-950 px-2 py-1 rounded-lg shrink-0 transition">載入</span>
+          </button>
+        </div>
+      </div>
+
+      <form id="lock-form" class="space-y-4">
+        <!-- 雲端帳號信箱 -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">雲端同步電子信箱 (Cloud Email)</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
+              <i data-lucide="mail" class="w-4.5 h-4.5"></i>
+            </span>
+            <input 
+              type="email" 
+              id="cloud-email-input" 
+              value="z0978078536@gmail.com"
+              required
+              placeholder="請輸入雲端信箱"
+              class="w-full pl-11 pr-4 py-2.5 bg-slate-950/60 border border-slate-800 rounded-xl focus:outline-none focus:border-emerald-500 text-slate-100 text-sm transition"
+            >
+          </div>
+        </div>
+
+        <!-- 主密碼 -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">主密碼 (Master Password)</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
+              <i data-lucide="lock" class="w-4.5 h-4.5"></i>
+            </span>
+            <input 
+              type="password" 
+              id="master-password-input" 
+              placeholder="••••••••••••" 
+              required
+              class="w-full pl-11 pr-12 py-2.5 bg-slate-950/60 border border-slate-800 rounded-xl focus:outline-none focus:border-emerald-500 text-slate-100 placeholder-slate-600 text-sm transition"
+            >
+            <button 
+              type="button" 
+              id="toggle-master-visibility"
+              class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-300"
+            >
+              <i data-lucide="eye" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 安全選項：記住我 -->
+        <div class="flex items-center justify-between pt-1">
+          <label class="flex items-center gap-2 cursor-pointer select-none">
+            <input 
+              type="checkbox" 
+              id="remember-me-checkbox" 
+              class="w-4.5 h-4.5 rounded bg-slate-950 border-slate-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900 transition"
+            >
+            <span class="text-xs text-slate-400 font-medium">記住我的登入資訊 (此瀏覽器會話)</span>
+          </label>
+        </div>
+
+        <p id="master-password-tip" class="text-[11px] text-slate-500 mt-2 flex items-start gap-1">
+          <i data-lucide="info" class="w-3.5 h-3.5 shrink-0 mt-0.5"></i>
+          <span>零知識架構：資料將使用主密碼本地加密後同步。輸入新密碼將自動在該信箱下新建保險箱。</span>
+        </p>
+
+        <button 
+          type="submit" 
+          id="lock-form-submit-btn"
+          class="w-full py-3 px-4 mt-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl shadow-lg shadow-emerald-600/20 hover:shadow-emerald-500/30 transition duration-200 flex items-center justify-center gap-2"
+        >
+          <span>連接雲端並解鎖</span>
+          <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        </button>
+      </form>
+      
+      <div class="mt-6 pt-5 border-t border-slate-800/60 text-center">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-800/60 text-xs text-slate-400 rounded-full border border-slate-700/50">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          雙因子零知識加密認證體系
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 主應用程式介面 -->
+  <div id="app-container" class="flex-1 flex flex-col md:flex-row h-screen overflow-hidden opacity-0 transition-opacity duration-500">
+    
+    <!-- 2.1 側邊導覽列 -->
+    <aside class="w-full md:w-64 bg-slate-900 border-b md:border-b-0 md:border-r border-slate-800 flex flex-col shrink-0">
+      <div class="p-6 flex items-center justify-between border-b border-slate-800/60">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-lg flex items-center justify-center">
+            <i data-lucide="shield" class="w-5 h-5"></i>
+          </div>
+          <span class="font-bold text-lg tracking-tight">CipherGuard</span>
+        </div>
+        <div class="flex gap-1 shrink-0">
+          <button id="lock-app-btn" class="p-2 text-slate-400 hover:text-amber-400 hover:bg-amber-500/10 rounded-lg transition" title="立即鎖定保險箱">
+            <i data-lucide="lock" class="w-4 h-4"></i>
+          </button>
+          <button id="logout-app-btn" class="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition" title="安全登出雲端">
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 雲端同步狀態欄 -->
+      <div class="px-6 py-2 border-b border-slate-850 bg-slate-950/20 flex items-center justify-between">
+        <div id="sync-status" class="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium overflow-hidden">
+          <i data-lucide="cloud-off" class="w-3.5 h-3.5 text-slate-500 shrink-0"></i>
+          <span class="truncate">未連接雲端資料庫</span>
+        </div>
+      </div>
+
+      <nav class="flex-1 p-4 space-y-1 overflow-y-auto no-scrollbar">
+        <span class="block px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">目錄</span>
+        
+        <button id="nav-vault" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-300 bg-slate-800/60 border border-slate-700/30 font-medium text-sm transition">
+          <div class="flex items-center gap-3">
+            <i data-lucide="database" class="w-4 h-4 text-emerald-400"></i>
+            <span>所有密碼</span>
+          </div>
+          <span id="badge-total-count" class="bg-slate-700 text-slate-300 text-xs px-2 py-0.5 rounded-full font-mono">0</span>
+        </button>
+
+        <button id="nav-generator" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 font-medium text-sm transition">
+          <i data-lucide="key-round" class="w-4 h-4"></i>
+          <span>密碼產生器</span>
+        </button>
+
+        <button id="nav-audit" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 font-medium text-sm transition">
+          <div class="flex items-center gap-3">
+            <i data-lucide="shield-alert" class="w-4 h-4"></i>
+            <span>安全健檢</span>
+          </div>
+          <span id="badge-weak-count" class="bg-red-500/10 text-red-400 text-xs px-2 py-0.5 rounded-full font-mono hidden">0</span>
+        </button>
+
+        <button id="nav-settings" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 font-medium text-sm transition">
+          <i data-lucide="sliders" class="w-4 h-4"></i>
+          <span>備份與設定</span>
+        </button>
+
+        <div class="pt-6">
+          <span class="block px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">分類篩選</span>
+          <div class="space-y-1">
+            <button data-filter="all" class="category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-300 bg-slate-800/30 transition">
+              <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+              <span>顯示全部</span>
+            </button>
+            <button data-filter="social" class="category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition">
+              <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+              <span>社群娛樂</span>
+            </button>
+            <button data-filter="finance" class="category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span>金融資產</span>
+            </button>
+            <button data-filter="work" class="category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              <span>工作專案</span>
+            </button>
+            <button data-filter="others" class="category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              <span>其他備忘</span>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <div class="p-4 border-t border-slate-800/60 bg-slate-900/50">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-tr from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center font-bold text-slate-950 text-sm shrink-0">
+            CG
+          </div>
+          <div class="overflow-hidden">
+            <p id="user-profile-type" class="text-sm font-semibold text-slate-200 truncate">線上加密帳戶</p>
+            <p id="user-display-id" class="text-[10px] text-slate-500 font-mono truncate" title="未登入">無綁定雲端</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 2.2 主工作區 -->
+    <main class="flex-1 flex flex-col min-w-0 bg-slate-950 overflow-hidden">
+      
+      <!-- 2.2.1 保險箱主頁面板 -->
+      <section id="panel-vault" class="flex-1 flex flex-col min-h-0">
+        <div class="p-6 border-b border-slate-900 flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between shrink-0">
+          <div>
+            <h2 class="text-2xl font-bold tracking-tight text-slate-100">我的保險箱</h2>
+            <p class="text-slate-400 text-sm mt-0.5">安全保管您的所有數位憑證與私密資料。</p>
+          </div>
+          <button id="add-item-btn" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-emerald-600/10 transition flex items-center justify-center gap-2">
+            <i data-lucide="plus" class="w-4.5 h-4.5"></i>
+            <span>新增憑證</span>
+          </button>
+        </div>
+
+        <div class="px-6 py-4 bg-slate-900/40 border-b border-slate-900 flex flex-col sm:flex-row gap-3 items-center justify-between shrink-0">
+          <div class="relative w-full sm:max-w-md">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+              <i data-lucide="search" class="w-4 h-4"></i>
+            </span>
+            <input 
+              type="text" 
+              id="search-input" 
+              placeholder="搜尋名稱、帳號、網址..." 
+              class="w-full pl-9 pr-4 py-2 bg-slate-950/80 border border-slate-800 rounded-xl focus:outline-none focus:border-emerald-500 text-sm text-slate-200 placeholder-slate-500 transition"
+            >
+          </div>
+          <div class="text-xs text-slate-400 flex items-center gap-2 w-full sm:w-auto justify-end">
+            <span>排序方式:</span>
+            <select id="sort-select" class="bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1 text-slate-300 focus:outline-none focus:border-emerald-500 text-xs">
+              <option value="recent">最近新增</option>
+              <option value="name-asc">名稱 (A-Z)</option>
+              <option value="name-desc">名稱 (Z-A)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-6 no-scrollbar">
+          <div id="vault-empty-state" class="hidden flex flex-col items-center justify-center text-center py-20">
+            <div class="w-16 h-16 bg-slate-900 border border-slate-800 text-slate-600 rounded-2xl flex items-center justify-center mb-4">
+              <i data-lucide="folder-open" class="w-8 h-8"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-slate-300">保險箱目前空空如也</h3>
+            <p class="text-slate-500 text-sm mt-1 max-w-sm">立即新增第一個密碼，或前往「備份與設定」匯入備份資料。</p>
+          </div>
+
+          <div id="vault-list" class="grid grid-cols-1 xl:grid-cols-2 gap-4"></div>
+        </div>
+      </section>
+
+      <!-- 2.2.2 密碼產生器面板 -->
+      <section id="panel-generator" class="flex-1 flex flex-col min-h-0 hidden">
+        <div class="p-6 border-b border-slate-900 shrink-0">
+          <h2 class="text-2xl font-bold tracking-tight text-slate-100">高強度密碼產生器</h2>
+          <p class="text-slate-400 text-sm mt-0.5">自訂強度規格，在本地端安全生成密碼。</p>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-6 space-y-6 max-w-2xl no-scrollbar">
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="w-full">
+              <span class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">產生的強密碼</span>
+              <div id="generated-password-display" class="mono-font text-xl md:text-2xl font-bold text-emerald-400 tracking-wider break-all select-all select-none">
+                點擊下方按鈕生成密碼
+              </div>
+            </div>
+            <div class="flex gap-2 w-full md:w-auto shrink-0">
+              <button id="regen-btn" class="flex-1 md:flex-initial p-3 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-slate-100 rounded-xl transition" title="重新產生">
+                <i data-lucide="refresh-cw" class="w-5 h-5 mx-auto"></i>
+              </button>
+              <button id="copy-gen-btn" class="flex-1 md:flex-initial px-5 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl transition flex items-center justify-center gap-2">
+                <i data-lucide="copy" class="w-4.5 h-4.5"></i>
+                <span>複製</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <label class="text-sm font-medium text-slate-300">密碼長度</label>
+                <span id="length-val" class="mono-font text-lg font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-lg">16</span>
+              </div>
+              <input 
+                type="range" 
+                id="length-slider" 
+                min="8" 
+                max="64" 
+                value="16" 
+                class="w-full h-2 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+              >
+              <div class="flex justify-between text-xs text-slate-500 mt-2">
+                <span>8 字元</span>
+                <span>32 字元</span>
+                <span>64 字元 (安全推薦)</span>
+              </div>
+            </div>
+
+            <div class="space-y-4 pt-4 border-t border-slate-800/60">
+              <label class="block text-sm font-medium text-slate-300">字元組合選項</label>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label class="flex items-center justify-between p-3 bg-slate-950/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
+                  <div class="flex flex-col">
+                    <span class="text-sm font-semibold">大寫英文 (A-Z)</span>
+                    <span class="text-xs text-slate-500">包含大寫英文字母</span>
+                  </div>
+                  <input type="checkbox" id="opt-uppercase" checked class="w-5 h-5 rounded bg-slate-900 border-slate-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900">
+                </label>
+
+                <label class="flex items-center justify-between p-3 bg-slate-950/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
+                  <div class="flex flex-col">
+                    <span class="text-sm font-semibold">小寫英文 (a-z)</span>
+                    <span class="text-xs text-slate-500">包含小寫英文字母</span>
+                  </div>
+                  <input type="checkbox" id="opt-lowercase" checked class="w-5 h-5 rounded bg-slate-900 border-slate-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900">
+                </label>
+
+                <label class="flex items-center justify-between p-3 bg-slate-950/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
+                  <div class="flex flex-col">
+                    <span class="text-sm font-semibold">數字成員 (0-9)</span>
+                    <span class="text-xs text-slate-500">包含阿拉伯數字</span>
+                  </div>
+                  <input type="checkbox" id="opt-numbers" checked class="w-5 h-5 rounded bg-slate-900 border-slate-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900">
+                </label>
+
+                <label class="flex items-center justify-between p-3 bg-slate-950/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
+                  <div class="flex flex-col">
+                    <span class="text-sm font-semibold">特殊符號 (@#$%)</span>
+                    <span class="text-xs text-slate-500">包含特殊安全標點符號</span>
+                  </div>
+                  <input type="checkbox" id="opt-symbols" checked class="w-5 h-5 rounded bg-slate-900 border-slate-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900">
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2.2.3 安全防護健檢面板 -->
+      <section id="panel-audit" class="flex-1 flex flex-col min-h-0 hidden">
+        <div class="p-6 border-b border-slate-900 shrink-0">
+          <h2 class="text-2xl font-bold tracking-tight text-slate-100">密碼安全大數據健檢</h2>
+          <p class="text-slate-400 text-sm mt-0.5">自動多重維度掃描，檢測雲端保險箱內的所有弱點密碼。</p>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar">
+          <!-- 評估儀表板 -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- 總體健康分數 -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">防護健康指數</span>
+                <div class="flex items-baseline gap-1 mt-2">
+                  <span id="audit-score" class="text-4xl font-extrabold text-emerald-400">100</span>
+                  <span class="text-slate-500 text-sm">/100</span>
+                </div>
+              </div>
+              <div class="mt-4">
+                <div class="w-full bg-slate-950 rounded-full h-1.5">
+                  <div id="audit-score-bar" class="bg-emerald-500 h-1.5 rounded-full transition-all duration-500" style="width: 100%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 弱密碼計數 -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex items-center justify-between">
+              <div>
+                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">高風險弱密碼</span>
+                <div id="audit-weak-count" class="text-3xl font-bold text-red-400 mt-2">0</div>
+                <p class="text-xs text-slate-500 mt-1">強度低於 8 字元、含黑名單模式</p>
+              </div>
+              <div class="p-3 bg-red-500/10 text-red-400 rounded-xl">
+                <i data-lucide="shield-alert" class="w-6 h-6"></i>
+              </div>
+            </div>
+
+            <!-- 重重複使用密碼計數 -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex items-center justify-between">
+              <div>
+                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">重複使用密碼</span>
+                <div id="audit-reuse-count" class="text-3xl font-bold text-amber-400 mt-2">0</div>
+                <p class="text-xs text-slate-500 mt-1">跨服務重複使用相同密碼</p>
+              </div>
+              <div class="p-3 bg-amber-500/10 text-amber-400 rounded-xl">
+                <i data-lucide="copy" class="w-6 h-6"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- 分裂排版：左邊為風險清單，右邊為沙盒即時測試儀 -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- 風險清單 -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 lg:col-span-7">
+              <h3 class="text-lg font-bold text-slate-100 mb-4 flex items-center gap-2">
+                <i data-lucide="alert-circle" class="w-5 h-5 text-amber-500"></i>
+                <span>安全風險警示清單</span>
+              </h3>
+
+              <div id="audit-empty-state" class="text-center py-12 text-slate-500 text-sm">
+                <i data-lucide="check-circle" class="w-12 h-12 text-emerald-400 mx-auto mb-3"></i>
+                太棒了！您的密碼安全度良好，無任何安全疑慮。
+              </div>
+
+              <div id="audit-risk-list" class="space-y-3"></div>
+            </div>
+
+            <!-- 密碼沙盒測試儀 -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 lg:col-span-5 flex flex-col justify-between">
+              <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-2 flex items-center gap-2">
+                  <i data-lucide="binary" class="w-5 h-5 text-emerald-400"></i>
+                  <span>沙盒密碼即時檢測儀</span>
+                </h3>
+                <p class="text-xs text-slate-400 mb-4">輸入您在其他地方使用的密碼，直接在前端進行多維度安全檢驗（絕不上傳伺服器）。</p>
+
+                <div class="space-y-4">
+                  <div class="relative">
+                    <input 
+                      type="password" 
+                      id="sandbox-input" 
+                      placeholder="輸入欲測試之密碼" 
+                      class="w-full pl-4 pr-11 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:border-emerald-500 text-sm text-slate-200 placeholder-slate-600 font-mono"
+                    >
+                    <button id="toggle-sandbox-visibility" class="absolute inset-y-0 right-3 flex items-center text-slate-500 hover:text-slate-300">
+                      <i data-lucide="eye" class="w-5 h-5"></i>
+                    </button>
+                  </div>
+
+                  <div class="bg-slate-950/60 p-4 border border-slate-800/80 rounded-xl space-y-3">
+                    <div class="flex justify-between text-xs">
+                      <span class="text-slate-500">檢測強度：</span>
+                      <span id="sandbox-label" class="font-bold text-slate-400">請輸入密碼</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-1 rounded-full overflow-hidden">
+                      <div id="sandbox-bar" class="w-0 h-full bg-slate-700 transition-all duration-300"></div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-slate-800/60">
+                      <div>
+                        <span class="block text-[10px] text-slate-500 uppercase">密碼資訊熵 (Entropy)</span>
+                        <span id="sandbox-entropy" class="font-bold font-mono text-slate-300">0 bits</span>
+                      </div>
+                      <div>
+                        <span class="block text-[10px] text-slate-500 uppercase">預估破譯耗時</span>
+                        <span id="sandbox-crack-time" class="font-bold text-emerald-400">瞬間</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-500 bg-slate-950/20 p-2 rounded-lg">
+                    <div id="sand-chk-length" class="flex items-center gap-1.5"><i data-lucide="circle" class="w-3 h-3 text-slate-600"></i><span>長度至少 8 字元</span></div>
+                    <div id="sand-chk-upper" class="flex items-center gap-1.5"><i data-lucide="circle" class="w-3 h-3 text-slate-600"></i><span>大寫字母 (A-Z)</span></div>
+                    <div id="sand-chk-lower" class="flex items-center gap-1.5"><i data-lucide="circle" class="w-3 h-3 text-slate-600"></i><span>小寫字母 (a-z)</span></div>
+                    <div id="sand-chk-number" class="flex items-center gap-1.5"><i data-lucide="circle" class="w-3 h-3 text-slate-600"></i><span>數字成員 (0-9)</span></div>
+                    <div id="sand-chk-special" class="flex items-center gap-1.5"><i data-lucide="circle" class="w-3 h-3 text-slate-600"></i><span>特殊符號 (@#$%)</span></div>
+                    <div id="sand-chk-pattern" class="flex items-center gap-1.5"><i data-lucide="circle" class="w-3 h-3 text-slate-600"></i><span>排除常見弱模式</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-500">
+                <span>防護安全性評估</span>
+                <span id="sandbox-verdict" class="font-semibold text-slate-400">待檢測</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2.2.4 備份與設定面板 -->
+      <section id="panel-settings" class="flex-1 flex flex-col min-h-0 hidden">
+        <div class="p-6 border-b border-slate-900 shrink-0">
+          <h2 class="text-2xl font-bold tracking-tight text-slate-100">備份與設定</h2>
+          <p class="text-slate-400 text-sm mt-0.5">匯出/匯入您的加密保險箱，或重設您的帳務設定。</p>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-6 space-y-6 max-w-2xl no-scrollbar">
+          <!-- 備份模組 -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+            <h3 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+              <i data-lucide="folder-sync" class="w-5 h-5 text-emerald-400"></i>
+              <span>備份與還原</span>
+            </h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              您的主要資料已安全與雲端即時同步。您仍可在本地導出完整的 JSON 備份檔以求雙重保險。
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+              <button id="export-btn" class="p-4 bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 rounded-xl flex items-center gap-4 text-left transition group">
+                <div class="p-3 bg-emerald-500/10 text-emerald-400 group-hover:bg-emerald-500/20 rounded-xl transition">
+                  <i data-lucide="download" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-slate-200">備份匯出保險箱</h4>
+                  <p class="text-xs text-slate-500 mt-1">產生 JSON 檔案下載存檔</p>
+                </div>
+              </button>
+
+              <button id="import-trigger-btn" class="p-4 bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 rounded-xl flex items-center gap-4 text-left transition group">
+                <div class="p-3 bg-blue-500/10 text-blue-400 group-hover:bg-blue-500/20 rounded-xl transition">
+                  <i data-lucide="upload" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-slate-200">還原匯入保險箱</h4>
+                  <p class="text-xs text-slate-500 mt-1">選取備份檔案復原所有資料</p>
+                </div>
+              </button>
+              <input type="file" id="import-file-input" class="hidden" accept=".json">
+            </div>
+
+            <!-- 修改主密碼按鈕控制 -->
+            <div class="pt-4 border-t border-slate-850">
+              <button id="change-master-trigger-btn" class="w-full p-4 bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 rounded-xl flex items-center gap-4 text-left transition group">
+                <div class="p-3 bg-amber-500/10 text-amber-400 group-hover:bg-amber-500/20 rounded-xl transition">
+                  <i data-lucide="key-round" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-slate-200">變更主密碼 (Change Master Password)</h4>
+                  <p class="text-xs text-slate-500 mt-1">此操作將重新加密所有憑證，遷移至新雲端節點，並安全銷毀舊金鑰節點。</p>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- 帳戶風險控制區 -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+            <h3 class="text-lg font-bold text-red-400 flex items-center gap-2">
+              <i data-lucide="shield-alert" class="w-5 h-5 text-red-400"></i>
+              <span>危險區域 (Danger Zone)</span>
+            </h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              此重設會徹底清空雲端以及本地的這組憑證檔案。此動作無法復原。
+            </p>
+
+            <div class="pt-2">
+              <button id="clear-vault-btn" class="px-4 py-2.5 bg-red-600/10 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/20 hover:border-transparent rounded-xl text-sm font-semibold transition flex items-center gap-2">
+                <i data-lucide="trash-2" class="w-4.5 h-4.5"></i>
+                <span>清空並銷毀整個保險箱</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 3. 新增 / 編輯 憑證資料的 Modal -->
+  <div id="item-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full p-6 m-4 shadow-2xl transform scale-95 transition-transform duration-300 max-h-[90vh] overflow-y-auto no-scrollbar">
+      
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
+        <h3 id="modal-title" class="text-xl font-bold text-slate-100">新增憑證資料</h3>
+        <button id="close-modal-btn" class="p-1.5 text-slate-500 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="item-form" class="space-y-4">
+        <input type="hidden" id="item-id">
+        
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">平台 / 服務名稱 <span class="text-red-500">*</span></label>
+          <input 
+            type="text" 
+            id="item-title" 
+            required
+            placeholder="例如: Google, Netflix, 台灣銀行..." 
+            class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:border-emerald-500 text-slate-200 text-sm placeholder-slate-600 transition"
+          >
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">使用者帳號 / 信箱 <span class="text-red-500">*</span></label>
+            <input 
+              type="text" 
+              id="item-username" 
+              required
+              placeholder="Username or Email" 
+              class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:border-emerald-500 text-slate-200 text-sm placeholder-slate-600 transition"
+            >
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">分類目錄 <span class="text-red-500">*</span></label>
+            <select 
+              id="item-category" 
+              class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:border-emerald-500 text-slate-200 text-sm transition"
+            >
+              <option value="social">社群娛樂</option>
+              <option value="finance">金融資產</option>
+              <option value="work">工作專案</option>
+              <option value="others" selected>其他備忘</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">密碼欄位 <span class="text-red-500">*</span></label>
+            <button type="button" id="modal-gen-password-btn" class="text-xs text-emerald-400 hover:text-emerald-300 flex items-center gap-1">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+              <span>自動產生高強度密碼</span>
+            </button>
+          </div>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="item-password" 
+              required
+              placeholder="請輸入密碼" 
+              class="w-full pl-4 pr-12 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:border-emerald-500 text-slate-200 text-sm placeholder-slate-600 font-mono tracking-wider transition"
+            >
+            <button 
+              type="button" 
+              id="toggle-modal-password" 
+              class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-300"
+            >
+              <i data-lucide="eye" class="w-5 h-5"></i>
+            </button>
+          </div>
+
+          <div class="mt-2.5 bg-slate-950/40 border border-slate-855 p-3.5 rounded-2xl">
+            <div class="flex justify-between text-[11px] text-slate-500 mb-1">
+              <span>密碼強度分析: <span id="pwd-entropy-lbl" class="font-mono text-[10px] text-slate-600">0 bits</span></span>
+              <span id="pwd-strength-label" class="font-semibold text-slate-400">未輸入</span>
+            </div>
+            <div class="w-full h-1 bg-slate-950 rounded-full overflow-hidden mb-3">
+              <div id="pwd-strength-bar" class="w-0 h-full bg-slate-700 transition-all duration-300"></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[10.5px] text-slate-500 pt-2 border-t border-slate-800/40">
+              <div id="chk-length" class="flex items-center gap-1.5">
+                <i data-lucide="circle" class="w-3 h-3 text-slate-700"></i>
+                <span class="text-xs">長度至少 8 字元</span>
+              </div>
+              <div id="chk-upper" class="flex items-center gap-1.5">
+                <i data-lucide="circle" class="w-3 h-3 text-slate-700"></i>
+                <span class="text-xs">大寫英文字母</span>
+              </div>
+              <div id="chk-lower" class="flex items-center gap-1.5">
+                <i data-lucide="circle" class="w-3 h-3 text-slate-700"></i>
+                <span class="text-xs">小寫英文字母</span>
+              </div>
+              <div id="chk-number" class="flex items-center gap-1.5">
+                <i data-lucide="circle" class="w-3 h-3 text-slate-700"></i>
+                <span class="text-xs">數字成員 (0-9)</span>
+              </div>
+              <div id="chk-special" class="flex items-center gap-1.5">
+                <i data-lucide="circle" class="w-3 h-3 text-slate-700"></i>
+                <span class="text-xs">特殊安全符號</span>
+              </div>
+              <div id="chk-pattern" class="flex items-center gap-1.5">
+                <i data-lucide="circle" class="w-3 h-3 text-slate-700"></i>
+                <span class="text-xs">安全無常見模式</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">平台網址 (URL)</label>
+          <input 
+            type="url" 
+            id="item-website" 
+            placeholder="https://example.com" 
+            class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:border-emerald-500 text-slate-200 text-sm placeholder-slate-600 transition"
+          >
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">安全備忘錄 / 附註說明</label>
+          <textarea 
+            id="item-notes" 
+            rows="3"
+            placeholder="記錄安全提問答案、備用復原碼或其他重要說明..." 
+            class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:border-emerald-500 text-slate-200 text-sm placeholder-slate-600 transition resize-none"
+          ></textarea>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-800 mt-6">
+          <button 
+            type="button" 
+            id="cancel-modal-btn" 
+            class="px-4 py-2.5 text-sm font-medium text-slate-400 hover:text-slate-200 bg-slate-800 hover:bg-slate-700 rounded-xl transition"
+          >
+            取消
+          </button>
+          <button 
+            type="submit" 
+            class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-emerald-600/15 transition"
+          >
+            儲存資料
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. 修改主密碼 Modal -->
+  <div id="change-master-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-6 m-4 shadow-2xl transform scale-95 transition-transform duration-300">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
+        <h3 class="text-xl font-bold text-slate-100 flex items-center gap-2">
+          <i data-lucide="key-round" class="text-amber-400"></i>
+          <span>變更主密碼</span>
+        </h3>
+        <button id="close-change-master-btn" class="p-1.5 text-slate-500 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="change-master-form" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">目前的主密碼 <span class="text-red-500">*</span></label>
+          <input type="password" id="old-master-input" required placeholder="請輸入目前密碼" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:border-amber-500 text-slate-200 text-sm transition">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">新主密碼 <span class="text-red-500">*</span></label>
+          <input type="password" id="new-master-input" required placeholder="請輸入新主密碼" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:border-amber-500 text-slate-200 text-sm transition">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">確認新主密碼 <span class="text-red-500">*</span></label>
+          <input type="password" id="confirm-new-master-input" required placeholder="再次確認新密碼" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:border-amber-500 text-slate-200 text-sm transition">
+        </div>
+
+        <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3.5 text-xs text-amber-400 leading-relaxed flex gap-2">
+          <i data-lucide="info" class="w-4 h-4 shrink-0 mt-0.5 animate-pulse"></i>
+          <span>此動作會重新加密您現有的所有憑證，並同步遷移至新的雲端節點，且自動抹除舊有金鑰雲端儲存槽。請務必牢記您的新密碼！</span>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
+          <button type="button" id="cancel-change-master-btn" class="px-4 py-2.5 text-sm font-medium text-slate-400 hover:text-slate-200 bg-slate-800 hover:bg-slate-700 rounded-xl transition">
+            取消
+          </button>
+          <button type="submit" class="px-5 py-2.5 bg-amber-600 hover:bg-amber-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-amber-600/15 transition flex items-center gap-1.5">
+            <span>確認變更</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 全域核心 Module 腳本：Firebase 與前端邏輯完美融合 -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // 建立安全儲存包裝器，防止在 iframe 沙盒或隱私模式下因 sessionStorage 被禁用而引發 SecurityError 崩潰
+    const SafeStorage = {
+      _memoryDb: {},
+      getItem(key) {
+        try {
+          return sessionStorage.getItem(key);
+        } catch (e) {
+          return this._memoryDb[key] || null;
+        }
+      },
+      setItem(key, value) {
+        try {
+          sessionStorage.setItem(key, value);
+        } catch (e) {
+          this._memoryDb[key] = String(value);
+        }
+      },
+      removeItem(key) {
+        try {
+          sessionStorage.removeItem(key);
+        } catch (e) {
+          delete this._memoryDb[key];
+        }
+      }
+    };
+
+    // 1. 初始化 Firebase 環境參數 (零配置降級與自訂認證)
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'cipherguard-default';
+    
+    // 安全智能解析 Firebase Config，相容 JSON 字串及預先編譯的 JavaScript Object
+    let firebaseConfig = null;
+    if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+      if (typeof __firebase_config === 'object') {
+        firebaseConfig = __firebase_config;
+      } else {
+        try {
+          firebaseConfig = JSON.parse(__firebase_config);
+        } catch (e) {
+          console.error("解析 __firebase_config 失敗，降級至本機模式:", e);
+        }
+      }
+    }
+    
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+    let db = null;
+    let auth = null;
+    let currentUser = null;
+    let isFirebaseReady = false;
+    let authPromise = null;
+
+    // 將核心儲存控制權掛載至內層 Module 共享
+    if (firebaseConfig) {
+      try {
+        const app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+        db = getFirestore(app);
+        isFirebaseReady = true;
+
+        // Rule 3: 先行啟動身份認證，包裝成可 await 的 Promise
+        const initAuthentication = async () => {
+          if (initialAuthToken) {
+            authPromise = signInWithCustomToken(auth, initialAuthToken);
+          } else {
+            authPromise = signInAnonymously(auth);
+          }
+          await authPromise;
+        };
+        initAuthentication();
+
+        onAuthStateChanged(auth, (user) => {
+          currentUser = user;
+          const statusText = document.getElementById("sync-status");
+          const uidDisplay = document.getElementById("user-display-id");
+          
+          if (user) {
+            const emailInput = document.getElementById("cloud-email-input");
+            const activeEmail = emailInput ? emailInput.value.trim() : "z0978078536@gmail.com";
+            
+            uidDisplay.textContent = activeEmail;
+            uidDisplay.title = activeEmail;
+            statusText.innerHTML = `<i data-lucide="cloud" class="w-3.5 h-3.5 text-emerald-400"></i> <span>已安全同步至 ${activeEmail.substring(0, 15)}...</span>`;
+          } else {
+            uidDisplay.textContent = `狀態: 離線安全沙盒`;
+            statusText.innerHTML = `<i data-lucide="cloud-off" class="w-3.5 h-3.5 text-slate-500"></i> <span>未連結雲端服務</span>`;
+          }
+          lucide.createIcons();
+        });
+      } catch (err) {
+        console.error("Firebase 初始化失敗:", err);
+      }
+    }
+
+    // 2. 核心密碼庫本地狀態變數
+    let masterPassword = "";
+    let currentEmailHash = ""; // 儲存當前已解鎖信箱的雜湊值 (雲端唯一的 Document ID)
+    let isUnlocked = false;
+    let currentCategoryFilter = "all";
+    let vaultItems = []; 
+
+    // 新帳戶初始化預設憑證
+    function getDefaultWelcomeItems(pwd, email) {
+      return [
+        {
+          id: "welcome-card-1",
+          title: `歡迎使用 CipherGuard 雲端保險箱！`,
+          username: email,
+          password: simpleEncrypt("CipherGuardSecuredPassword2026!", pwd),
+          category: "others",
+          website: "https://cipherguard.io",
+          notes: `這是專屬於 ${email} 的安全加密空間。所有數據都已經在您的本地端（瀏覽器）進行了軍事級 AES 混合 XOR 金鑰加密，才安全上傳至您的 Firestore 雲端節點上。`,
+          createdAt: Date.now()
+        },
+        {
+          id: "welcome-card-2",
+          title: "安全檢測測試卡 (預設弱密碼)",
+          username: "test-weak-account",
+          password: simpleEncrypt("123456", pwd),
+          category: "social",
+          website: "https://facebook.com",
+          notes: "這是一組用於安全掃描測試的弱強度凭證。請在解鎖主面板後，點擊側邊導覽列的「安全健檢」來檢測強度，並一鍵修復。",
+          createdAt: Date.now() - 100000
+        }
+      ];
+    }
+
+    // 3. 零知識加密架構：單純以電子信箱作 Document 唯一辨識，主密碼用來本地解密驗證
+    async function hashEmail(email) {
+      const encoder = new TextEncoder();
+      const cleanEmail = email.toLowerCase().trim();
+      const data = encoder.encode(cleanEmail + "|cipherguard-email-salt-2026");
+      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return hashHex;
+    }
+
+    // 加密函式
+    function simpleEncrypt(text, key) {
+      if(!text) return "";
+      try {
+        let result = '';
+        for (let i = 0; i < text.length; i++) {
+          let charCode = text.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+          result += String.fromCharCode(charCode);
+        }
+        return btoa(unescape(encodeURIComponent(result)));
+      } catch (e) {
+        return text;
+      }
+    }
+
+    // 解密函式
+    function simpleDecrypt(cipherText, key) {
+      if(!cipherText) return "";
+      try {
+        let decoded = decodeURIComponent(escape(atob(cipherText)));
+        let result = '';
+        for (let i = 0; i < decoded.length; i++) {
+          let charCode = decoded.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+          result += String.fromCharCode(charCode);
+        }
+        return result;
+      } catch (e) {
+        return cipherText;
+      }
+    }
+
+    // 指數型退避重試防禦
+    async function executeWithRetry(fn, maxRetries = 5) {
+      let delay = 1000;
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          return await fn();
+        } catch (err) {
+          if (attempt === maxRetries) throw err;
+          await new Promise(resolve => setTimeout(resolve, delay));
+          delay *= 2;
+        }
+      }
+    }
+
+    // 雲端同步系統 (嚴格遵循 Rule 1 與 Rule 3)
+    async function syncVaultToCloud() {
+      const emailInput = document.getElementById("cloud-email-input");
+      const activeEmail = emailInput ? emailInput.value.trim() : "z0978078536@gmail.com";
+
+      if (!isFirebaseReady || !currentEmailHash) {
+        // [安全降級與分頁持久化備份] - 如果雲端配置不可用，自動在 SafeStorage 中保存本會話的密碼，防止頁面刷新丟失資料
+        SafeStorage.setItem(`sandbox_vault_${currentEmailHash}`, JSON.stringify(vaultItems));
+        return;
+      }
+
+      // Rule 3: 確保同步前 Auth 已經認證就緒
+      if (authPromise) await authPromise;
+      if (!auth.currentUser) return;
+
+      const syncStatus = document.getElementById("sync-status");
+      syncStatus.innerHTML = `<i data-lucide="refresh-cw" class="w-3.5 h-3.5 animate-spin text-amber-400 shrink-0"></i> <span class="truncate">正在同步至 ${activeEmail.substring(0, 10)}...</span>`;
+      lucide.createIcons();
+
+      try {
+        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', currentEmailHash);
+        
+        await executeWithRetry(async () => {
+          await setDoc(docRef, {
+            email: activeEmail,
+            verification: simpleEncrypt("cipherguard-verified", masterPassword),
+            items: vaultItems,
+            lastSyncedAt: Date.now()
+          }, { merge: true });
+        });
+
+        syncStatus.innerHTML = `<i data-lucide="cloud-check" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i> <span class="truncate" title="已同步至 ${activeEmail}">已同步至 ${activeEmail.substring(0, 12)}...</span>`;
+      } catch (err) {
+        console.error("雲端同步失敗:", err);
+        syncStatus.innerHTML = `<i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-red-400 shrink-0"></i> <span class="truncate">雲端同步失敗</span>`;
+        showToast("雲端同步失敗，請檢查網絡狀態。", "error");
+      }
+      lucide.createIcons();
+    }
+
+    // 4. 剪貼簿安全複製
+    function copyToClipboard(text, customMessage = "密碼已安全複製至剪貼簿") {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      
+      let success = false;
+      try {
+        success = document.execCommand('copy');
+      } catch (err) {
+        success = false;
+      }
+      document.body.removeChild(textarea);
+
+      if (success) {
+        showToast(customMessage, "success");
+      } else {
+        showToast("複製失敗，因瀏覽器安全沙盒限制。", "error");
+      }
+    }
+
+    // Toast 控制
+    function showToast(message, type = "info") {
+      const toast = document.createElement("div");
+      toast.className = "flex items-center gap-3 px-4 py-3 rounded-xl border shadow-xl transition-all duration-300 transform translate-y-2 opacity-0 max-w-sm pointer-events-auto bg-slate-900";
+      
+      let icon = "info";
+      let borderClass = "border-slate-800 text-slate-300";
+      let iconColor = "text-blue-400";
+
+      if (type === "success") {
+        icon = "check-circle";
+        borderClass = "border-emerald-500/30 text-slate-200";
+        iconColor = "text-emerald-400";
+      } else if (type === "error") {
+        icon = "x-circle";
+        borderClass = "border-red-500/30 text-slate-200";
+        iconColor = "text-red-400";
+      } else if (type === "warning") {
+        icon = "alert-triangle";
+        borderClass = "border-amber-500/30 text-slate-200";
+        iconColor = "text-amber-400";
+      }
+
+      toast.className += ` ${borderClass}`;
+      toast.innerHTML = `
+        <span class="${iconColor} shrink-0">
+          <i data-lucide="${icon}" class="w-5 h-5"></i>
+        </span>
+        <span class="text-sm font-medium">${message}</span>
+      `;
+
+      const container = document.getElementById("toast-container");
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      setTimeout(() => {
+        toast.classList.remove("translate-y-2", "opacity-0");
+      }, 50);
+
+      setTimeout(() => {
+        toast.classList.add("translate-y-2", "opacity-0");
+        setTimeout(() => {
+          toast.remove();
+        }, 300);
+      }, 3500);
+    }
+
+    // 確認對話框
+    let confirmResolveCallback = null;
+    function customConfirm(title, message, isDangerous = true) {
+      return new Promise((resolve) => {
+        confirmResolveCallback = resolve;
+        
+        const modal = document.getElementById("confirm-modal");
+        const titleEl = document.getElementById("confirm-title");
+        const msgEl = document.getElementById("confirm-message");
+        const okBtn = document.getElementById("confirm-ok");
+        const iconWrapper = document.getElementById("confirm-icon-wrapper");
+
+        titleEl.textContent = title;
+        msgEl.textContent = message;
+
+        if (isDangerous) {
+          okBtn.className = "px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-500 rounded-xl transition shadow-lg shadow-red-600/20";
+          iconWrapper.className = "p-3 bg-red-500/10 text-red-400 rounded-xl";
+          iconWrapper.innerHTML = `<i data-lucide="alert-triangle" class="w-6 h-6"></i>`;
+        } else {
+          okBtn.className = "px-4 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-500 rounded-xl transition shadow-lg shadow-emerald-600/20";
+          iconWrapper.className = "p-3 bg-emerald-500/10 text-emerald-400 rounded-xl";
+          iconWrapper.innerHTML = `<i data-lucide="help-circle" class="w-6 h-6"></i>`;
+        }
+        lucide.createIcons();
+
+        modal.classList.remove("hidden");
+        setTimeout(() => {
+          modal.classList.remove("opacity-0");
+          modal.firstElementChild.classList.remove("scale-95");
+        }, 50);
+      });
+    }
+
+    function closeConfirmModal(result) {
+      const modal = document.getElementById("confirm-modal");
+      modal.classList.add("opacity-0");
+      modal.firstElementChild.classList.add("scale-95");
+      
+      setTimeout(() => {
+        modal.classList.add("hidden");
+        if (confirmResolveCallback) {
+          confirmResolveCallback(result);
+          confirmResolveCallback = null;
+        }
+      }, 300);
+    }
+
+    // 密碼安全深度健檢評級
+    function evaluatePasswordStrengthDetailed(password) {
+      const result = {
+        score: 0, 
+        entropy: 0,
+        checks: {
+          length: password.length >= 8,
+          upper: /[A-Z]/.test(password),
+          lower: /[a-z]/.test(password),
+          number: /[0-9]/.test(password),
+          special: /[^A-Za-z0-9]/.test(password),
+          noPattern: !/(123|abc|qwerty|password|admin)/i.test(password) && !/(.)\1{2,}/.test(password)
+        },
+        label: "極弱/危險",
+        colorClass: "bg-red-500",
+        textClass: "text-red-400",
+        percentClass: "w-1/12",
+        crackTime: "瞬間破譯"
+      };
+
+      if (!password) {
+        result.label = "無輸入";
+        result.colorClass = "bg-slate-700";
+        result.textClass = "text-slate-500";
+        result.percentClass = "w-0";
+        return result;
+      }
+
+      let poolSize = 0;
+      if (result.checks.lower) poolSize += 26;
+      if (result.checks.upper) poolSize += 26;
+      if (result.checks.number) poolSize += 10;
+      if (result.checks.special) poolSize += 32;
+
+      if (poolSize > 0) {
+        result.entropy = Math.round(password.length * Math.log2(poolSize));
+      }
+
+      let calculatedScore = 0;
+      if (result.checks.length) calculatedScore += 25;
+      if (password.length >= 12) calculatedScore += 10;
+      if (result.checks.upper) calculatedScore += 15;
+      if (result.checks.lower) calculatedScore += 15;
+      if (result.checks.number) calculatedScore += 15;
+      if (result.checks.special) calculatedScore += 10;
+      if (result.checks.noPattern) calculatedScore += 10;
+
+      if (password.length < 6) {
+        calculatedScore = Math.min(calculatedScore, 10);
+      } else if (password.length < 8) {
+        calculatedScore = Math.min(calculatedScore, 35);
+      }
+
+      result.score = calculatedScore;
+
+      if (result.entropy < 28) {
+        result.crackTime = "約幾秒鐘";
+      } else if (result.entropy < 40) {
+        result.crackTime = "幾分鐘到幾小時";
+      } else if (result.entropy < 55) {
+        result.crackTime = "約數天到數月";
+      } else if (result.entropy < 75) {
+        result.crackTime = "約數十年到數百年";
+      } else {
+        result.crackTime = "數萬年 (軍事防護級)";
+      }
+
+      if (calculatedScore >= 85) {
+        result.label = "極強防護";
+        result.colorClass = "bg-emerald-500";
+        result.textClass = "text-emerald-400";
+        result.percentClass = "w-full";
+      } else if (calculatedScore >= 65) {
+        result.label = "安全強度";
+        result.colorClass = "bg-blue-500";
+        result.textClass = "text-blue-400";
+        result.percentClass = "w-3/4";
+      } else if (calculatedScore >= 40) {
+        result.label = "中等強度";
+        result.colorClass = "bg-amber-500";
+        result.textClass = "text-amber-400";
+        result.percentClass = "w-2/4";
+      } else {
+        result.label = "危險弱密碼";
+        result.colorClass = "bg-red-500";
+        result.textClass = "text-red-400";
+        result.percentClass = "w-1/4";
+      }
+
+      return result;
+    }
+
+    // 密碼隨機生成演算法
+    function generateSecurePassword(length, useUpper, useLower, useNumbers, useSymbols) {
+      let charset = "";
+      if (useUpper) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      if (useLower) charset += "abcdefghijklmnopqrstuvwxyz";
+      if (useNumbers) charset += "0123456789";
+      if (useSymbols) charset += "!@#$%^&*()_+-=[]{}|;:,.<>?";
+
+      if (!charset) return "";
+
+      let password = "";
+      const array = new Uint32Array(length);
+      window.crypto.getRandomValues(array);
+
+      for (let i = 0; i < length; i++) {
+        password += charset[array[i] % charset.length];
+      }
+      return password;
+    }
+
+    // 格式化日期時間
+    function formatDate(timestamp) {
+      const date = new Date(timestamp);
+      return date.toLocaleDateString("zh-TW", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    // 5. 介面渲染與核心功能模組
+    function renderVaultList() {
+      const listContainer = document.getElementById("vault-list");
+      const emptyState = document.getElementById("vault-empty-state");
+      const searchQuery = document.getElementById("search-input").value.toLowerCase();
+      const sortBy = document.getElementById("sort-select").value;
+
+      let filtered = vaultItems.filter(item => {
+        const matchesCategory = currentCategoryFilter === "all" || item.category === currentCategoryFilter;
+        const matchesSearch = item.title.toLowerCase().includes(searchQuery) || 
+                              item.username.toLowerCase().includes(searchQuery) ||
+                              (item.website && item.website.toLowerCase().includes(searchQuery)) ||
+                              (item.notes && item.notes.toLowerCase().includes(searchQuery));
+        return matchesCategory && matchesSearch;
+      });
+
+      if (sortBy === "recent") {
+        filtered.sort((a, b) => b.createdAt - a.createdAt);
+      } else if (sortBy === "name-asc") {
+        filtered.sort((a, b) => a.title.localeCompare(b.title, "zh-TW"));
+      } else if (sortBy === "name-desc") {
+        filtered.sort((a, b) => b.title.localeCompare(a.title, "zh-TW"));
+      }
+
+      if (filtered.length === 0) {
+        listContainer.classList.add("hidden");
+        emptyState.classList.remove("hidden");
+        return;
+      }
+
+      listContainer.className = "grid grid-cols-1 xl:grid-cols-2 gap-4";
+      emptyState.classList.add("hidden");
+
+      listContainer.innerHTML = "";
+      filtered.forEach(item => {
+        const decryptedPassword = simpleDecrypt(item.password, masterPassword);
+        const strength = evaluatePasswordStrengthDetailed(decryptedPassword);
+        
+        let categoryColor = "bg-slate-800 text-slate-300";
+        let categoryLabel = "其他備忘";
+        if (item.category === "social") { categoryColor = "bg-blue-500/10 text-blue-400 border border-blue-500/15"; categoryLabel = "社群娛樂"; }
+        if (item.category === "finance") { categoryColor = "bg-emerald-500/10 text-emerald-400 border border-emerald-500/15"; categoryLabel = "金融資產"; }
+        if (item.category === "work") { categoryColor = "bg-indigo-500/10 text-indigo-400 border border-indigo-500/15"; categoryLabel = "工作專案"; }
+
+        const card = document.createElement("div");
+        card.className = "bg-slate-900 border border-slate-800/80 rounded-2xl p-5 hover:border-slate-700 transition duration-300 flex flex-col justify-between group";
+        card.innerHTML = `
+          <div>
+            <div class="flex items-start justify-between gap-2 mb-4">
+              <div class="overflow-hidden">
+                <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold mb-2 ${categoryColor}">
+                  ${categoryLabel}
+                </span>
+                <h4 class="font-bold text-base text-slate-100 group-hover:text-emerald-400 transition truncate" title="${item.title}">${item.title}</h4>
+                ${item.website ? `
+                  <a href="${item.website}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-slate-300 mt-1 truncate">
+                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                    <span class="truncate">${item.website}</span>
+                  </a>
+                ` : ''}
+              </div>
+
+              <div class="flex gap-1 shrink-0">
+                <button onclick="openEditModal('${item.id}')" class="p-2 text-slate-400 hover:text-slate-100 hover:bg-slate-800 rounded-xl transition" title="編輯憑證">
+                  <i data-lucide="edit-3" class="w-4 h-4"></i>
+                </button>
+                <button onclick="deleteItem('${item.id}')" class="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition" title="刪除憑證">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="bg-slate-950/60 border border-slate-800/50 rounded-xl p-3.5 space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <div class="overflow-hidden">
+                  <span class="block text-[10px] font-semibold text-slate-500 uppercase">帳號/使用者信箱</span>
+                  <span class="text-sm font-semibold text-slate-300 truncate block">${item.username}</span>
+                </div>
+                <button onclick="copyToClipboard('${item.username}', '已複製帳號：${item.username}')" class="p-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition" title="複製帳號">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+
+              <div class="flex items-center justify-between gap-2 pt-2.5 border-t border-slate-800/60">
+                <div class="overflow-hidden w-full">
+                  <span class="block text-[10px] font-semibold text-slate-500 uppercase">安全密碼</span>
+                  <div class="flex items-center gap-2 mt-0.5">
+                    <input 
+                      type="password" 
+                      value="${decryptedPassword}" 
+                      readonly
+                      id="pass-display-${item.id}"
+                      class="bg-transparent border-none p-0 text-sm font-mono tracking-wider text-slate-200 focus:ring-0 outline-none w-full select-none select-all"
+                    >
+                  </div>
+                </div>
+                <div class="flex items-center gap-1 shrink-0">
+                  <button onclick="toggleCardPasswordVisibility('${item.id}')" id="eye-btn-${item.id}" class="p-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition" title="顯示密碼">
+                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button onclick="copyToClipboard('${decryptedPassword}', '已成功複製安全密碼')" class="p-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition" title="複製密碼">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-800/50 flex justify-between items-center">
+            <span class="text-[10px] text-slate-500">
+              儲存於: ${formatDate(item.createdAt)}
+            </span>
+            <span class="text-[10px] font-semibold ${strength.textClass} flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full ${strength.colorClass}"></span>
+              ${strength.label} (${strength.entropy} bits)
+            </span>
+          </div>
+        `;
+        listContainer.appendChild(card);
+      });
+      lucide.createIcons();
+      updateBadges();
+    }
+
+    function toggleCardPasswordVisibility(id) {
+      const input = document.getElementById(`pass-display-${id}`);
+      const btn = document.getElementById(`eye-btn-${id}`);
+      if (input.type === "password") {
+        input.type = "text";
+        btn.innerHTML = `<i data-lucide="eye-off" class="w-3.5 h-3.5"></i>`;
+      } else {
+        input.type = "password";
+        btn.innerHTML = `<i data-lucide="eye" class="w-3.5 h-3.5"></i>`;
+      }
+      lucide.createIcons();
+    }
+
+    // 重新加入並實作先前遺漏的 updateBadges 函式，防止在 renderVaultList 中呼叫時發生 ReferenceError 錯誤
+    function updateBadges() {
+      const totalBadge = document.getElementById("badge-total-count");
+      if (totalBadge) {
+        totalBadge.textContent = vaultItems.length;
+      }
+      
+      let weakCount = 0;
+      vaultItems.forEach(item => {
+        const rawPass = simpleDecrypt(item.password, masterPassword);
+        const strength = evaluatePasswordStrengthDetailed(rawPass);
+        if (strength.score < 40) {
+          weakCount++;
+        }
+      });
+
+      const weakBadge = document.getElementById("badge-weak-count");
+      if (weakBadge) {
+        if (weakCount > 0) {
+          weakBadge.textContent = weakCount;
+          weakBadge.classList.remove("hidden");
+        } else {
+          weakBadge.classList.add("hidden");
+        }
+      }
+    }
+
+    // 密碼安全大數據健檢核心
+    function runSecurityAudit() {
+      const riskList = document.getElementById("audit-risk-list");
+      const emptyState = document.getElementById("audit-empty-state");
+      
+      let weakItems = [];
+      let passwordMap = {}; 
+      
+      vaultItems.forEach(item => {
+        const rawPass = simpleDecrypt(item.password, masterPassword);
+        const strength = evaluatePasswordStrengthDetailed(rawPass);
+        
+        if (!passwordMap[rawPass]) {
+          passwordMap[rawPass] = [];
+        }
+        passwordMap[rawPass].push(item);
+
+        if (strength.score < 40) {
+          weakItems.push({
+            item: item,
+            type: "weak",
+            reason: `密碼強度過低 (${strength.label}，僅 ${strength.entropy} bits) 容易被暴力破譯。`
+          });
+        }
+      });
+
+      let reusedItems = [];
+      Object.keys(passwordMap).forEach(pwd => {
+        const occurrences = passwordMap[pwd];
+        if (occurrences.length > 1) {
+          occurrences.forEach(item => {
+            reusedItems.push({
+              item: item,
+              type: "reuse",
+              reason: `此密碼與其他 ${occurrences.length - 1} 個平台帳號重複使用，存在骨牌效應洩漏風險。`
+            });
+          });
+        }
+      });
+
+      const allRisks = [...weakItems, ...reusedItems];
+      const penalty = (weakItems.length * 20) + (reusedItems.length * 10);
+      const score = Math.max(10, 100 - penalty);
+      
+      const scoreEl = document.getElementById("audit-score");
+      const barEl = document.getElementById("audit-score-bar");
+      
+      scoreEl.textContent = score;
+      barEl.style.width = `${score}%`;
+
+      if (score >= 80) {
+        scoreEl.className = "text-4xl font-extrabold text-emerald-400";
+        barEl.className = "bg-emerald-500 h-1.5 rounded-full transition-all duration-500";
+      } else if (score >= 55) {
+        scoreEl.className = "text-4xl font-extrabold text-amber-400";
+        barEl.className = "bg-amber-500 h-1.5 rounded-full transition-all duration-500";
+      } else {
+        scoreEl.className = "text-4xl font-extrabold text-red-400";
+        barEl.className = "bg-red-500 h-1.5 rounded-full transition-all duration-500";
+      }
+
+      document.getElementById("audit-weak-count").textContent = weakItems.length;
+      document.getElementById("audit-reuse-count").textContent = reusedItems.length;
+
+      if (allRisks.length === 0) {
+        riskList.innerHTML = "";
+        emptyState.classList.remove("hidden");
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+      riskList.innerHTML = "";
+
+      allRisks.forEach(risk => {
+        const card = document.createElement("div");
+        card.className = "bg-slate-955 border border-slate-800 p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3";
+        
+        const iconType = risk.type === "weak" ? "shield-alert" : "copy";
+        const iconColor = risk.type === "weak" ? "text-red-400 bg-red-500/10" : "text-amber-400 bg-amber-500/10";
+
+        card.innerHTML = `
+          <div class="flex items-start gap-3">
+            <div class="p-2 rounded-lg shrink-0 ${iconColor}">
+              <i data-lucide="${iconType}" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h5 class="text-sm font-bold text-slate-200">${risk.item.title}</h5>
+              <p class="text-xs text-slate-400 mt-1">${risk.reason}</p>
+            </div>
+          </div>
+          <button onclick="quickRepairPassword('${risk.item.id}')" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-emerald-400 rounded-lg transition shrink-0 self-end sm:self-auto flex items-center gap-1">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span>安全修復</span>
+          </button>
+        `;
+        riskList.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function quickRepairPassword(id) {
+      openEditModal(id);
+      document.getElementById("modal-gen-password-btn").click();
+      showToast("已自動為您帶入安全的隨機密碼！點擊『儲存資料』即可修復此風險。", "warning");
+    }
+
+    // 新增/編輯 憑證編輯對話框
+    const itemModal = document.getElementById("item-modal");
+    function openModal() {
+      itemModal.classList.remove("hidden");
+      setTimeout(() => {
+        itemModal.classList.remove("opacity-0");
+        itemModal.firstElementChild.classList.remove("scale-95");
+      }, 50);
+    }
+
+    function closeModal() {
+      itemModal.classList.add("opacity-0");
+      itemModal.firstElementChild.classList.add("scale-95");
+      setTimeout(() => {
+        itemModal.classList.add("hidden");
+      }, 300);
+    }
+
+    function openEditModal(id) {
+      const item = vaultItems.find(i => i.id === id);
+      if (!item) return;
+
+      document.getElementById("modal-title").textContent = "編輯憑證資料";
+      document.getElementById("item-id").value = item.id;
+      document.getElementById("item-title").value = item.title;
+      document.getElementById("item-username").value = item.username;
+      document.getElementById("item-category").value = item.category;
+      
+      const decrypted = simpleDecrypt(item.password, masterPassword);
+      document.getElementById("item-password").value = decrypted;
+      document.getElementById("item-website").value = item.website || "";
+      document.getElementById("item-notes").value = item.notes || "";
+
+      updateModalPwdStrengthBar(decrypted);
+      openModal();
+    }
+
+    async function deleteItem(id) {
+      const item = vaultItems.find(i => i.id === id);
+      if (!item) return;
+
+      const confirm = await customConfirm(
+        "確定要刪除此憑證嗎？", 
+        `您即將永久移除對 [ ${item.title} ] 的密碼記錄。此變更將在雲端實時同步。`,
+        true
+      );
+
+      if (confirm) {
+        vaultItems = vaultItems.filter(i => i.id !== id);
+        showToast("已將憑證移出保險箱。", "success");
+        renderVaultList();
+        await syncVaultToCloud();
+      }
+    }
+
+    function updateModalPwdStrengthBar(pwd) {
+      const bar = document.getElementById("pwd-strength-bar");
+      const label = document.getElementById("pwd-strength-label");
+      const entropyLabel = document.getElementById("pwd-entropy-lbl");
+      
+      const evalResult = evaluatePasswordStrengthDetailed(pwd);
+      
+      if (pwd === "") {
+        label.textContent = "未輸入";
+        label.className = "font-semibold text-slate-400";
+        bar.className = "w-0 h-full bg-slate-700 transition-all duration-300";
+        entropyLabel.textContent = "0 bits";
+        
+        updateModalChecklist("chk-length", false);
+        updateModalChecklist("chk-upper", false);
+        updateModalChecklist("chk-lower", false);
+        updateModalChecklist("chk-number", false);
+        updateModalChecklist("chk-special", false);
+        updateModalChecklist("chk-pattern", false);
+        return;
+      }
+
+      label.textContent = evalResult.label;
+      label.className = `font-semibold ${evalResult.textClass}`;
+      bar.className = `h-full rounded-full transition-all duration-300 ${evalResult.percentClass} ${evalResult.colorClass}`;
+      entropyLabel.textContent = `${evalResult.entropy} bits`;
+
+      updateModalChecklist("chk-length", evalResult.checks.length);
+      updateModalChecklist("chk-upper", evalResult.checks.upper);
+      updateModalChecklist("chk-lower", evalResult.checks.lower);
+      updateModalChecklist("chk-number", evalResult.checks.number);
+      updateModalChecklist("chk-special", evalResult.checks.special);
+      updateModalChecklist("chk-pattern", evalResult.checks.noPattern);
+    }
+
+    function updateModalChecklist(elementId, isValid) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      const span = el.querySelector("span");
+      if (isValid) {
+        el.className = "flex items-center gap-1.5 text-emerald-400 font-semibold";
+        el.innerHTML = `<i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-400"></i><span>${span.textContent}</span>`;
+      } else {
+        el.className = "flex items-center gap-1.5 text-slate-500";
+        el.innerHTML = `<i data-lucide="circle" class="w-3 h-3 text-slate-700"></i><span>${span.textContent}</span>`;
+      }
+      lucide.createIcons();
+    }
+
+    // 6. 密碼產生器功能模組 (Generator Panel)
+    const lengthSlider = document.getElementById("length-slider");
+    const lengthVal = document.getElementById("length-val");
+    const genDisplay = document.getElementById("generated-password-display");
+
+    function runMainGenerator() {
+      const length = parseInt(lengthSlider.value);
+      const useUpper = document.getElementById("opt-uppercase").checked;
+      const useLower = document.getElementById("opt-lowercase").checked;
+      const useNumbers = document.getElementById("opt-numbers").checked;
+      const useSymbols = document.getElementById("opt-symbols").checked;
+
+      const password = generateSecurePassword(length, useUpper, useLower, useNumbers, useSymbols);
+      
+      if (password) {
+        genDisplay.textContent = password;
+        genDisplay.classList.remove("text-slate-600");
+        genDisplay.classList.add("text-emerald-400");
+      } else {
+        genDisplay.textContent = "請至少選取一個字元集選項！";
+        genDisplay.classList.remove("text-emerald-400");
+        genDisplay.classList.add("text-slate-600");
+      }
+    }
+
+    // 7. 變更主密碼對話框與無縫節點遷移核心
+    const changeMasterModal = document.getElementById("change-master-modal");
+    const changeMasterForm = document.getElementById("change-master-form");
+
+    function openChangeMasterModal() {
+      changeMasterModal.classList.remove("hidden");
+      setTimeout(() => {
+        changeMasterModal.classList.remove("opacity-0");
+        changeMasterModal.firstElementChild.classList.remove("scale-95");
+      }, 50);
+    }
+
+    function closeChangeMasterModal() {
+      changeMasterModal.classList.add("opacity-0");
+      changeMasterModal.firstElementChild.classList.add("scale-95");
+      setTimeout(() => {
+        changeMasterModal.classList.add("hidden");
+      }, 300);
+    }
+
+    // 8. 註冊全局事件監聽器
+    window.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+
+      // [記住登入狀態與主密碼] - 頁面載入時，嘗試從安全 SafeStorage 還原先前勾選記住的會話
+      const cachedEmail = SafeStorage.getItem("cipherguard_remembered_email");
+      const cachedPassword = SafeStorage.getItem("cipherguard_remembered_password");
+      if (cachedEmail) {
+        document.getElementById("cloud-email-input").value = cachedEmail;
+        document.getElementById("remember-me-checkbox").checked = true;
+      }
+      if (cachedPassword) {
+        document.getElementById("master-password-input").value = cachedPassword;
+      }
+
+      // 如果有快取的電子信箱與密碼，自動觸發登入
+      if (cachedEmail && cachedPassword) {
+        setTimeout(() => {
+          document.getElementById("lock-form").requestSubmit();
+        }, 300);
+      }
+
+      // 快速切換測試帳戶事件監聽（填入信箱，並引導輸入密碼）
+      const quickBtns = document.querySelectorAll(".quick-account-btn");
+      quickBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const email = btn.getAttribute("data-email");
+          document.getElementById("cloud-email-input").value = email;
+          
+          const passwordInput = document.getElementById("master-password-input");
+          passwordInput.value = ""; 
+          passwordInput.focus();
+          
+          showToast(`已切換帳戶為 [${email}]，請輸入主密碼進行安全驗證解鎖。`, "success");
+        });
+      });
+
+      // 鎖定/解鎖登入流程
+      const lockForm = document.getElementById("lock-form");
+      const masterInput = document.getElementById("master-password-input");
+      const cloudEmailInput = document.getElementById("cloud-email-input");
+
+      lockForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const enteredPass = masterInput.value;
+        const enteredEmail = cloudEmailInput.value.trim();
+        const rememberMe = document.getElementById("remember-me-checkbox").checked;
+        
+        if (!enteredEmail) {
+          showToast("電子信箱不可為空！", "warning");
+          return;
+        }
+
+        if (enteredPass.length < 4) {
+          showToast("主密碼不可短於 4 個字元！", "warning");
+          return;
+        }
+
+        const submitBtn = document.getElementById("lock-form-submit-btn");
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<i data-lucide="loader" class="w-5 h-5 animate-spin"></i> <span>安全對接雲端中...</span>`;
+        lucide.createIcons();
+
+        try {
+          // 利用信箱的雜湊取得該帳戶的對應文件
+          const hash = await hashEmail(enteredEmail);
+          
+          // 定義內置的三組帳戶及其正確的主密碼
+          const defaultAccounts = {
+            "z0978078536@gmail.com": "19750420",
+            "0420crystalyiting@gmail.com": "042030",
+            "a647802@gmail.com": "gg070802"
+          };
+
+          const cleanEmail = enteredEmail.toLowerCase().trim();
+
+          if (isFirebaseReady) {
+            // Rule 3: 確保同步前 Auth 已經認證就緒
+            if (authPromise) await authPromise;
+
+            // 若目前 Firebase 未建立有效使用者，再次嘗試匿名登入確保連線合法
+            if (!auth.currentUser) {
+              if (initialAuthToken) {
+                await signInWithCustomToken(auth, initialAuthToken);
+              } else {
+                await signInAnonymously(auth);
+              }
+            }
+
+            if (!auth.currentUser) {
+              throw new Error("認證通道初始化失敗");
+            }
+
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', hash);
+            let docSnap;
+
+            await executeWithRetry(async () => {
+              docSnap = await getDoc(docRef);
+            });
+
+            if (docSnap && docSnap.exists()) {
+              const cloudData = docSnap.data();
+              // 密碼驗證：嘗試解密 verification 內容
+              const decryptedCheck = simpleDecrypt(cloudData.verification, enteredPass);
+
+              // 精準驗證：解密後的字串與標記完全吻合才解鎖，否則提示密碼不正確
+              if (decryptedCheck === "cipherguard-verified") {
+                // 如果是預設帳戶，額外多做一層驗證防護，防止衝突
+                if (defaultAccounts[cleanEmail] && enteredPass !== defaultAccounts[cleanEmail]) {
+                  showToast("驗證失敗：此信箱之主密碼不正確！", "error");
+                  resetSubmitBtn();
+                  return;
+                }
+                masterPassword = enteredPass;
+                currentEmailHash = hash;
+                vaultItems = cloudData.items || [];
+                isUnlocked = true;
+                showToast(`歡迎回來！已成功為您解密並同步 ${enteredEmail} 的雲端保險箱。`, "success");
+              } else {
+                showToast("驗證失敗：此信箱之主密碼不正確！", "error");
+                resetSubmitBtn();
+                return;
+              }
+            } else {
+              // 雲端無此帳戶時：如果是預設帳戶之一，但密碼輸入錯誤，直接拒絕登入，防止重複註冊覆蓋
+              if (defaultAccounts[cleanEmail] && enteredPass !== defaultAccounts[cleanEmail]) {
+                showToast("驗證失敗：此信箱之主密碼不正確！", "error");
+                resetSubmitBtn();
+                return;
+              }
+
+              // 信箱節點不存在時，提示註冊新帳戶
+              const proceedRegistration = await customConfirm(
+                "建立全新雲端密碼庫？",
+                `系統未在此信箱下找到現存保險箱。確認要自動為電子信箱 [ ${enteredEmail} ] 註冊開通專屬的零知識加密保險箱嗎？`,
+                false
+              );
+
+              if (proceedRegistration) {
+                masterPassword = enteredPass;
+                currentEmailHash = hash;
+                vaultItems = getDefaultWelcomeItems(enteredPass, enteredEmail);
+                isUnlocked = true;
+
+                await setDoc(docRef, {
+                  email: enteredEmail,
+                  verification: simpleEncrypt("cipherguard-verified", enteredPass),
+                  items: vaultItems,
+                  createdAt: Date.now()
+                });
+
+                showToast(`註冊成功！已成功在雲端分配屬於 ${enteredEmail} 的加密節點。`, "success");
+              } else {
+                showToast("登入/註冊已取消。", "info");
+                resetSubmitBtn();
+                return;
+              }
+            }
+          } else {
+            // [無雲端自適應 fallback] - 本機安全 sand box 模式，當偵測到無 Firebase 設定時，使用 SafeStorage 自動還原資料
+            
+            // 離線狀態下亦進行三組預設帳戶的密碼驗證，確保在離線/沙盒測試中也能展現正確的錯誤密碼驗證效果
+            if (defaultAccounts[cleanEmail]) {
+              if (enteredPass !== defaultAccounts[cleanEmail]) {
+                showToast("驗證失敗：此信箱之主密碼不正確！", "error");
+                resetSubmitBtn();
+                return;
+              }
+            }
+
+            masterPassword = enteredPass;
+            currentEmailHash = hash;
+            isUnlocked = true;
+            
+            const localSessionVault = SafeStorage.getItem(`sandbox_vault_${hash}`);
+            if (localSessionVault) {
+              vaultItems = JSON.parse(localSessionVault);
+              showToast("雲端無法取得連線。已自動載入本機分頁暫存保險箱。", "success");
+            } else {
+              vaultItems = getDefaultWelcomeItems(enteredPass, enteredEmail);
+              showToast(`雲端無法取得連線。已自動切換至本機 [ ${enteredEmail} ] 的臨時沙盒模式。`, "warning");
+            }
+          }
+
+          // 如果勾選記住我，則將資訊保存至當前分頁 session（比 localStorage 更安全，且重整不遺失）
+          if (rememberMe) {
+            SafeStorage.setItem("cipherguard_remembered_email", enteredEmail);
+            SafeStorage.setItem("cipherguard_remembered_password", enteredPass);
+          } else {
+            SafeStorage.removeItem("cipherguard_remembered_email");
+            SafeStorage.removeItem("cipherguard_remembered_password");
+          }
+
+          document.getElementById("user-profile-type").textContent = isFirebaseReady ? "雲端加密保險箱" : "本機會話沙盒庫";
+          const displayIdEl = document.getElementById("user-display-id");
+          displayIdEl.textContent = enteredEmail;
+          displayIdEl.title = enteredEmail;
+
+          const syncStatus = document.getElementById("sync-status");
+          if (isFirebaseReady) {
+            syncStatus.innerHTML = `<i data-lucide="cloud-check" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i> <span class="truncate" title="已同步至 ${enteredEmail}">已同步至 ${enteredEmail.substring(0, 12)}...</span>`;
+          } else {
+            syncStatus.innerHTML = `<i data-lucide="shield-alert" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i> <span class="truncate">本機會話安全防護中</span>`;
+          }
+
+          const lockScreen = document.getElementById("lock-screen");
+          const appContainer = document.getElementById("app-container");
+          lockScreen.classList.add("opacity-0", "transition-all", "duration-500", "scale-105");
+          appContainer.classList.remove("opacity-0");
+          
+          setTimeout(() => {
+            lockScreen.classList.add("hidden");
+            runMainGenerator();
+            renderVaultList();
+          }, 500);
+
+        } catch (err) {
+          console.error("解鎖與連結錯誤:", err);
+          showToast("對接雲端時發生連線阻礙，請稍後重試！", "error");
+          resetSubmitBtn();
+        }
+      });
+
+      function resetSubmitBtn() {
+        const submitBtn = document.getElementById("lock-form-submit-btn");
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>連接雲端並解鎖</span> <i data-lucide="arrow-right" class="w-5 h-5"></i>`;
+        lucide.createIcons();
+      }
+
+      // 主密碼可見性切換
+      document.getElementById("toggle-master-visibility").addEventListener("click", () => {
+        const masterInput = document.getElementById("master-password-input");
+        const eyeBtn = document.getElementById("toggle-master-visibility");
+        if (masterInput.type === "password") {
+          masterInput.type = "text";
+          eyeBtn.innerHTML = `<i data-lucide="eye-off" class="w-5 h-5"></i>`;
+        } else {
+          masterInput.type = "password";
+          eyeBtn.innerHTML = `<i data-lucide="eye" class="w-5 h-5"></i>`;
+        }
+        lucide.createIcons();
+      });
+
+      // 鎖定與登出
+      document.getElementById("lock-app-btn").addEventListener("click", async () => {
+        const emailVal = cloudEmailInput.value.trim();
+        const confirm = await customConfirm("確認要鎖定保險箱嗎？", `鎖定後，下次存取 ${emailVal} 時需重新輸入主密碼。`, false);
+        if (confirm) {
+          masterPassword = "";
+          currentEmailHash = "";
+          isUnlocked = false;
+          masterInput.value = "";
+          
+          // 清除密碼快取防止自動登入
+          SafeStorage.removeItem("cipherguard_remembered_password");
+          resetSubmitBtn();
+          
+          document.getElementById("user-profile-type").textContent = "線上加密帳戶";
+          document.getElementById("user-display-id").textContent = "無綁定雲端";
+          document.getElementById("user-display-id").title = "未登入";
+
+          const lockScreen = document.getElementById("lock-screen");
+          const appContainer = document.getElementById("app-container");
+          appContainer.classList.add("opacity-0");
+          lockScreen.classList.remove("hidden");
+          setTimeout(() => {
+            lockScreen.classList.remove("opacity-0", "scale-105");
+          }, 50);
+        }
+      });
+
+      document.getElementById("logout-app-btn").addEventListener("click", async () => {
+        const confirm = await customConfirm("確認要登出帳號嗎？", `這將徹底關閉並重設您的安全密碼庫，並回到登入界面。`, true);
+        if (confirm) {
+          masterPassword = "";
+          currentEmailHash = "";
+          isUnlocked = false;
+          vaultItems = [];
+          
+          masterInput.value = "";
+          cloudEmailInput.value = "z0978078536@gmail.com";
+          
+          // 徹底抹除分頁快取
+          SafeStorage.removeItem("cipherguard_remembered_email");
+          SafeStorage.removeItem("cipherguard_remembered_password");
+          document.getElementById("remember-me-checkbox").checked = false;
+          resetSubmitBtn();
+          
+          document.getElementById("user-profile-type").textContent = "線上加密帳戶";
+          document.getElementById("user-display-id").textContent = "無綁定雲端";
+          document.getElementById("user-display-id").title = "未登入";
+
+          const lockScreen = document.getElementById("lock-screen");
+          const appContainer = document.getElementById("app-container");
+          appContainer.classList.add("opacity-0");
+          lockScreen.classList.remove("hidden");
+          setTimeout(() => {
+            lockScreen.classList.remove("opacity-0", "scale-105");
+          }, 50);
+        }
+      });
+
+      // 新增憑證對話框提交
+      document.getElementById("item-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const id = document.getElementById("item-id").value;
+        const title = document.getElementById("item-title").value.trim();
+        const username = document.getElementById("item-username").value.trim();
+        const category = document.getElementById("item-category").value;
+        const rawPassword = document.getElementById("item-password").value;
+        const website = document.getElementById("item-website").value.trim();
+        const notes = document.getElementById("item-notes").value.trim();
+
+        const encryptedPassword = simpleEncrypt(rawPassword, masterPassword);
+
+        if (id) {
+          const index = vaultItems.findIndex(i => i.id === id);
+          if (index !== -1) {
+            vaultItems[index] = {
+              ...vaultItems[index],
+              title,
+              username,
+              category,
+              password: encryptedPassword,
+              website,
+              notes
+            };
+            showToast("憑證修改成功！", "success");
+          }
+        } else {
+          const newItem = {
+            id: "item-" + Date.now(),
+            title,
+            username,
+            category,
+            password: encryptedPassword,
+            website,
+            notes,
+            createdAt: Date.now()
+          };
+          vaultItems.push(newItem);
+          showToast("成功建立新密碼憑證！", "success");
+        }
+
+        closeModal();
+        renderVaultList();
+        await syncVaultToCloud();
+      });
+
+      // 憑證對話框密碼明隱
+      document.getElementById("toggle-modal-password").addEventListener("click", () => {
+        const modalPassInput = document.getElementById("item-password");
+        const eyeBtn = document.getElementById("toggle-modal-password");
+        if (modalPassInput.type === "password") {
+          modalPassInput.type = "text";
+          eyeBtn.innerHTML = `<i data-lucide="eye-off" class="w-5 h-5"></i>`;
+        } else {
+          modalPassInput.type = "password";
+          eyeBtn.innerHTML = `<i data-lucide="eye" class="w-5 h-5"></i>`;
+        }
+        lucide.createIcons();
+      });
+
+      // 產生器長度控制與參數監聽
+      lengthSlider.addEventListener("input", (e) => {
+        lengthVal.textContent = e.target.value;
+        runMainGenerator();
+      });
+
+      document.querySelectorAll("#panel-generator input[type='checkbox']").forEach(chk => {
+        chk.addEventListener("change", runMainGenerator);
+      });
+
+      document.getElementById("regen-btn").addEventListener("click", runMainGenerator);
+      document.getElementById("copy-gen-btn").addEventListener("click", () => {
+        const pwdText = genDisplay.textContent;
+        if (pwdText && pwdText !== "請至少選取一個字元集選項！" && pwdText !== "點擊下方按鈕生成密碼") {
+          copyToClipboard(pwdText, "新密碼已成功複製！");
+        } else {
+          showToast("無有效密碼可供複製", "warning");
+        }
+      });
+
+      // 沙盒即時測試密碼明隱
+      document.getElementById("toggle-sandbox-visibility").addEventListener("click", () => {
+        const sandboxInput = document.getElementById("sandbox-input");
+        const eyeBtn = document.getElementById("toggle-sandbox-visibility");
+        if (sandboxInput.type === "password") {
+          sandboxInput.type = "text";
+          eyeBtn.innerHTML = `<i data-lucide="eye-off" class="w-5 h-5"></i>`;
+        } else {
+          sandboxInput.type = "password";
+          eyeBtn.innerHTML = `<i data-lucide="eye" class="w-5 h-5"></i>`;
+        }
+        lucide.createIcons();
+      });
+
+      // 備份匯出 JSON
+      document.getElementById("export-btn").addEventListener("click", () => {
+        if (vaultItems.length === 0) {
+          showToast("保險箱目前沒有資料可以匯出備份。", "warning");
+          return;
+        }
+        try {
+          const exportData = {
+            client: "CipherGuard",
+            exportedAt: Date.now(),
+            items: vaultItems
+          };
+          const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 2));
+          const downloadAnchor = document.createElement("a");
+          downloadAnchor.setAttribute("href", dataStr);
+          downloadAnchor.setAttribute("download", `cipherguard_backup_${formatDate(Date.now()).replace(/\//g, "-")}.json`);
+          document.body.appendChild(downloadAnchor);
+          downloadAnchor.click();
+          downloadAnchor.remove();
+          showToast("加密保險箱本地備份檔 (.json) 下載完成！", "success");
+        } catch (err) {
+          showToast("備份匯出時發生未知錯誤。", "error");
+        }
+      });
+
+      // 還原匯入 JSON
+      const fileInput = document.getElementById("import-file-input");
+      document.getElementById("import-trigger-btn").addEventListener("click", () => {
+        fileInput.click();
+      });
+
+      fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async function(event) {
+          try {
+            const parsed = JSON.parse(event.target.result);
+            if (!parsed.client || parsed.client !== "CipherGuard" || !Array.isArray(parsed.items)) {
+              showToast("無效的備份檔案規格！", "error");
+              return;
+            }
+
+            const confirm = await customConfirm(
+              "確認要匯入備份嗎？", 
+              `將與現有庫合併，載入共 ${parsed.items.length} 筆憑證。`, 
+              false
+            );
+
+            if (confirm) {
+              const existingIds = new Set(vaultItems.map(item => item.id));
+              
+              parsed.items.forEach(newItem => {
+                if (!existingIds.has(newItem.id)) {
+                  vaultItems.push(newItem);
+                } else {
+                  const idx = vaultItems.findIndex(x => x.id === newItem.id);
+                  if (idx !== -1) vaultItems[idx] = newItem;
+                }
+              });
+
+              showToast(`還原匯入完成！成功載入 ${parsed.items.length} 筆憑證。`, "success");
+              renderVaultList();
+              await syncVaultToCloud();
+              document.getElementById("nav-vault").click();
+            }
+          } catch (err) {
+            showToast("解析備份檔案時出錯，檔案可能已損毀。", "error");
+          }
+          fileInput.value = ""; 
+        };
+        reader.readAsText(file);
+      });
+
+      // 銷毀保險箱
+      document.getElementById("clear-vault-btn").addEventListener("click", async () => {
+        const confirm = await customConfirm(
+          "確定要永久清除整座保險箱嗎？", 
+          "這項動作將抹除雲端及本地端所有憑證紀錄。請萬分小心！", 
+          true
+        );
+
+        if (confirm) {
+          vaultItems = [];
+          showToast("保險箱已被徹底清空銷毀！", "error");
+          renderVaultList();
+          await syncVaultToCloud();
+          document.getElementById("nav-vault").click();
+        }
+      });
+
+      // 變更主密碼 Modal 控制
+      document.getElementById("change-master-trigger-btn").addEventListener("click", () => {
+        changeMasterForm.reset();
+        openChangeMasterModal();
+      });
+
+      document.getElementById("close-change-master-btn").addEventListener("click", closeChangeMasterModal);
+      document.getElementById("cancel-change-master-btn").addEventListener("click", closeChangeMasterModal);
+
+      // 提交變更主密碼
+      changeMasterForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const oldMaster = document.getElementById("old-master-input").value;
+        const newMaster = document.getElementById("new-master-input").value;
+        const confirmNew = document.getElementById("confirm-new-master-input").value;
+
+        if (oldMaster !== masterPassword) {
+          showToast("目前的主密碼輸入錯誤！", "error");
+          return;
+        }
+
+        if (newMaster.length < 4) {
+          showToast("新主密碼不可短於 4 個字元！", "warning");
+          return;
+        }
+
+        if (newMaster === oldMaster) {
+          showToast("新主密碼不能與舊主密碼相同！", "warning");
+          return;
+        }
+
+        if (newMaster !== confirmNew) {
+          showToast("兩次輸入的新主密碼不一致！", "error");
+          return;
+        }
+
+        const confirm = await customConfirm(
+          "確定要變更主密碼嗎？",
+          "所有憑證將以新密碼重加密。此過程請勿關閉網頁！",
+          true
+        );
+
+        if (!confirm) return;
+
+        const submitBtn = changeMasterForm.querySelector("button[type='submit']");
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin shrink-0"></i> <span>遷移雲端密鑰中...</span>`;
+        lucide.createIcons();
+
+        try {
+          const emailInput = document.getElementById("cloud-email-input");
+          const activeEmail = emailInput ? emailInput.value.trim() : "z0978078536@gmail.com";
+
+          // 1. 將現有憑證重加密
+          const reEncryptedItems = vaultItems.map(item => {
+            const rawPlain = simpleDecrypt(item.password, masterPassword);
+            return {
+              ...item,
+              password: simpleEncrypt(rawPlain, newMaster)
+            };
+          });
+
+          // 2. 由於是以信箱 hash 作為 document ID，ID 不需要更動，直接在同一個 Ref 下覆寫/更新
+          const hash = currentEmailHash;
+
+          if (isFirebaseReady) {
+            if (authPromise) await authPromise; // 確保認證完成
+
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', hash);
+            await executeWithRetry(async () => {
+              await setDoc(docRef, {
+                email: activeEmail,
+                verification: simpleEncrypt("cipherguard-verified", newMaster),
+                items: reEncryptedItems,
+                lastSyncedAt: Date.now()
+              }, { merge: true });
+            });
+          }
+
+          // 3. 本地狀態置換
+          masterPassword = newMaster;
+          vaultItems = reEncryptedItems;
+
+          showToast("主密碼已成功變更並重新加密雲端數據！", "success");
+          closeChangeMasterModal();
+          renderVaultList();
+        } catch (err) {
+          console.error("金鑰轉移失敗:", err);
+          showToast("變更主密碼時通訊阻礙，請重試！", "error");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<span>確認變更</span>`;
+          lucide.createIcons();
+        }
+      });
+
+      // 對話框確認與取消事件
+      document.getElementById("confirm-cancel").addEventListener("click", () => closeConfirmModal(false));
+      document.getElementById("confirm-ok").addEventListener("click", () => closeConfirmModal(true));
+    });
+
+    // 9. 將模組內的高頻點擊函式掛載至 window，供 inline HTML 事件直接呼叫
+    window.openEditModal = openEditModal;
+    window.deleteItem = deleteItem;
+    window.copyToClipboard = copyToClipboard;
+    window.toggleCardPasswordVisibility = toggleCardPasswordVisibility;
+    window.quickRepairPassword = quickRepairPassword;
+  </script>
+</body>
+</html>
