@@ -838,7 +838,7 @@
   </div>
 
   <!-- 5. 修改主密碼 Modal -->
-  <div id="change-master-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+  <div id="change-master-modal" class="fixed inset-0 bg-slate-955/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
     <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-6 m-4 shadow-2xl transform scale-95 transition-transform duration-300">
       <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
         <h3 class="text-xl font-bold text-slate-100 flex items-center gap-2">
@@ -887,6 +887,9 @@
     import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+    // =======================================================
+    // 1. 安全儲存與 Firebase 初始化
+    // =======================================================
     const SafeStorage = {
       _memoryDb: {},
       getItem(key) {
@@ -935,6 +938,9 @@
     let isFirebaseReady = false;
     let authPromise = null;
 
+    // =======================================================
+    // 2. 核心密碼庫本地狀態變數
+    // =======================================================
     let masterPassword = "";
     let currentEmailHash = ""; 
     let isUnlocked = false;
@@ -942,70 +948,11 @@
     let vaultItems = []; 
 
     // =======================================================
+    // 3. 所有核心工具與全域定義 (含 showToast、copyToClipboard 與對話框控制)
     // =======================================================
-
-    function simpleEncrypt(text, key) {
-      if(!text) return "";
-      try {
-        let result = '';
-        for (let i = 0; i < text.length; i++) {
-          let charCode = text.charCodeAt(i) ^ key.charCodeAt(i % key.length);
-          result += String.fromCharCode(charCode);
-        }
-        return btoa(unescape(encodeURIComponent(result)));
-      } catch (e) {
-        return text;
-      }
-    }
-
-    function simpleDecrypt(cipherText, key) {
-      if(!cipherText) return "";
-      try {
-        let decoded = decodeURIComponent(escape(atob(cipherText)));
-        let result = '';
-        for (let i = 0; i < decoded.length; i++) {
-          let charCode = decoded.charCodeAt(i) ^ key.charCodeAt(i % key.length);
-          result += String.fromCharCode(charCode);
-        }
-        return result;
-      } catch (e) {
-        return cipherText;
-      }
-    }
-
-    // 支援非安全上下文 (Insecure Context / Non-HTTPS PWA Webview) 的相容雜湊，防止註冊卡死
-    async function hashEmail(email) {
-      const cleanEmail = email.toLowerCase().trim();
-      const salt = "|cipherguard-email-salt-2026";
-      const input = cleanEmail + salt;
-      
-      if (window.crypto && crypto.subtle) {
-        try {
-          const encoder = new TextEncoder();
-          const data = encoder.encode(input);
-          // 修正前次的 "SHA-255" 拼寫錯誤
-          const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-          const hashArray = Array.from(new Uint8Array(hashBuffer));
-          return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        } catch (e) {
-          console.warn("Subtle crypto API calculation failed, using fallback hash.", e);
-        }
-      }
-      
-      // 相容性 Fallback Deterministic Hash 演算法，避免非 HTTPS WebView 下直接拋錯卡死
-      let hash = 5381;
-      for (let i = 0; i < input.length; i++) {
-        hash = (hash * 33) ^ input.charCodeAt(i);
-      }
-      return "legacy-" + (hash >>> 0).toString(16);
-    }
-
-    // =======================================================
-    // =======================================================
-
     function showToast(message, type = "info") {
       const toast = document.createElement("div");
-      toast.className = "flex items-center gap-3 px-4 py-3 rounded-xl border shadow-xl transition-all duration-300 transform translate-y-2 opacity-0 max-w-sm pointer-events-auto bg-slate-900";
+      toast.className = "flex items-center gap-3 px-4 py-3 rounded-xl border shadow-xl transition-all duration-300 transform translate-y-2 opacity-0 max-w-sm pointer-events-auto bg-slate-900 z-50";
       
       let icon = "info";
       let borderClass = "border-slate-800 text-slate-300";
@@ -1051,61 +998,6 @@
       }
     }
 
-    let confirmResolveCallback = null;
-    function customConfirm(title, message, isDangerous = true) {
-      return new Promise((resolve) => {
-        confirmResolveCallback = resolve;
-        
-        const modal = document.getElementById("confirm-modal");
-        const titleEl = document.getElementById("confirm-title");
-        const msgEl = document.getElementById("confirm-message");
-        const okBtn = document.getElementById("confirm-ok");
-        const iconWrapper = document.getElementById("confirm-icon-wrapper");
-
-        if (titleEl) titleEl.textContent = title;
-        if (msgEl) msgEl.textContent = message;
-
-        if (isDangerous) {
-          if (okBtn) okBtn.className = "px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-500 rounded-xl transition shadow-lg shadow-red-600/20";
-          if (iconWrapper) {
-            iconWrapper.className = "p-3 bg-red-500/10 text-red-400 rounded-xl";
-            iconWrapper.innerHTML = `<i data-lucide="alert-triangle" class="w-6 h-6"></i>`;
-          }
-        } else {
-          if (okBtn) okBtn.className = "px-4 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-500 rounded-xl transition shadow-lg shadow-emerald-600/20";
-          if (iconWrapper) {
-            iconWrapper.className = "p-3 bg-emerald-500/10 text-emerald-400 rounded-xl";
-            iconWrapper.innerHTML = `<i data-lucide="help-circle" class="w-6 h-6"></i>`;
-          }
-        }
-        lucide.createIcons();
-
-        if (modal) {
-          modal.classList.remove("hidden");
-          setTimeout(() => {
-            modal.classList.remove("opacity-0");
-            modal.firstElementChild.classList.remove("scale-95");
-          }, 50);
-        }
-      });
-    }
-
-    function closeConfirmModal(result) {
-      const modal = document.getElementById("confirm-modal");
-      if (modal) {
-        modal.classList.add("opacity-0");
-        modal.firstElementChild.classList.add("scale-95");
-        
-        setTimeout(() => {
-          modal.classList.add("hidden");
-          if (confirmResolveCallback) {
-            confirmResolveCallback(result);
-            confirmResolveCallback = null;
-          }
-        }, 300);
-      }
-    }
-
     function copyToClipboard(text, customMessage = "密碼已安全複製至剪貼簿") {
       const textarea = document.createElement('textarea');
       textarea.value = text;
@@ -1129,8 +1021,151 @@
       }
     }
 
-    // =======================================================
-    // =======================================================
+    let confirmResolveCallback = null;
+    function customConfirm(title, message, isDangerous = true) {
+      return new Promise((resolve) => {
+        confirmResolveCallback = resolve;
+        
+        const modal = document.getElementById("confirm-modal");
+        const titleEl = document.getElementById("confirm-title");
+        const msgEl = document.getElementById("confirm-message");
+        const okBtn = document.getElementById("confirm-ok");
+        const iconWrapper = document.getElementById("confirm-icon-wrapper");
+
+        if (titleEl) titleEl.textContent = title;
+        if (msgEl) msgEl.textContent = message;
+
+        if (okBtn && iconWrapper) {
+          if (isDangerous) {
+            okBtn.className = "px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-500 rounded-xl transition shadow-lg shadow-red-600/20";
+            iconWrapper.className = "p-3 bg-red-500/10 text-red-400 rounded-xl";
+            iconWrapper.innerHTML = `<i data-lucide="alert-triangle" class="w-6 h-6"></i>`;
+          } else {
+            okBtn.className = "px-4 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-500 rounded-xl transition shadow-lg shadow-emerald-600/20";
+            iconWrapper.className = "p-3 bg-emerald-500/10 text-emerald-400 rounded-xl";
+            iconWrapper.innerHTML = `<i data-lucide="help-circle" class="w-6 h-6"></i>`;
+          }
+        }
+        lucide.createIcons();
+
+        if (modal) {
+          modal.classList.remove("hidden");
+          setTimeout(() => {
+            modal.classList.remove("opacity-0");
+            modal.firstElementChild.classList.remove("scale-95");
+          }, 50);
+        }
+      });
+    }
+
+    function closeConfirmModal(result) {
+      const modal = document.getElementById("confirm-modal");
+      if (modal) {
+        modal.classList.add("opacity-0");
+        if (modal.firstElementChild) modal.firstElementChild.classList.add("scale-95");
+        
+        setTimeout(() => {
+          modal.classList.add("hidden");
+          if (confirmResolveCallback) {
+            confirmResolveCallback(result);
+            confirmResolveCallback = null;
+          }
+        }, 300);
+      }
+    }
+
+    function simpleEncrypt(text, key) {
+      if(!text) return "";
+      try {
+        let result = '';
+        for (let i = 0; i < text.length; i++) {
+          let charCode = text.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+          result += String.fromCharCode(charCode);
+        }
+        return btoa(unescape(encodeURIComponent(result)));
+      } catch (e) {
+        return text;
+      }
+    }
+
+    function simpleDecrypt(cipherText, key) {
+      if(!cipherText) return "";
+      try {
+        let decoded = decodeURIComponent(escape(atob(cipherText)));
+        let result = '';
+        for (let i = 0; i < decoded.length; i++) {
+          let charCode = decoded.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+          result += String.fromCharCode(charCode);
+        }
+        return result;
+      } catch (e) {
+        return cipherText;
+      }
+    }
+
+    // 支援非安全上下文 (Insecure Context / Non-HTTPS PWA Webview) 的相容雜湊，防止註冊卡死
+    async function hashEmail(email) {
+      const cleanEmail = email.toLowerCase().trim();
+      const salt = "|cipherguard-email-salt-2026";
+      const input = cleanEmail + salt;
+      
+      if (window.crypto && crypto.subtle) {
+        try {
+          const encoder = new TextEncoder();
+          const data = encoder.encode(input);
+          const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+          const hashArray = Array.from(new Uint8Array(hashBuffer));
+          return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        } catch (e) {
+          console.warn("Subtle crypto API calculation failed, using fallback hash.", e);
+        }
+      }
+      
+      // 相容性 Fallback Deterministic Hash 演算法，避免非 HTTPS WebView 下直接拋錯卡死
+      let hash = 5381;
+      for (let i = 0; i < input.length; i++) {
+        hash = (hash * 33) ^ input.charCodeAt(i);
+      }
+      return "legacy-" + (hash >>> 0).toString(16);
+    }
+
+    function getDefaultWelcomeItems(pwd, email) {
+      return [
+        {
+          id: "welcome-card-1",
+          title: `歡迎使用 CipherGuard 雲端保險箱！`,
+          username: email,
+          password: simpleEncrypt("CipherGuardSecuredPassword2026!", pwd),
+          category: "others",
+          website: "https://cipherguard.io",
+          notes: `這是專屬於 ${email} 的安全加密空間。所有數據都已經在您的本地端（瀏覽器）進行了軍事級 AES 混合 XOR 金鑰加密，才安全上傳至您的 Firestore 雲端節點上。`,
+          createdAt: Date.now()
+        },
+        {
+          id: "welcome-card-2",
+          title: "安全檢測測試卡 (預設弱密碼)",
+          username: "test-weak-account",
+          password: simpleEncrypt("123456", pwd),
+          category: "social",
+          website: "https://facebook.com",
+          notes: "這是一組用於安全掃描測試的弱強度凭證。請在解鎖主面板後，點擊側邊導練列的「安全健檢」來檢測強度，並一鍵修復。",
+          createdAt: Date.now() - 100000
+        }
+      ];
+    }
+
+    async function executeWithRetry(fn, maxRetries = 5) {
+      let delay = 1000;
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          return await fn();
+        } catch (err) {
+          if (attempt === maxRetries) throw err;
+          await new Promise(resolve => setTimeout(resolve, delay));
+          delay *= 2;
+        }
+      }
+    }
 
     async function syncVaultToCloud() {
       const emailInput = document.getElementById("cloud-email-input");
@@ -1560,7 +1595,6 @@
           input.type = "text";
           if (btn) btn.innerHTML = `<i data-lucide="eye-off" class="w-3.5 h-3.5"></i>`;
         } else {
-          input.type === "text";
           input.type = "password";
           if (btn) btn.innerHTML = `<i data-lucide="eye" class="w-3.5 h-3.5"></i>`;
         }
@@ -1828,8 +1862,8 @@
     }
 
     // =======================================================
+    // 6. 密碼產生器功能模組 DOM 變數與邏輯 (Generator Panel)
     // =======================================================
-
     const lengthSlider = document.getElementById("length-slider");
     const lengthVal = document.getElementById("length-val");
     const genDisplay = document.getElementById("generated-password-display");
@@ -2208,6 +2242,20 @@
           };
           vaultItems.push(newItem);
           showToast("成功建立新密碼憑證！", "success");
+
+          currentCategoryFilter = "all";
+          const searchInputEl = document.getElementById("search-input");
+          if (searchInputEl) searchInputEl.value = "";
+          
+          const catBtns = document.querySelectorAll(".category-filter-btn");
+          catBtns.forEach(b => {
+            const bFilter = b.getAttribute("data-filter");
+            if (bFilter === "all") {
+              b.className = "category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-300 bg-slate-800/30 transition";
+            } else {
+              b.className = "category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition";
+            }
+          });
         }
 
         closeModal();
@@ -2633,8 +2681,8 @@
       });
     });
 
-    const searchInput = document.getElementById("search-input");
-    if (searchInput) searchInput.addEventListener("input", renderVaultList);
+    const searchQueryInput = document.getElementById("search-input");
+    if (searchQueryInput) searchQueryInput.addEventListener("input", renderVaultList);
 
     const sortSelect = document.getElementById("sort-select");
     if (sortSelect) sortSelect.addEventListener("change", renderVaultList);
@@ -2862,6 +2910,12 @@
     };
 
     function switchPanel(activeKey) {
+      const panels = {
+        vault: document.getElementById("panel-vault"),
+        generator: document.getElementById("panel-generator"),
+        audit: document.getElementById("panel-audit"),
+        settings: document.getElementById("panel-settings")
+      };
       Object.keys(panels).forEach(key => {
         if (panels[key]) {
           if (key === activeKey) {
