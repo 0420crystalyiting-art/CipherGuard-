@@ -75,7 +75,7 @@
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent pointer-events-none"></div>
     
     <div class="max-w-md w-full bg-slate-900/80 backdrop-blur-md border border-slate-800 p-8 rounded-3xl shadow-2xl relative z-10 my-8">
-      <div class="flex flex-col items-center text-center mb-6">
+      <div class="flex flex-col items-center text-center mb-5">
         <div class="w-16 h-16 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/5">
           <i data-lucide="shield-check" class="w-8 h-8"></i>
         </div>
@@ -83,58 +83,28 @@
         <p class="text-slate-400 text-sm mt-1" id="lock-screen-subtitle">選擇或輸入您的雲端同步保險箱帳戶</p>
       </div>
 
-      <!-- 快速切換帳戶面板 -->
-      <div class="mb-6 bg-slate-950/50 border border-slate-800/80 rounded-2xl p-4">
-        <label class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
-          <i data-lucide="users" class="w-3.5 h-3.5 text-emerald-400"></i>
-          <span>快速切換預設帳戶 (Quick Load)</span>
-        </label>
-        <div class="grid grid-cols-1 gap-2">
-          <!-- 帳戶 1 -->
-          <button 
-            type="button" 
-            class="quick-account-btn flex items-center justify-between px-3 py-2 bg-slate-900 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-850 rounded-xl text-left transition group"
-            data-email="z0978078536@gmail.com"
-          >
-            <div class="overflow-hidden pr-2">
-              <span class="block text-xs font-bold text-slate-200 group-hover:text-emerald-400 transition truncate">z0978078536@gmail.com</span>
-              <span class="block text-[10px] text-slate-500 font-mono mt-0.5">安全防護：需手動輸入主密碼</span>
-            </div>
-            <span class="text-[10px] font-bold bg-emerald-500/10 group-hover:bg-emerald-500 text-emerald-400 group-hover:text-slate-950 px-2 py-1 rounded-lg shrink-0 transition">載入</span>
-          </button>
-          
-          <!-- 帳戶 2 -->
-          <button 
-            type="button" 
-            class="quick-account-btn flex items-center justify-between px-3 py-2 bg-slate-900 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-850 rounded-xl text-left transition group"
-            data-email="0420crystalyiting@gmail.com"
-          >
-            <div class="overflow-hidden pr-2">
-              <span class="block text-xs font-bold text-slate-200 group-hover:text-emerald-400 transition truncate">0420crystalyiting@gmail.com</span>
-              <span class="block text-[10px] text-slate-500 font-mono mt-0.5">安全防護：需手動輸入主密碼</span>
-            </div>
-            <span class="text-[10px] font-bold bg-emerald-500/10 group-hover:bg-emerald-500 text-emerald-400 group-hover:text-slate-950 px-2 py-1 rounded-lg shrink-0 transition">載入</span>
-          </button>
-
-          <!-- 帳戶 3 -->
-          <button 
-            type="button" 
-            class="quick-account-btn flex items-center justify-between px-3 py-2 bg-slate-900 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-850 rounded-xl text-left transition group"
-            data-email="a647802@gmail.com"
-          >
-            <div class="overflow-hidden pr-2">
-              <span class="block text-xs font-bold text-slate-200 group-hover:text-emerald-400 transition truncate">a647802@gmail.com</span>
-              <span class="block text-[10px] text-slate-500 font-mono mt-0.5">安全防護：需手動輸入主密碼</span>
-            </div>
-            <span class="text-[10px] font-bold bg-emerald-500/10 group-hover:bg-emerald-500 text-emerald-400 group-hover:text-slate-950 px-2 py-1 rounded-lg shrink-0 transition">載入</span>
-          </button>
-        </div>
+      <!-- 登入與註冊頁籤切換器 -->
+      <div class="flex bg-slate-950/80 p-1 rounded-2xl border border-slate-800/80 mb-5">
+        <button 
+          type="button" 
+          id="tab-login-btn" 
+          class="flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-600/10 text-emerald-400 border border-emerald-500/20 transition duration-200"
+        >
+          解鎖保險箱
+        </button>
+        <button 
+          type="button" 
+          id="tab-register-btn" 
+          class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-slate-200 border border-transparent transition duration-200"
+        >
+          註冊新帳戶
+        </button>
       </div>
 
       <form id="lock-form" class="space-y-4">
         <!-- 雲端帳號信箱 -->
         <div>
-          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">雲端同步電子信箱 (Cloud Email)</label>
+          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5" id="email-field-label">雲端同步電子信箱 (Cloud Email)</label>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
               <i data-lucide="mail" class="w-4.5 h-4.5"></i>
@@ -142,9 +112,9 @@
             <input 
               type="email" 
               id="cloud-email-input" 
-              value="z0978078536@gmail.com"
+              value=""
               required
-              placeholder="請輸入雲端信箱"
+              placeholder="請輸入您的電子信箱"
               class="w-full pl-11 pr-4 py-2.5 bg-slate-950/60 border border-slate-800 rounded-xl focus:outline-none focus:border-emerald-500 text-slate-100 text-sm transition"
             >
           </div>
@@ -152,7 +122,7 @@
 
         <!-- 主密碼 -->
         <div>
-          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">主密碼 (Master Password)</label>
+          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5" id="password-field-label">主密碼 (Master Password)</label>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
               <i data-lucide="lock" class="w-4.5 h-4.5"></i>
@@ -175,7 +145,7 @@
         </div>
 
         <!-- 安全選項：記住我 -->
-        <div class="flex items-center justify-between pt-1">
+        <div class="flex items-center justify-between pt-1" id="remember-me-container">
           <label class="flex items-center gap-2 cursor-pointer select-none">
             <input 
               type="checkbox" 
@@ -188,7 +158,7 @@
 
         <p id="master-password-tip" class="text-[11px] text-slate-500 mt-2 flex items-start gap-1">
           <i data-lucide="info" class="w-3.5 h-3.5 shrink-0 mt-0.5"></i>
-          <span>零知識架構：資料將使用主密碼本地加密後同步。輸入新密碼將自動在該信箱下新建保險箱。</span>
+          <span id="tip-text">零知識架構：資料將使用主密碼本地加密後同步。登入將自動載入您的保險箱數據。</span>
         </p>
 
         <button 
@@ -196,8 +166,8 @@
           id="lock-form-submit-btn"
           class="w-full py-3 px-4 mt-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl shadow-lg shadow-emerald-600/20 hover:shadow-emerald-500/30 transition duration-200 flex items-center justify-center gap-2"
         >
-          <span>連接雲端並解鎖</span>
-          <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          <span id="submit-btn-text">連接雲端並解鎖</span>
+          <i data-lucide="arrow-right" class="w-5 h-5" id="submit-btn-icon"></i>
         </button>
       </form>
       
@@ -640,13 +610,17 @@
               <span>危險區域 (Danger Zone)</span>
             </h3>
             <p class="text-slate-400 text-sm leading-relaxed">
-              此重設會徹底清空雲端以及本地的這組憑證檔案。此動作無法復原。
+              此動作會徹底清空您的密碼資料或直接將此雲端帳戶完全註銷，刪除後將無法復原。
             </p>
 
-            <div class="pt-2">
-              <button id="clear-vault-btn" class="px-4 py-2.5 bg-red-600/10 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/20 hover:border-transparent rounded-xl text-sm font-semibold transition flex items-center gap-2">
+            <div class="flex flex-col sm:flex-row gap-3 pt-2">
+              <button id="clear-vault-btn" class="px-4 py-2.5 bg-red-600/10 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/20 hover:border-transparent rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2">
                 <i data-lucide="trash-2" class="w-4.5 h-4.5"></i>
-                <span>清空並銷毀整個保險箱</span>
+                <span>清空保險箱內所有憑證</span>
+              </button>
+              <button id="delete-account-btn" class="px-4 py-2.5 bg-red-600 hover:bg-red-500 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 shadow-lg shadow-red-600/10">
+                <i data-lucide="user-x" class="w-4.5 h-4.5"></i>
+                <span>徹底註銷並刪除此帳戶</span>
               </button>
             </div>
           </div>
@@ -918,7 +892,7 @@
         db = getFirestore(app);
         isFirebaseReady = true;
 
-        // Rule 3: 先行啟動身份認證，包裝成可 await 的 Promise
+        // 先行啟動身份認證，包裝成可 await 的 Promise
         const initAuthentication = async () => {
           if (initialAuthToken) {
             authPromise = signInWithCustomToken(auth, initialAuthToken);
@@ -936,7 +910,7 @@
           
           if (user) {
             const emailInput = document.getElementById("cloud-email-input");
-            const activeEmail = emailInput ? emailInput.value.trim() : "z0978078536@gmail.com";
+            const activeEmail = emailInput ? emailInput.value.trim() : "";
             
             uidDisplay.textContent = activeEmail;
             uidDisplay.title = activeEmail;
@@ -979,7 +953,7 @@
           password: simpleEncrypt("123456", pwd),
           category: "social",
           website: "https://facebook.com",
-          notes: "這是一組用於安全掃描測試的弱強度凭證。請在解鎖主面板後，點擊側邊導覽列的「安全健檢」來檢測強度，並一鍵修復。",
+          notes: "這是一組用於安全掃描測試的弱強度凭證。請在解鎖主面板後，點擊側邊導練列的「安全健檢」來檢測強度，並一鍵修復。",
           createdAt: Date.now() - 100000
         }
       ];
@@ -1041,18 +1015,17 @@
       }
     }
 
-    // 雲端同步系統 (嚴格遵循 Rule 1 與 Rule 3)
+    // 雲端同步系統
     async function syncVaultToCloud() {
       const emailInput = document.getElementById("cloud-email-input");
-      const activeEmail = emailInput ? emailInput.value.trim() : "z0978078536@gmail.com";
+      const activeEmail = emailInput ? emailInput.value.trim() : "";
 
       if (!isFirebaseReady || !currentEmailHash) {
-        // [安全降級與分頁持久化備份] - 如果雲端配置不可用，自動在 SafeStorage 中保存本會話的密碼，防止頁面刷新丟失資料
+        // 儲存至本機
         SafeStorage.setItem(`sandbox_vault_${currentEmailHash}`, JSON.stringify(vaultItems));
         return;
       }
 
-      // Rule 3: 確保同步前 Auth 已經認證就緒
       if (authPromise) await authPromise;
       if (!auth.currentUser) return;
 
@@ -1461,7 +1434,6 @@
       lucide.createIcons();
     }
 
-    // 重新加入並實作先前遺漏的 updateBadges 函式，防止在 renderVaultList 中呼叫時發生 ReferenceError 錯誤
     function updateBadges() {
       const totalBadge = document.getElementById("badge-total-count");
       if (totalBadge) {
@@ -1743,11 +1715,66 @@
       }, 300);
     }
 
-    // 8. 註冊全局事件監聽器
+    // 記憶本機已註冊的雜湊集合，確保沙盒離線模式下信箱與密碼也不可重新註冊
+    function isEmailHashRegisteredLocally(hash) {
+      const list = JSON.parse(SafeStorage.getItem("cipherguard_local_registry") || "[]");
+      return list.includes(hash);
+    }
+
+    function registerEmailHashLocally(hash) {
+      const list = JSON.parse(SafeStorage.getItem("cipherguard_local_registry") || "[]");
+      if (!list.includes(hash)) {
+        list.push(hash);
+        SafeStorage.setItem("cipherguard_local_registry", JSON.stringify(list));
+      }
+    }
+
+    // 8. 註冊全域事件監聽器與 Tab 開關控制
+    let currentLockMode = "login"; // "login" 或 "register"
+
     window.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
 
-      // [記住登入狀態與主密碼] - 頁面載入時，嘗試從安全 SafeStorage 還原先前勾選記住的會話
+      const tabLoginBtn = document.getElementById("tab-login-btn");
+      const tabRegisterBtn = document.getElementById("tab-register-btn");
+      const lockScreenSubtitle = document.getElementById("lock-screen-subtitle");
+      const emailFieldLabel = document.getElementById("email-field-label");
+      const passwordFieldLabel = document.getElementById("password-field-label");
+      const tipText = document.getElementById("tip-text");
+      const submitBtnText = document.getElementById("submit-btn-text");
+      const rememberMeContainer = document.getElementById("remember-me-container");
+
+      // 切換為「解鎖保險箱」模式
+      tabLoginBtn.addEventListener("click", () => {
+        currentLockMode = "login";
+        tabLoginBtn.className = "flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-600/10 text-emerald-400 border border-emerald-500/20 transition duration-200";
+        tabRegisterBtn.className = "flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-slate-200 border border-transparent transition duration-200";
+        
+        lockScreenSubtitle.textContent = "選擇或輸入您的雲端同步保險箱帳戶";
+        emailFieldLabel.textContent = "雲端同步電子信箱 (Cloud Email)";
+        passwordFieldLabel.textContent = "主密碼 (Master Password)";
+        tipText.textContent = "零知識架構：資料將使用主密碼本地加密後同步。登入將自動載入您的保險箱數據。";
+        submitBtnText.textContent = "連接雲端並解鎖";
+        
+        rememberMeContainer.classList.remove("hidden");
+      });
+
+      // 切換為「註冊新帳戶」模式
+      tabRegisterBtn.addEventListener("click", () => {
+        currentLockMode = "register";
+        tabRegisterBtn.className = "flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-600/10 text-emerald-400 border border-emerald-500/20 transition duration-200";
+        tabLoginBtn.className = "flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-slate-200 border border-transparent transition duration-200";
+        
+        lockScreenSubtitle.textContent = "立即為您的信箱建立專屬安全加密空間";
+        emailFieldLabel.textContent = "設定註冊電子信箱 (Registration Email)";
+        passwordFieldLabel.textContent = "設定新主密碼 (New Master Password)";
+        tipText.textContent = "注意：帳戶註冊後即不可重複註冊。請記妥您的主密碼，我們無法代為復原。";
+        submitBtnText.textContent = "註冊電子郵件與主密碼";
+        
+        rememberMeContainer.classList.add("hidden");
+      });
+
+      // 載入安全 SafeStorage 狀態
       const cachedEmail = SafeStorage.getItem("cipherguard_remembered_email");
       const cachedPassword = SafeStorage.getItem("cipherguard_remembered_password");
       if (cachedEmail) {
@@ -1765,22 +1792,7 @@
         }, 300);
       }
 
-      // 快速切換測試帳戶事件監聽（填入信箱，並引導輸入密碼）
-      const quickBtns = document.querySelectorAll(".quick-account-btn");
-      quickBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-          const email = btn.getAttribute("data-email");
-          document.getElementById("cloud-email-input").value = email;
-          
-          const passwordInput = document.getElementById("master-password-input");
-          passwordInput.value = ""; 
-          passwordInput.focus();
-          
-          showToast(`已切換帳戶為 [${email}]，請輸入主密碼進行安全驗證解鎖。`, "success");
-        });
-      });
-
-      // 鎖定/解鎖登入流程
+      // 鎖定/解鎖登入流程與註冊流程
       const lockForm = document.getElementById("lock-form");
       const masterInput = document.getElementById("master-password-input");
       const cloudEmailInput = document.getElementById("cloud-email-input");
@@ -1797,7 +1809,7 @@
         }
 
         if (enteredPass.length < 4) {
-          showToast("主密碼不可短於 4 個字元！", "warning");
+          showToast("密碼不可短於 4 個字元！", "warning");
           return;
         }
 
@@ -1807,128 +1819,122 @@
         lucide.createIcons();
 
         try {
-          // 利用信箱的雜湊取得該帳戶的對應文件
           const hash = await hashEmail(enteredEmail);
-          
-          // 定義內置的三組帳戶及其正確的主密碼
-          const defaultAccounts = {
-            "z0978078536@gmail.com": "19750420",
-            "0420crystalyiting@gmail.com": "042030",
-            "a647802@gmail.com": "gg070802"
-          };
-
           const cleanEmail = enteredEmail.toLowerCase().trim();
 
-          if (isFirebaseReady) {
-            // Rule 3: 確保同步前 Auth 已經認證就緒
-            if (authPromise) await authPromise;
+          if (currentLockMode === "register") {
+            
+            // 1. 離線與本機雜湊註冊紀錄檢查
+            if (isEmailHashRegisteredLocally(hash) || SafeStorage.getItem(`sandbox_vault_${hash}`)) {
+              showToast("註冊失敗：此電子信箱已在本機註冊，不可重新註冊！", "error");
+              resetSubmitBtn();
+              return;
+            }
 
-            // 若目前 Firebase 未建立有效使用者，再次嘗試匿名登入確保連線合法
-            if (!auth.currentUser) {
-              if (initialAuthToken) {
-                await signInWithCustomToken(auth, initialAuthToken);
-              } else {
+            // 2. 線上 Firebase 實體資料重複性檢查
+            if (isFirebaseReady) {
+              if (authPromise) await authPromise;
+              if (!auth.currentUser) {
                 await signInAnonymously(auth);
               }
+
+              const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', hash);
+              let docSnap = null;
+              await executeWithRetry(async () => {
+                docSnap = await getDoc(docRef);
+              });
+
+              if (docSnap && docSnap.exists()) {
+                showToast("註冊失敗：此電子信箱已被註冊，不可重新註冊！", "error");
+                resetSubmitBtn();
+                return;
+              }
+
+              // 確認沒有被註冊，開始建立雲端文件並註冊
+              masterPassword = enteredPass;
+              currentEmailHash = hash;
+              vaultItems = getDefaultWelcomeItems(enteredPass, enteredEmail);
+              isUnlocked = true;
+
+              await setDoc(docRef, {
+                email: enteredEmail,
+                verification: simpleEncrypt("cipherguard-verified", enteredPass),
+                items: vaultItems,
+                createdAt: Date.now()
+              });
+
+              registerEmailHashLocally(hash);
+              showToast(`註冊成功！已在雲端建立屬於 ${enteredEmail} 的安全保險箱。`, "success");
+            } else {
+              // 3. 無 Firebase 環境下的本機沙盒註冊
+              masterPassword = enteredPass;
+              currentEmailHash = hash;
+              vaultItems = getDefaultWelcomeItems(enteredPass, enteredEmail);
+              isUnlocked = true;
+
+              registerEmailHashLocally(hash);
+              SafeStorage.setItem(`sandbox_vault_${hash}`, JSON.stringify(vaultItems));
+              showToast(`本機模式註冊成功！已為 [${enteredEmail}] 建立臨時加密空間，注意此瀏覽器不可重新註冊！`, "success");
             }
 
-            if (!auth.currentUser) {
-              throw new Error("認證通道初始化失敗");
-            }
+          } else {
+            if (isFirebaseReady) {
+              if (authPromise) await authPromise;
+              if (!auth.currentUser) {
+                if (initialAuthToken) {
+                  await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                  await signInAnonymously(auth);
+                }
+              }
 
-            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', hash);
-            let docSnap;
+              const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', hash);
+              let docSnap = null;
+              await executeWithRetry(async () => {
+                docSnap = await getDoc(docRef);
+              });
 
-            await executeWithRetry(async () => {
-              docSnap = await getDoc(docRef);
-            });
+              if (docSnap && docSnap.exists()) {
+                const cloudData = docSnap.data();
+                const decryptedCheck = simpleDecrypt(cloudData.verification, enteredPass);
 
-            if (docSnap && docSnap.exists()) {
-              const cloudData = docSnap.data();
-              // 密碼驗證：嘗試解密 verification 內容
-              const decryptedCheck = simpleDecrypt(cloudData.verification, enteredPass);
-
-              // 精準驗證：解密後的字串與標記完全吻合才解鎖，否則提示密碼不正確
-              if (decryptedCheck === "cipherguard-verified") {
-                // 如果是預設帳戶，額外多做一層驗證防護，防止衝突
-                if (defaultAccounts[cleanEmail] && enteredPass !== defaultAccounts[cleanEmail]) {
+                if (decryptedCheck === "cipherguard-verified") {
+                  masterPassword = enteredPass;
+                  currentEmailHash = hash;
+                  vaultItems = cloudData.items || [];
+                  isUnlocked = true;
+                  showToast(`登入成功！已成功解密 ${enteredEmail} 的雲端保險箱。`, "success");
+                } else {
                   showToast("驗證失敗：此信箱之主密碼不正確！", "error");
                   resetSubmitBtn();
                   return;
                 }
-                masterPassword = enteredPass;
-                currentEmailHash = hash;
-                vaultItems = cloudData.items || [];
-                isUnlocked = true;
-                showToast(`歡迎回來！已成功為您解密並同步 ${enteredEmail} 的雲端保險箱。`, "success");
               } else {
-                showToast("驗證失敗：此信箱之主密碼不正確！", "error");
+                // 非預設帳戶，提示引導
+                showToast("登入失敗：未在此信箱下找到現存保險箱。請點擊上方『註冊新帳戶』進行開通！", "warning");
                 resetSubmitBtn();
                 return;
               }
             } else {
-              // 雲端無此帳戶時：如果是預設帳戶之一，但密碼輸入錯誤，直接拒絕登入，防止重複註冊覆蓋
-              if (defaultAccounts[cleanEmail] && enteredPass !== defaultAccounts[cleanEmail]) {
-                showToast("驗證失敗：此信箱之主密碼不正確！", "error");
-                resetSubmitBtn();
-                return;
-              }
-
-              // 信箱節點不存在時，提示註冊新帳戶
-              const proceedRegistration = await customConfirm(
-                "建立全新雲端密碼庫？",
-                `系統未在此信箱下找到現存保險箱。確認要自動為電子信箱 [ ${enteredEmail} ] 註冊開通專屬的零知識加密保險箱嗎？`,
-                false
-              );
-
-              if (proceedRegistration) {
+              // 離線登入處理
+              const localSessionVault = SafeStorage.getItem(`sandbox_vault_${hash}`);
+              if (localSessionVault) {
                 masterPassword = enteredPass;
                 currentEmailHash = hash;
-                vaultItems = getDefaultWelcomeItems(enteredPass, enteredEmail);
+                vaultItems = JSON.parse(localSessionVault);
                 isUnlocked = true;
-
-                await setDoc(docRef, {
-                  email: enteredEmail,
-                  verification: simpleEncrypt("cipherguard-verified", enteredPass),
-                  items: vaultItems,
-                  createdAt: Date.now()
-                });
-
-                showToast(`註冊成功！已成功在雲端分配屬於 ${enteredEmail} 的加密節點。`, "success");
+                showToast("離線驗證通過：已載入本機暫存保險箱。", "success");
               } else {
-                showToast("登入/註冊已取消。", "info");
+                // 尚未註冊
+                showToast("登入失敗：未在此信箱下找到現存保險箱。請點擊上方『註冊新帳戶』進行開通！", "warning");
                 resetSubmitBtn();
                 return;
               }
-            }
-          } else {
-            // [無雲端自適應 fallback] - 本機安全 sand box 模式，當偵測到無 Firebase 設定時，使用 SafeStorage 自動還原資料
-            
-            // 離線狀態下亦進行三組預設帳戶的密碼驗證，確保在離線/沙盒測試中也能展現正確的錯誤密碼驗證效果
-            if (defaultAccounts[cleanEmail]) {
-              if (enteredPass !== defaultAccounts[cleanEmail]) {
-                showToast("驗證失敗：此信箱之主密碼不正確！", "error");
-                resetSubmitBtn();
-                return;
-              }
-            }
-
-            masterPassword = enteredPass;
-            currentEmailHash = hash;
-            isUnlocked = true;
-            
-            const localSessionVault = SafeStorage.getItem(`sandbox_vault_${hash}`);
-            if (localSessionVault) {
-              vaultItems = JSON.parse(localSessionVault);
-              showToast("雲端無法取得連線。已自動載入本機分頁暫存保險箱。", "success");
-            } else {
-              vaultItems = getDefaultWelcomeItems(enteredPass, enteredEmail);
-              showToast(`雲端無法取得連線。已自動切換至本機 [ ${enteredEmail} ] 的臨時沙盒模式。`, "warning");
             }
           }
 
-          // 如果勾選記住我，則將資訊保存至當前分頁 session（比 localStorage 更安全，且重整不遺失）
-          if (rememberMe) {
+          // 儲存記住我
+          if (rememberMe && currentLockMode === "login") {
             SafeStorage.setItem("cipherguard_remembered_email", enteredEmail);
             SafeStorage.setItem("cipherguard_remembered_password", enteredPass);
           } else {
@@ -1936,6 +1942,7 @@
             SafeStorage.removeItem("cipherguard_remembered_password");
           }
 
+          // 介面轉換與解鎖
           document.getElementById("user-profile-type").textContent = isFirebaseReady ? "雲端加密保險箱" : "本機會話沙盒庫";
           const displayIdEl = document.getElementById("user-display-id");
           displayIdEl.textContent = enteredEmail;
@@ -1960,8 +1967,8 @@
           }, 500);
 
         } catch (err) {
-          console.error("解鎖與連結錯誤:", err);
-          showToast("對接雲端時發生連線阻礙，請稍後重試！", "error");
+          console.error("安全校驗錯誤:", err);
+          showToast("對接伺服器時發生阻礙，請稍後重試！", "error");
           resetSubmitBtn();
         }
       });
@@ -1969,7 +1976,11 @@
       function resetSubmitBtn() {
         const submitBtn = document.getElementById("lock-form-submit-btn");
         submitBtn.disabled = false;
-        submitBtn.innerHTML = `<span>連接雲端並解鎖</span> <i data-lucide="arrow-right" class="w-5 h-5"></i>`;
+        if (currentLockMode === "login") {
+          submitBtn.innerHTML = `<span>連接雲端並解鎖</span> <i data-lucide="arrow-right" class="w-5 h-5"></i>`;
+        } else {
+          submitBtn.innerHTML = `<span>註冊電子郵件與主密碼</span> <i data-lucide="arrow-right" class="w-5 h-5"></i>`;
+        }
         lucide.createIcons();
       }
 
@@ -1997,7 +2008,6 @@
           isUnlocked = false;
           masterInput.value = "";
           
-          // 清除密碼快取防止自動登入
           SafeStorage.removeItem("cipherguard_remembered_password");
           resetSubmitBtn();
           
@@ -2024,9 +2034,8 @@
           vaultItems = [];
           
           masterInput.value = "";
-          cloudEmailInput.value = "z0978078536@gmail.com";
+          cloudEmailInput.value = "";
           
-          // 徹底抹除分頁快取
           SafeStorage.removeItem("cipherguard_remembered_email");
           SafeStorage.removeItem("cipherguard_remembered_password");
           document.getElementById("remember-me-checkbox").checked = false;
@@ -2125,6 +2134,50 @@
         } else {
           showToast("無有效密碼可供複製", "warning");
         }
+      });
+
+      // 監聽沙盒輸入
+      document.getElementById("sandbox-input").addEventListener("input", (e) => {
+        const val = e.target.value;
+        const evalRes = evaluatePasswordStrengthDetailed(val);
+        const bar = document.getElementById("sandbox-bar");
+        const label = document.getElementById("sandbox-label");
+        const entropy = document.getElementById("sandbox-entropy");
+        const crackTime = document.getElementById("sandbox-crack-time");
+        const verdict = document.getElementById("sandbox-verdict");
+
+        if (val === "") {
+          label.textContent = "請輸入密碼";
+          label.className = "font-bold text-slate-400";
+          bar.className = "w-0 h-full bg-slate-700 transition-all duration-300";
+          entropy.textContent = "0 bits";
+          crackTime.textContent = "瞬間";
+          verdict.textContent = "待檢測";
+          verdict.className = "font-semibold text-slate-400";
+
+          updateModalChecklist("sand-chk-length", false);
+          updateModalChecklist("sand-chk-upper", false);
+          updateModalChecklist("sand-chk-lower", false);
+          updateModalChecklist("sand-chk-number", false);
+          updateModalChecklist("sand-chk-special", false);
+          updateModalChecklist("sand-chk-pattern", false);
+          return;
+        }
+
+        label.textContent = evalRes.label;
+        label.className = `font-bold ${evalRes.textClass}`;
+        bar.className = `h-full transition-all duration-300 ${evalRes.percentClass} ${evalRes.colorClass}`;
+        entropy.textContent = `${evalRes.entropy} bits`;
+        crackTime.textContent = evalRes.crackTime;
+        verdict.textContent = evalRes.label;
+        verdict.className = `font-semibold ${evalRes.textClass}`;
+
+        updateModalChecklist("sand-chk-length", evalRes.checks.length);
+        updateModalChecklist("sand-chk-upper", evalRes.checks.upper);
+        updateModalChecklist("sand-chk-lower", evalRes.checks.lower);
+        updateModalChecklist("sand-chk-number", evalRes.checks.number);
+        updateModalChecklist("sand-chk-special", evalRes.checks.special);
+        updateModalChecklist("sand-chk-pattern", evalRes.checks.noPattern);
       });
 
       // 沙盒即時測試密碼明隱
@@ -2233,6 +2286,85 @@
         }
       });
 
+      // 徹底註銷並刪除帳戶
+      document.getElementById("delete-account-btn").addEventListener("click", async () => {
+        const activeEmail = cloudEmailInput ? cloudEmailInput.value.trim() : "";
+        
+        const confirm1 = await customConfirm(
+          "確定要永久註銷帳戶嗎？", 
+          `此操作將永久刪除您在 [ ${activeEmail} ] 下儲存的所有資料，並從雲端及本機徹底註銷此帳戶！`, 
+          true
+        );
+
+        if (!confirm1) return;
+
+        const confirm2 = await customConfirm(
+          "最後警告：此動作無法還原！", 
+          "您將無法再用原主密碼解鎖或復原此帳戶。所有雲端備份金鑰都將被銷毀。確定要繼續嗎？", 
+          true
+        );
+
+        if (!confirm2) return;
+
+        // 執行徹底刪除
+        const syncStatus = document.getElementById("sync-status");
+        syncStatus.innerHTML = `<i data-lucide="refresh-cw" class="w-3.5 h-3.5 animate-spin text-red-400 shrink-0"></i> <span class="truncate">正在雲端註銷帳戶中...</span>`;
+        lucide.createIcons();
+
+        try {
+          // 1. 刪除雲端文檔 (這使該信箱在註冊機制下可以重新被註冊)
+          if (isFirebaseReady && currentEmailHash) {
+            if (authPromise) await authPromise;
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', currentEmailHash);
+            await executeWithRetry(async () => {
+              await deleteDoc(docRef);
+            });
+          }
+
+          // 2. 清除本機與 SafeStorage 註冊及密碼備份快取
+          if (currentEmailHash) {
+            SafeStorage.removeItem(`sandbox_vault_${currentEmailHash}`);
+            
+            // 從本機已註冊的雜湊清單中移除
+            const localRegistry = JSON.parse(SafeStorage.getItem("cipherguard_local_registry") || "[]");
+            const filteredRegistry = localRegistry.filter(h => h !== currentEmailHash);
+            SafeStorage.setItem("cipherguard_local_registry", JSON.stringify(filteredRegistry));
+          }
+
+          // 3. 清除「記住我」資訊
+          SafeStorage.removeItem("cipherguard_remembered_email");
+          SafeStorage.removeItem("cipherguard_remembered_password");
+          document.getElementById("remember-me-checkbox").checked = false;
+
+          showToast("您的帳戶已徹底被註銷並刪除！", "success");
+
+          // 4. 重設本機變數並強制登出返回鎖定畫面
+          masterPassword = "";
+          currentEmailHash = "";
+          isUnlocked = false;
+          vaultItems = [];
+          
+          masterInput.value = "";
+          cloudEmailInput.value = "";
+          
+          document.getElementById("user-profile-type").textContent = "線上加密帳戶";
+          document.getElementById("user-display-id").textContent = "無綁定雲端";
+          document.getElementById("user-display-id").title = "未登入";
+
+          const lockScreen = document.getElementById("lock-screen");
+          const appContainer = document.getElementById("app-container");
+          appContainer.classList.add("opacity-0");
+          lockScreen.classList.remove("hidden");
+          setTimeout(() => {
+            lockScreen.classList.remove("opacity-0", "scale-105");
+          }, 50);
+
+        } catch (err) {
+          console.error("徹底銷毀帳戶失敗:", err);
+          showToast("註銷帳戶失敗，請檢查網路連線後重試。", "error");
+        }
+      });
+
       // 變更主密碼 Modal 控制
       document.getElementById("change-master-trigger-btn").addEventListener("click", () => {
         changeMasterForm.reset();
@@ -2285,7 +2417,7 @@
 
         try {
           const emailInput = document.getElementById("cloud-email-input");
-          const activeEmail = emailInput ? emailInput.value.trim() : "z0978078536@gmail.com";
+          const activeEmail = emailInput ? emailInput.value.trim() : "";
 
           // 1. 將現有憑證重加密
           const reEncryptedItems = vaultItems.map(item => {
@@ -2296,11 +2428,11 @@
             };
           });
 
-          // 2. 由於是以信箱 hash 作為 document ID，ID 不需要更動，直接在同一個 Ref 下覆寫/更新
+          // 2. 覆寫雲端節點
           const hash = currentEmailHash;
 
           if (isFirebaseReady) {
-            if (authPromise) await authPromise; // 確保認證完成
+            if (authPromise) await authPromise;
 
             const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', hash);
             await executeWithRetry(async () => {
@@ -2329,6 +2461,96 @@
           lucide.createIcons();
         }
       });
+
+      // 新增憑證按鈕點擊
+      document.getElementById("add-item-btn").addEventListener("click", () => {
+        document.getElementById("modal-title").textContent = "新增憑證資料";
+        document.getElementById("item-form").reset();
+        document.getElementById("item-id").value = "";
+        updateModalPwdStrengthBar("");
+        openModal();
+      });
+
+      document.getElementById("close-modal-btn").addEventListener("click", closeModal);
+      document.getElementById("cancel-modal-btn").addEventListener("click", closeModal);
+
+      // 新增憑證內部的密碼生成器觸發
+      document.getElementById("modal-gen-password-btn").addEventListener("click", () => {
+        const length = 18; 
+        const randomPass = generateSecurePassword(length, true, true, true, true);
+        const passInput = document.getElementById("item-password");
+        passInput.value = randomPass;
+        updateModalPwdStrengthBar(randomPass);
+        showToast("已成功產生高強度密碼！", "success");
+      });
+
+      // 密碼即時強度評估監聽
+      document.getElementById("item-password").addEventListener("input", (e) => {
+        updateModalPwdStrengthBar(e.target.value);
+      });
+
+      // 側邊目錄導覽切換 (Panel Toggles)
+      const panels = {
+        vault: document.getElementById("panel-vault"),
+        generator: document.getElementById("panel-generator"),
+        audit: document.getElementById("panel-audit"),
+        settings: document.getElementById("panel-settings")
+      };
+
+      const navButtons = {
+        vault: document.getElementById("nav-vault"),
+        generator: document.getElementById("nav-generator"),
+        audit: document.getElementById("nav-audit"),
+        settings: document.getElementById("nav-settings")
+      };
+
+      function switchPanel(activeKey) {
+        Object.keys(panels).forEach(key => {
+          if (key === activeKey) {
+            panels[key].classList.remove("hidden");
+            // 啟用時更新相應的功能
+            if (key === "vault") renderVaultList();
+            if (key === "audit") runSecurityAudit();
+          } else {
+            panels[key].classList.add("hidden");
+          }
+        });
+
+        Object.keys(navButtons).forEach(key => {
+          if (key === activeKey) {
+            navButtons[key].className = "w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-300 bg-slate-800/60 border border-slate-700/30 font-medium text-sm transition";
+          } else {
+            navButtons[key].className = "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 font-medium text-sm transition";
+          }
+        });
+        lucide.createIcons();
+      }
+
+      navButtons.vault.addEventListener("click", () => switchPanel("vault"));
+      navButtons.generator.addEventListener("click", () => switchPanel("generator"));
+      navButtons.audit.addEventListener("click", () => switchPanel("audit"));
+      navButtons.settings.addEventListener("click", () => switchPanel("settings"));
+
+      // 分類篩選過濾
+      const categoryBtns = document.querySelectorAll(".category-filter-btn");
+      categoryBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          currentCategoryFilter = btn.getAttribute("data-filter");
+          categoryBtns.forEach(b => {
+            const bFilter = b.getAttribute("data-filter");
+            if (bFilter === currentCategoryFilter) {
+              b.className = "category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-300 bg-slate-800/30 transition";
+            } else {
+              b.className = "category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition";
+            }
+          });
+          switchPanel("vault");
+        });
+      });
+
+      // 搜尋與排序事件綁定
+      document.getElementById("search-input").addEventListener("input", renderVaultList);
+      document.getElementById("sort-select").addEventListener("change", renderVaultList);
 
       // 對話框確認與取消事件
       document.getElementById("confirm-cancel").addEventListener("click", () => closeConfirmModal(false));
