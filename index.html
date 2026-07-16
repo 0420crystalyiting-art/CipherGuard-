@@ -42,7 +42,7 @@
     }
   </style>
 </head>
-<body class="bg-slate-955 text-slate-100 min-h-screen flex flex-col antialiased font-sans">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased font-sans">
 
   <!-- 全域 Toast 提示訊息容器 -->
   <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
@@ -71,7 +71,7 @@
   </div>
 
   <!-- 安全帳戶變更/修改信箱對話框 -->
-  <div id="rename-modal" class="fixed inset-0 bg-slate-955/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+  <div id="rename-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 m-4 shadow-2xl transform scale-95 transition-transform duration-300">
       <div class="flex items-start gap-4 mb-4">
         <div class="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl">
@@ -109,7 +109,7 @@
   </div>
 
   <!-- 1. 主密碼解鎖/設定畫面 -->
-  <div id="lock-screen" class="fixed inset-0 bg-slate-955 z-40 flex items-center justify-center p-4 overflow-y-auto">
+  <div id="lock-screen" class="fixed inset-0 bg-slate-950 z-40 flex items-center justify-center p-4 overflow-y-auto">
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent pointer-events-none"></div>
     
     <div class="max-w-md w-full bg-slate-900/80 backdrop-blur-md border border-slate-800 p-8 rounded-3xl shadow-2xl relative z-10 my-8">
@@ -257,7 +257,7 @@
       </div>
 
       <!-- 雲端同步狀態欄 -->
-      <div class="px-6 py-2 border-b border-slate-855 bg-slate-955/20 flex items-center justify-between">
+      <div class="px-6 py-2 border-b border-slate-850 bg-slate-950/20 flex items-center justify-between">
         <div id="sync-status" class="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium overflow-hidden">
           <i data-lucide="cloud-off" class="w-3.5 h-3.5 text-slate-500 shrink-0"></i>
           <span class="truncate">未連接雲端資料庫</span>
@@ -334,7 +334,7 @@
     </aside>
 
     <!-- 2.2 主工作區 -->
-    <main class="flex-1 flex flex-col min-w-0 bg-slate-955 overflow-hidden">
+    <main class="flex-1 flex flex-col min-w-0 bg-slate-950 overflow-hidden">
       
       <!-- 2.2.1 保險箱主頁面板 -->
       <section id="panel-vault" class="flex-1 flex flex-col min-h-0">
@@ -434,7 +434,7 @@
             <div class="space-y-4 pt-4 border-t border-slate-800/60">
               <label class="block text-sm font-medium text-slate-300">字元組合選項</label>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <label class="flex items-center justify-between p-3 bg-slate-955/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
+                <label class="flex items-center justify-between p-3 bg-slate-950/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
                   <div class="flex flex-col">
                     <span class="text-sm font-semibold">大寫英文 (A-Z)</span>
                     <span class="text-xs text-slate-500">包含大寫英文字母</span>
@@ -442,7 +442,7 @@
                   <input type="checkbox" id="opt-uppercase" checked class="w-5 h-5 rounded bg-slate-900 border-slate-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900">
                 </label>
 
-                <label class="flex items-center justify-between p-3 bg-slate-955/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
+                <label class="flex items-center justify-between p-3 bg-slate-950/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
                   <div class="flex flex-col">
                     <span class="text-sm font-semibold">小寫英文 (a-z)</span>
                     <span class="text-xs text-slate-500">包含小寫英文字母</span>
@@ -450,7 +450,7 @@
                   <input type="checkbox" id="opt-lowercase" checked class="w-5 h-5 rounded bg-slate-900 border-slate-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900">
                 </label>
 
-                <label class="flex items-center justify-between p-3 bg-slate-955/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
+                <label class="flex items-center justify-between p-3 bg-slate-950/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
                   <div class="flex flex-col">
                     <span class="text-sm font-semibold">數字成員 (0-9)</span>
                     <span class="text-xs text-slate-500">包含阿拉伯數字</span>
@@ -458,7 +458,7 @@
                   <input type="checkbox" id="opt-numbers" checked class="w-5 h-5 rounded bg-slate-900 border-slate-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900">
                 </label>
 
-                <label class="flex items-center justify-between p-3 bg-slate-955/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
+                <label class="flex items-center justify-between p-3 bg-slate-950/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
                   <div class="flex flex-col">
                     <span class="text-sm font-semibold">特殊符號 (@#$%)</span>
                     <span class="text-xs text-slate-500">包含特殊安全標點符號</span>
@@ -644,7 +644,7 @@
             </div>
 
             <!-- 修改主密碼按鈕控制 -->
-            <div class="pt-4 border-t border-slate-855">
+            <div class="pt-4 border-t border-slate-850">
               <button id="change-master-trigger-btn" class="w-full p-4 bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 rounded-xl flex items-center gap-4 text-left transition group">
                 <div class="p-3 bg-amber-500/10 text-amber-400 group-hover:bg-amber-500/20 rounded-xl transition">
                   <i data-lucide="key-round" class="w-6 h-6"></i>
@@ -685,7 +685,7 @@
   </div>
 
   <!-- 3. 新增 / 編輯 憑證資料的 Modal -->
-  <div id="item-modal" class="fixed inset-0 bg-slate-955/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+  <div id="item-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
     <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full p-6 m-4 shadow-2xl transform scale-95 transition-transform duration-300 max-h-[90vh] overflow-y-auto no-scrollbar">
       
       <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
@@ -838,7 +838,7 @@
   </div>
 
   <!-- 5. 修改主密碼 Modal -->
-  <div id="change-master-modal" class="fixed inset-0 bg-slate-955/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+  <div id="change-master-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
     <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-6 m-4 shadow-2xl transform scale-95 transition-transform duration-300">
       <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
         <h3 class="text-xl font-bold text-slate-100 flex items-center gap-2">
@@ -888,7 +888,7 @@
     import { getFirestore, doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     // =======================================================
-    // 1. 安全儲存與 Firebase 初始化
+    // 1. 安全持久儲存封裝器
     // =======================================================
     const SafeStorage = {
       _memoryDb: {},
@@ -915,6 +915,9 @@
       }
     };
 
+    // =======================================================
+    // 2. Firebase 與本地降級參數初始化
+    // =======================================================
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'cipherguard-default';
     
     let firebaseConfig = null;
@@ -925,7 +928,7 @@
         try {
           firebaseConfig = JSON.parse(__firebase_config);
         } catch (e) {
-          console.error("解析 __firebase_config 失敗，降級至本機模式:", e);
+          console.error("解析 __firebase_config 失敗，將自動降級至離線沙盒模式:", e);
         }
       }
     }
@@ -939,7 +942,7 @@
     let authPromise = null;
 
     // =======================================================
-    // 2. 核心密碼庫本地狀態變數
+    // 3. 全域狀態變數
     // =======================================================
     let masterPassword = "";
     let currentEmailHash = ""; 
@@ -948,8 +951,9 @@
     let vaultItems = []; 
 
     // =======================================================
-    // 3. 所有核心工具與全域定義 (含 showToast、copyToClipboard 與對話框控制)
+    // 4. 所有核心函式與工具定義 (完全置頂以消除任何 Hoisting 錯誤)
     // =======================================================
+    
     function showToast(message, type = "info") {
       const toast = document.createElement("div");
       toast.className = "flex items-center gap-3 px-4 py-3 rounded-xl border shadow-xl transition-all duration-300 transform translate-y-2 opacity-0 max-w-sm pointer-events-auto bg-slate-900 z-50";
@@ -1103,7 +1107,6 @@
       }
     }
 
-    // 支援非安全上下文 (Insecure Context / Non-HTTPS PWA Webview) 的相容雜湊，防止註冊卡死
     async function hashEmail(email) {
       const cleanEmail = email.toLowerCase().trim();
       const salt = "|cipherguard-email-salt-2026";
@@ -1117,11 +1120,11 @@
           const hashArray = Array.from(new Uint8Array(hashBuffer));
           return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         } catch (e) {
-          console.warn("Subtle crypto API calculation failed, using fallback hash.", e);
+          console.warn("Subtle crypto calculation failed, fallback to native hash.", e);
         }
       }
       
-      // 相容性 Fallback Deterministic Hash 演算法，避免非 HTTPS WebView 下直接拋錯卡死
+      // 相容性 Fallback Hash 演算法，避免非 HTTPS WebView 下直接拋錯
       let hash = 5381;
       for (let i = 0; i < input.length; i++) {
         hash = (hash * 33) ^ input.charCodeAt(i);
@@ -1154,63 +1157,6 @@
       ];
     }
 
-    async function executeWithRetry(fn, maxRetries = 5) {
-      let delay = 1000;
-      for (let attempt = 1; attempt <= maxRetries; attempt++) {
-        try {
-          return await fn();
-        } catch (err) {
-          if (attempt === maxRetries) throw err;
-          await new Promise(resolve => setTimeout(resolve, delay));
-          delay *= 2;
-        }
-      }
-    }
-
-    async function syncVaultToCloud() {
-      const emailInput = document.getElementById("cloud-email-input");
-      const activeEmail = emailInput ? emailInput.value.trim() : "";
-
-      try {
-        SafeStorage.setItem(`sandbox_vault_${currentEmailHash}`, JSON.stringify(vaultItems));
-      } catch (e) {
-        console.error("備份到本地 SafeStorage 失敗:", e);
-      }
-
-      if (!isFirebaseReady || !currentEmailHash) {
-        return;
-      }
-
-      try {
-        if (authPromise) await authPromise;
-        if (!auth.currentUser) return;
-
-        const syncStatus = document.getElementById("sync-status");
-        syncStatus.innerHTML = `<i data-lucide="refresh-cw" class="w-3.5 h-3.5 animate-spin text-amber-400 shrink-0"></i> <span class="truncate">正在同步至 ${activeEmail.substring(0, 10)}...</span>`;
-        lucide.createIcons();
-
-        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', currentEmailHash);
-        
-        await executeWithRetry(async () => {
-          await setDoc(docRef, {
-            email: activeEmail,
-            verification: simpleEncrypt("cipherguard-verified", masterPassword),
-            items: vaultItems,
-            lastSyncedAt: Date.now()
-          }, { merge: true });
-        });
-
-        syncStatus.innerHTML = `<i data-lucide="cloud-check" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i> <span class="truncate" title="已同步至 ${activeEmail}">已同步至 ${activeEmail.substring(0, 12)}...</span>`;
-      } catch (err) {
-        console.error("雲端同步失敗，系統進入本地安全沙盒保留狀態:", err);
-        const syncStatus = document.getElementById("sync-status");
-        if (syncStatus) {
-          syncStatus.innerHTML = `<i data-lucide="shield-alert" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i> <span class="truncate">本地沙盒安全防護中</span>`;
-          lucide.createIcons();
-        }
-      }
-    }
-
     async function getGlobalRegistry() {
       let localList = [];
       try {
@@ -1241,7 +1187,7 @@
           return mergedList;
         }
       } catch (err) {
-        console.error("讀取雲端已註冊帳戶列表失敗，降級至本機:", err);
+        console.error("讀取雲端註冊列表失敗，降級至本地端:", err);
       }
       return formattedLocal;
     }
@@ -1254,7 +1200,7 @@
           SafeStorage.setItem(`email_for_hash_${a.hash}`, a.email);
         });
       } catch (e) {
-        console.error("本地 Registry 緩存寫入失敗:", e);
+        console.error("本地 Registry 寫入失敗:", e);
       }
 
       if (!isFirebaseReady) {
@@ -1265,7 +1211,7 @@
         const regDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'globalRegistry', 'accounts');
         await setDoc(regDocRef, { accounts: accountsList }, { merge: true });
       } catch (err) {
-        console.error("更新雲端已註冊帳戶列表失敗（不阻斷登入）:", err);
+        console.error("更新雲端註冊列表失敗:", err);
       }
     }
 
@@ -1277,17 +1223,18 @@
           await syncGlobalRegistryToCloud(currentList);
         }
       } catch (e) {
-        console.error("新增帳戶註冊紀錄失敗:", e);
+        console.error("新增註冊紀錄失敗:", e);
       }
     }
 
     async function renderRememberedAccounts() {
       const listContainer = document.getElementById("remembered-accounts-list");
+      if (!listContainer) return;
       const accounts = await getGlobalRegistry();
 
       if (accounts.length === 0) {
         listContainer.innerHTML = `
-          <p class="text-xs text-slate-500 text-center py-2">尚未記住任何雲端帳戶。開通後將自動同步至此！</p>
+          <p class="text-xs text-slate-500 text-center py-2">尚未記住 any 雲端帳戶。開通後將自動同步至此！</p>
         `;
         return;
       }
@@ -1307,7 +1254,6 @@
           </button>
           
           <div class="flex items-center gap-1.5 opacity-60 group-hover:opacity-100 transition">
-            <!-- 編輯/安全信箱修改按鈕 -->
             <button 
               type="button" 
               onclick="openRenameModal('${acc.email}')" 
@@ -1316,7 +1262,6 @@
             >
               <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
             </button>
-            <!-- 徹底註銷或解除記住按鈕 -->
             <button 
               type="button" 
               onclick="removeAccountFromRegistry('${acc.email}', '${acc.hash}')" 
@@ -1332,143 +1277,13 @@
       lucide.createIcons();
     }
 
-    function quickLoadAccount(email) {
-      document.getElementById("cloud-email-input").value = email;
-      const masterInput = document.getElementById("master-password-input");
-      if (masterInput) {
-        masterInput.value = "";
-        masterInput.focus();
-      }
-      showToast(`已選定：[ ${email} ]，請輸入主密碼進行安全驗證。`, "success");
-    }
-
-    // =======================================================
-    // =======================================================
-
-    function evaluatePasswordStrengthDetailed(password) {
-      const result = {
-        score: 0, 
-        entropy: 0,
-        checks: {
-          length: password.length >= 8,
-          upper: /[A-Z]/.test(password),
-          lower: /[a-z]/.test(password),
-          number: /[0-9]/.test(password),
-          special: /[^A-Za-z0-9]/.test(password),
-          noPattern: !/(123|abc|qwerty|password|admin)/i.test(password) && !/(.)\1{2,}/.test(password)
-        },
-        label: "極弱/危險",
-        colorClass: "bg-red-500",
-        textClass: "text-red-400",
-        percentClass: "w-1/12",
-        crackTime: "瞬間破譯"
-      };
-
-      if (!password) {
-        result.label = "無輸入";
-        result.colorClass = "bg-slate-700";
-        result.textClass = "text-slate-500";
-        result.percentClass = "w-0";
-        return result;
-      }
-
-      let poolSize = 0;
-      if (result.checks.lower) poolSize += 26;
-      if (result.checks.upper) poolSize += 26;
-      if (result.checks.number) poolSize += 10;
-      if (result.checks.special) poolSize += 32;
-
-      if (poolSize > 0) {
-        result.entropy = Math.round(password.length * Math.log2(poolSize));
-      }
-
-      let calculatedScore = 0;
-      if (result.checks.length) calculatedScore += 25;
-      if (password.length >= 12) calculatedScore += 10;
-      if (result.checks.upper) calculatedScore += 15;
-      if (result.checks.lower) calculatedScore += 15;
-      if (result.checks.number) calculatedScore += 15;
-      if (result.checks.special) calculatedScore += 10;
-      if (result.checks.noPattern) calculatedScore += 10;
-
-      if (password.length < 6) {
-        calculatedScore = Math.min(calculatedScore, 10);
-      } else if (password.length < 8) {
-        calculatedScore = Math.min(calculatedScore, 35);
-      }
-
-      result.score = calculatedScore;
-
-      if (result.entropy < 28) {
-        result.crackTime = "約幾秒鐘";
-      } else if (result.entropy < 40) {
-        result.crackTime = "幾分鐘到幾小時";
-      } else if (result.entropy < 55) {
-        result.crackTime = "約數天到數月";
-      } else if (result.entropy < 75) {
-        result.crackTime = "約數十年到數百年";
-      } else {
-        result.crackTime = "數萬年 (軍事防護級)";
-      }
-
-      if (calculatedScore >= 85) {
-        result.label = "極強防護";
-        result.colorClass = "bg-emerald-500";
-        result.textClass = "text-emerald-400";
-        result.percentClass = "w-full";
-      } else if (calculatedScore >= 65) {
-        result.label = "安全強度";
-        result.colorClass = "bg-blue-500";
-        result.textClass = "text-blue-400";
-        result.percentClass = "w-3/4";
-      } else if (calculatedScore >= 40) {
-        result.label = "中等強度";
-        result.colorClass = "bg-amber-500";
-        result.textClass = "text-amber-400";
-        result.percentClass = "w-2/4";
-      } else {
-        result.label = "危險弱密碼";
-        result.colorClass = "bg-red-500";
-        result.textClass = "text-red-400";
-        result.percentClass = "w-1/4";
-      }
-
-      return result;
-    }
-
-    function generateSecurePassword(length, useUpper, useLower, useNumbers, useSymbols) {
-      let charset = "";
-      if (useUpper) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      if (useLower) charset += "abcdefghijklmnopqrstuvwxyz";
-      if (useNumbers) charset += "0123456789";
-      if (useSymbols) charset += "!@#$%^&*()_+-=[]{}|;:,.<>?";
-
-      if (!charset) return "";
-
-      let password = "";
-      if (window.crypto && window.crypto.getRandomValues) {
-        const array = new Uint32Array(length);
-        window.crypto.getRandomValues(array);
-        for (let i = 0; i < length; i++) {
-          password += charset[array[i] % charset.length];
-        }
-      } else {
-        // Fallback pseudorandom generator (防止不安全 Webview 直接拋錯)
-        for (let i = 0; i < length; i++) {
-          password += charset[Math.floor(Math.random() * charset.length)];
-        }
-      }
-      return password;
-    }
-
-    // =======================================================
-    // =======================================================
-
     function renderVaultList() {
       const listContainer = document.getElementById("vault-list");
       const emptyState = document.getElementById("vault-empty-state");
-      const searchQuery = document.getElementById("search-input").value.toLowerCase();
-      const sortBy = document.getElementById("sort-select").value;
+      if (!listContainer || !emptyState) return;
+
+      const searchQuery = document.getElementById("search-input") ? document.getElementById("search-input").value.toLowerCase() : "";
+      const sortBy = document.getElementById("sort-select") ? document.getElementById("sort-select").value : "recent";
 
       let filtered = vaultItems.filter(item => {
         const matchesCategory = currentCategoryFilter === "all" || item.category === currentCategoryFilter;
@@ -1586,336 +1401,6 @@
       lucide.createIcons();
       updateBadges();
     }
-
-    function toggleCardPasswordVisibility(id) {
-      const input = document.getElementById(`pass-display-${id}`);
-      const btn = document.getElementById(`eye-btn-${id}`);
-      if (input) {
-        if (input.type === "password") {
-          input.type = "text";
-          if (btn) btn.innerHTML = `<i data-lucide="eye-off" class="w-3.5 h-3.5"></i>`;
-        } else {
-          input.type = "password";
-          if (btn) btn.innerHTML = `<i data-lucide="eye" class="w-3.5 h-3.5"></i>`;
-        }
-      }
-      lucide.createIcons();
-    }
-
-    function updateBadges() {
-      const totalBadge = document.getElementById("badge-total-count");
-      if (totalBadge) {
-        totalBadge.textContent = vaultItems.length;
-      }
-      
-      let weakCount = 0;
-      vaultItems.forEach(item => {
-        const rawPass = simpleDecrypt(item.password, masterPassword);
-        const strength = evaluatePasswordStrengthDetailed(rawPass);
-        if (strength.score < 40) {
-          weakCount++;
-        }
-      });
-
-      const weakBadge = document.getElementById("badge-weak-count");
-      if (weakBadge) {
-        if (weakCount > 0) {
-          weakBadge.textContent = weakCount;
-          weakBadge.classList.remove("hidden");
-        } else {
-          weakBadge.classList.add("hidden");
-        }
-      }
-    }
-
-    // =======================================================
-    // =======================================================
-
-    function runSecurityAudit() {
-      const riskList = document.getElementById("audit-risk-list");
-      const emptyState = document.getElementById("audit-empty-state");
-      
-      let weakItems = [];
-      let passwordMap = {}; 
-      
-      vaultItems.forEach(item => {
-        const rawPass = simpleDecrypt(item.password, masterPassword);
-        const strength = evaluatePasswordStrengthDetailed(rawPass);
-        
-        if (!passwordMap[rawPass]) {
-          passwordMap[rawPass] = [];
-        }
-        passwordMap[rawPass].push(item);
-
-        if (strength.score < 40) {
-          weakItems.push({
-            item: item,
-            type: "weak",
-            reason: `密碼強度過低 (${strength.label}，僅 ${strength.entropy} bits) 容易被暴力破譯。`
-          });
-        }
-      });
-
-      let reusedItems = [];
-      Object.keys(passwordMap).forEach(pwd => {
-        const occurrences = passwordMap[pwd];
-        if (occurrences.length > 1) {
-          occurrences.forEach(item => {
-            reusedItems.push({
-              item: item,
-              type: "reuse",
-              reason: `此密碼與其他 ${occurrences.length - 1} 個平台帳號重複使用，存在骨牌效應洩漏風險。`
-            });
-          });
-        }
-      });
-
-      const allRisks = [...weakItems, ...reusedItems];
-      const penalty = (weakItems.length * 20) + (reusedItems.length * 10);
-      const score = Math.max(10, 100 - penalty);
-      
-      const scoreEl = document.getElementById("audit-score");
-      const barEl = document.getElementById("audit-score-bar");
-      
-      if (scoreEl) scoreEl.textContent = score;
-      if (barEl) barEl.style.width = `${score}%`;
-
-      if (score >= 80) {
-        if (scoreEl) scoreEl.className = "text-4xl font-extrabold text-emerald-400";
-        if (barEl) barEl.className = "bg-emerald-500 h-1.5 rounded-full transition-all duration-500";
-      } else if (score >= 55) {
-        if (scoreEl) scoreEl.className = "text-4xl font-extrabold text-amber-400";
-        if (barEl) barEl.className = "bg-amber-500 h-1.5 rounded-full transition-all duration-500";
-      } else {
-        if (scoreEl) scoreEl.className = "text-4xl font-extrabold text-red-400";
-        if (barEl) barEl.className = "bg-red-500 h-1.5 rounded-full transition-all duration-500";
-      }
-
-      const auditWeakCount = document.getElementById("audit-weak-count");
-      const auditReuseCount = document.getElementById("audit-reuse-count");
-      if (auditWeakCount) auditWeakCount.textContent = weakItems.length;
-      if (auditReuseCount) auditReuseCount.textContent = reusedItems.length;
-
-      if (allRisks.length === 0) {
-        if (riskList) riskList.innerHTML = "";
-        if (emptyState) emptyState.classList.remove("hidden");
-        return;
-      }
-
-      if (emptyState) emptyState.classList.add("hidden");
-      if (riskList) {
-        riskList.innerHTML = "";
-
-        allRisks.forEach(risk => {
-          const card = document.createElement("div");
-          card.className = "bg-slate-955 border border-slate-800 p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3";
-          
-          const iconType = risk.type === "weak" ? "shield-alert" : "copy";
-          const iconColor = risk.type === "weak" ? "text-red-400 bg-red-500/10" : "text-amber-400 bg-amber-500/10";
-
-          card.innerHTML = `
-            <div class="flex items-start gap-3">
-              <div class="p-2 rounded-lg shrink-0 ${iconColor}">
-                <i data-lucide="${iconType}" class="w-5 h-5"></i>
-              </div>
-              <div>
-                <h5 class="text-sm font-bold text-slate-200">${risk.item.title}</h5>
-                <p class="text-xs text-slate-400 mt-1">${risk.reason}</p>
-              </div>
-            </div>
-            <button onclick="quickRepairPassword('${risk.item.id}')" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-emerald-400 rounded-lg transition shrink-0 self-end sm:self-auto flex items-center gap-1">
-              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-              <span>安全修復</span>
-            </button>
-          `;
-          riskList.appendChild(card);
-        });
-      }
-      lucide.createIcons();
-    }
-
-    function quickRepairPassword(id) {
-      openEditModal(id);
-      const modalGenBtn = document.getElementById("modal-gen-password-btn");
-      if (modalGenBtn) modalGenBtn.click();
-      showToast("已自動為您帶入安全的隨機密碼！點擊『儲存資料』即可修復此風險。", "warning");
-    }
-
-    const itemModal = document.getElementById("item-modal");
-    function openModal() {
-      if (itemModal) {
-        itemModal.classList.remove("hidden");
-        setTimeout(() => {
-          itemModal.classList.remove("opacity-0");
-          itemModal.firstElementChild.classList.remove("scale-95");
-        }, 50);
-      }
-    }
-
-    function closeModal() {
-      if (itemModal) {
-        itemModal.classList.add("opacity-0");
-        itemModal.firstElementChild.classList.add("scale-95");
-        setTimeout(() => {
-          itemModal.classList.add("hidden");
-        }, 300);
-      }
-    }
-
-    function openEditModal(id) {
-      const item = vaultItems.find(i => i.id === id);
-      if (!item) return;
-
-      const modalTitle = document.getElementById("modal-title");
-      const itemId = document.getElementById("item-id");
-      const itemTitle = document.getElementById("item-title");
-      const itemUsername = document.getElementById("item-username");
-      const itemCategory = document.getElementById("item-category");
-      const itemPassword = document.getElementById("item-password");
-      const itemWebsite = document.getElementById("item-website");
-      const itemNotes = document.getElementById("item-notes");
-
-      if (modalTitle) modalTitle.textContent = "編輯憑證資料";
-      if (itemId) itemId.value = item.id;
-      if (itemTitle) itemTitle.value = item.title;
-      if (itemUsername) itemUsername.value = item.username;
-      if (itemCategory) itemCategory.value = item.category;
-      
-      const decrypted = simpleDecrypt(item.password, masterPassword);
-      if (itemPassword) itemPassword.value = decrypted;
-      if (itemWebsite) itemWebsite.value = item.website || "";
-      if (itemNotes) itemNotes.value = item.notes || "";
-
-      updateModalPwdStrengthBar(decrypted);
-      openModal();
-    }
-
-    async function deleteItem(id) {
-      const item = vaultItems.find(i => i.id === id);
-      if (!item) return;
-
-      const confirm = await customConfirm(
-        "確定要刪除此憑證嗎？", 
-        `您即將永久移除對 [ ${item.title} ] 的密碼記錄。此變更將在雲端實時同步。`,
-        true
-      );
-
-      if (confirm) {
-        vaultItems = vaultItems.filter(i => i.id !== id);
-        showToast("已將憑證移出保險箱。", "success");
-        renderVaultList();
-        await syncVaultToCloud();
-      }
-    }
-
-    function updateModalPwdStrengthBar(pwd) {
-      const bar = document.getElementById("pwd-strength-bar");
-      const label = document.getElementById("pwd-strength-label");
-      const entropyLabel = document.getElementById("pwd-entropy-lbl");
-      
-      const evalResult = evaluatePasswordStrengthDetailed(pwd);
-      
-      if (pwd === "") {
-        if (label) {
-          label.textContent = "未輸入";
-          label.className = "font-semibold text-slate-400";
-        }
-        if (bar) bar.className = "w-0 h-full bg-slate-700 transition-all duration-300";
-        if (entropyLabel) entropyLabel.textContent = "0 bits";
-        
-        updateModalChecklist("chk-length", false);
-        updateModalChecklist("chk-upper", false);
-        updateModalChecklist("chk-lower", false);
-        updateModalChecklist("chk-number", false);
-        updateModalChecklist("chk-special", false);
-        updateModalChecklist("chk-pattern", false);
-        return;
-      }
-
-      if (label) {
-        label.textContent = evalResult.label;
-        label.className = `font-semibold ${evalResult.textClass}`;
-      }
-      if (bar) bar.className = `h-full rounded-full transition-all duration-300 ${evalResult.percentClass} ${evalResult.colorClass}`;
-      if (entropyLabel) entropyLabel.textContent = `${evalResult.entropy} bits`;
-
-      updateModalChecklist("chk-length", evalResult.checks.length);
-      updateModalChecklist("chk-upper", evalResult.checks.upper);
-      updateModalChecklist("chk-lower", evalResult.checks.lower);
-      updateModalChecklist("chk-number", evalResult.checks.number);
-      updateModalChecklist("chk-special", evalResult.checks.special);
-      updateModalChecklist("chk-pattern", evalResult.checks.noPattern);
-    }
-
-    function updateModalChecklist(elementId, isValid) {
-      const el = document.getElementById(elementId);
-      if (!el) return;
-      const span = el.querySelector("span");
-      if (isValid) {
-        el.className = "flex items-center gap-1.5 text-emerald-400 font-semibold";
-        el.innerHTML = `<i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-400"></i><span>${span ? span.textContent : ""}</span>`;
-      } else {
-        el.className = "flex items-center gap-1.5 text-slate-500";
-        el.innerHTML = `<i data-lucide="circle" class="w-3 h-3 text-slate-700"></i><span>${span ? span.textContent : ""}</span>`;
-      }
-      lucide.createIcons();
-    }
-
-    // =======================================================
-    // 6. 密碼產生器功能模組 DOM 變數與邏輯 (Generator Panel)
-    // =======================================================
-    const lengthSlider = document.getElementById("length-slider");
-    const lengthVal = document.getElementById("length-val");
-    const genDisplay = document.getElementById("generated-password-display");
-
-    function runMainGenerator() {
-      const length = lengthSlider ? parseInt(lengthSlider.value) : 16;
-      const useUpper = document.getElementById("opt-uppercase") ? document.getElementById("opt-uppercase").checked : true;
-      const useLower = document.getElementById("opt-lowercase") ? document.getElementById("opt-lowercase").checked : true;
-      const useNumbers = document.getElementById("opt-numbers") ? document.getElementById("opt-numbers").checked : true;
-      const useSymbols = document.getElementById("opt-symbols") ? document.getElementById("opt-symbols").checked : true;
-
-      const password = generateSecurePassword(length, useUpper, useLower, useNumbers, useSymbols);
-      
-      if (genDisplay) {
-        if (password) {
-          genDisplay.textContent = password;
-          genDisplay.classList.remove("text-slate-600");
-          genDisplay.classList.add("text-emerald-400");
-        } else {
-          genDisplay.textContent = "請至少選取一個字元集選項！";
-          genDisplay.classList.remove("text-emerald-400");
-          genDisplay.classList.add("text-slate-600");
-        }
-      }
-    }
-
-    const changeMasterModal = document.getElementById("change-master-modal");
-    const changeMasterForm = document.getElementById("change-master-form");
-
-    function openChangeMasterModal() {
-      if (changeMasterModal) {
-        changeMasterModal.classList.remove("hidden");
-        setTimeout(() => {
-          changeMasterModal.classList.remove("opacity-0");
-          changeMasterModal.firstElementChild.classList.remove("scale-95");
-        }, 50);
-      }
-    }
-
-    function closeChangeMasterModal() {
-      if (changeMasterModal) {
-        changeMasterModal.classList.add("opacity-0");
-        changeMasterModal.firstElementChild.classList.add("scale-95");
-        setTimeout(() => {
-          changeMasterModal.classList.add("hidden");
-        }, 300);
-      }
-    }
-
-    const lockForm = document.getElementById("lock-form");
-    const masterInput = document.getElementById("master-password-input");
-    const cloudEmailInput = document.getElementById("cloud-email-input");
 
     if (lockForm) {
       lockForm.addEventListener("submit", async (e) => {
@@ -2091,444 +1576,17 @@
       });
     }
 
-    function resetSubmitBtn() {
-      const submitBtn = document.getElementById("lock-form-submit-btn");
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        if (currentLockMode === "login") {
-          submitBtn.innerHTML = `<span>連接雲端並解鎖</span> <i data-lucide="arrow-right" class="w-5 h-5"></i>`;
-        } else {
-          submitBtn.innerHTML = `<span>註冊電子郵件與主密碼</span> <i data-lucide="arrow-right" class="w-5 h-5"></i>`;
-        }
-        lucide.createIcons();
-      }
-    }
+    const oldMasterInput = document.getElementById("old-master-input");
+    const newMasterInput = document.getElementById("new-master-input");
+    const confirmNewMasterInput = document.getElementById("confirm-new-master-input");
 
-    // =======================================================
-    // =======================================================
-
-    const toggleMasterVisibility = document.getElementById("toggle-master-visibility");
-    if (toggleMasterVisibility) {
-      toggleMasterVisibility.addEventListener("click", () => {
-        const masterInput = document.getElementById("master-password-input");
-        if (masterInput) {
-          if (masterInput.type === "password") {
-            masterInput.type = "text";
-            toggleMasterVisibility.innerHTML = `<i data-lucide="eye-off" class="w-5 h-5"></i>`;
-          } else {
-            masterInput.type = "password";
-            toggleMasterVisibility.innerHTML = `<i data-lucide="eye" class="w-5 h-5"></i>`;
-          }
-        }
-        lucide.createIcons();
-      });
-    }
-
-    const lockAppBtn = document.getElementById("lock-app-btn");
-    if (lockAppBtn) {
-      lockAppBtn.addEventListener("click", async () => {
-        const emailVal = cloudEmailInput ? cloudEmailInput.value.trim() : "";
-        const confirm = await customConfirm("確認要鎖定保險箱嗎？", `鎖定後，下次存取 ${emailVal} 時需重新輸入主密碼。`, false);
-        if (confirm) {
-          masterPassword = "";
-          currentEmailHash = "";
-          isUnlocked = false;
-          if (masterInput) masterInput.value = "";
-          
-          SafeStorage.removeItem("cipherguard_remembered_password");
-          resetSubmitBtn();
-          renderRememberedAccounts();
-          
-          const userProfileType = document.getElementById("user-profile-type");
-          const userDisplayId = document.getElementById("user-display-id");
-          if (userProfileType) userProfileType.textContent = "線上加密帳戶";
-          if (userDisplayId) {
-            userDisplayId.textContent = "無綁定雲端";
-            userDisplayId.title = "未登入";
-          }
-
-          const lockScreen = document.getElementById("lock-screen");
-          const appContainer = document.getElementById("app-container");
-          if (appContainer) appContainer.classList.add("opacity-0");
-          if (lockScreen) {
-            lockScreen.classList.remove("hidden");
-            setTimeout(() => {
-              lockScreen.classList.remove("opacity-0", "scale-105");
-            }, 50);
-          }
-        }
-      });
-    }
-
-    const logoutAppBtn = document.getElementById("logout-app-btn");
-    if (logoutAppBtn) {
-      logoutAppBtn.addEventListener("click", async () => {
-        const confirm = await customConfirm("確認要登出帳號嗎？", `這將徹底關閉並重設您的安全密碼庫，並回到登入界面。`, true);
-        if (confirm) {
-          masterPassword = "";
-          currentEmailHash = "";
-          isUnlocked = false;
-          vaultItems = [];
-          
-          if (masterInput) masterInput.value = "";
-          if (cloudEmailInput) cloudEmailInput.value = "";
-          
-          SafeStorage.removeItem("cipherguard_remembered_email");
-          SafeStorage.removeItem("cipherguard_remembered_password");
-          const rememberMeCheckbox = document.getElementById("remember-me-checkbox");
-          if (rememberMeCheckbox) rememberMeCheckbox.checked = false;
-          resetSubmitBtn();
-          renderRememberedAccounts();
-          
-          const userProfileType = document.getElementById("user-profile-type");
-          const userDisplayId = document.getElementById("user-display-id");
-          if (userProfileType) userProfileType.textContent = "線上加密帳戶";
-          if (userDisplayId) {
-            userDisplayId.textContent = "無綁定雲端";
-            userDisplayId.title = "未登入";
-          }
-
-          const lockScreen = document.getElementById("lock-screen");
-          const appContainer = document.getElementById("app-container");
-          if (appContainer) appContainer.classList.add("opacity-0");
-          if (lockScreen) {
-            lockScreen.classList.remove("hidden");
-            setTimeout(() => {
-              lockScreen.classList.remove("opacity-0", "scale-105");
-            }, 50);
-          }
-        }
-      });
-    }
-
-    const itemForm = document.getElementById("item-form");
-    if (itemForm) {
-      itemForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const id = document.getElementById("item-id").value;
-        const title = document.getElementById("item-title").value.trim();
-        const username = document.getElementById("item-username").value.trim();
-        const category = document.getElementById("item-category").value;
-        const rawPassword = document.getElementById("item-password").value;
-        const website = document.getElementById("item-website").value.trim();
-        const notes = document.getElementById("item-notes").value.trim();
-
-        const encryptedPassword = simpleEncrypt(rawPassword, masterPassword);
-
-        if (id) {
-          const index = vaultItems.findIndex(i => i.id === id);
-          if (index !== -1) {
-            vaultItems[index] = {
-              ...vaultItems[index],
-              title,
-              username,
-              category,
-              password: encryptedPassword,
-              website,
-              notes
-            };
-            showToast("憑證修改成功！", "success");
-          }
-        } else {
-          const newItem = {
-            id: "item-" + Date.now(),
-            title,
-            username,
-            category,
-            password: encryptedPassword,
-            website,
-            notes,
-            createdAt: Date.now()
-          };
-          vaultItems.push(newItem);
-          showToast("成功建立新密碼憑證！", "success");
-
-          currentCategoryFilter = "all";
-          const searchInputEl = document.getElementById("search-input");
-          if (searchInputEl) searchInputEl.value = "";
-          
-          const catBtns = document.querySelectorAll(".category-filter-btn");
-          catBtns.forEach(b => {
-            const bFilter = b.getAttribute("data-filter");
-            if (bFilter === "all") {
-              b.className = "category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-300 bg-slate-800/30 transition";
-            } else {
-              b.className = "category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition";
-            }
-          });
-        }
-
-        closeModal();
-        renderVaultList();
-        await syncVaultToCloud();
-      });
-    }
-
-    const toggleModalPassword = document.getElementById("toggle-modal-password");
-    if (toggleModalPassword) {
-      toggleModalPassword.addEventListener("click", () => {
-        const modalPassInput = document.getElementById("item-password");
-        if (modalPassInput) {
-          if (modalPassInput.type === "password") {
-            modalPassInput.type = "text";
-            toggleModalPassword.innerHTML = `<i data-lucide="eye-off" class="w-5 h-5"></i>`;
-          } else {
-            modalPassInput.type = "password";
-            toggleModalPassword.innerHTML = `<i data-lucide="eye" class="w-5 h-5"></i>`;
-          }
-        }
-        lucide.createIcons();
-      });
-    }
-
-    if (lengthSlider) {
-      lengthSlider.addEventListener("input", (e) => {
-        if (lengthVal) lengthVal.textContent = e.target.value;
-        runMainGenerator();
-      });
-    }
-
-    document.querySelectorAll("#panel-generator input[type='checkbox']").forEach(chk => {
-      chk.addEventListener("change", runMainGenerator);
-    });
-
-    const regenBtn = document.getElementById("regen-btn");
-    if (regenBtn) regenBtn.addEventListener("click", runMainGenerator);
-
-    const copyGenBtn = document.getElementById("copy-gen-btn");
-    if (copyGenBtn) {
-      copyGenBtn.addEventListener("click", () => {
-        const pwdText = genDisplay ? genDisplay.textContent : "";
-        if (pwdText && pwdText !== "請至少選取一個字元集選項！" && pwdText !== "點擊下方按鈕生成密碼") {
-          copyToClipboard(pwdText, "新密碼已成功複製！");
-        } else {
-          showToast("無有效密碼可供複製", "warning");
-        }
-      });
-    }
-
-    const toggleSandboxVisibility = document.getElementById("toggle-sandbox-visibility");
-    if (toggleSandboxVisibility) {
-      toggleSandboxVisibility.addEventListener("click", () => {
-        const sandboxInput = document.getElementById("sandbox-input");
-        if (sandboxInput) {
-          if (sandboxInput.type === "password") {
-            sandboxInput.type = "text";
-            toggleSandboxVisibility.innerHTML = `<i data-lucide="eye-off" class="w-5 h-5"></i>`;
-          } else {
-            sandboxInput.type = "password";
-            toggleSandboxVisibility.innerHTML = `<i data-lucide="eye" class="w-5 h-5"></i>`;
-          }
-        }
-        lucide.createIcons();
-      });
-    }
-
-    const exportBtn = document.getElementById("export-btn");
-    if (exportBtn) {
-      exportBtn.addEventListener("click", () => {
-        if (vaultItems.length === 0) {
-          showToast("保險箱目前沒有資料可以匯出備份。", "warning");
-          return;
-        }
-        try {
-          const exportData = {
-            client: "CipherGuard",
-            exportedAt: Date.now(),
-            items: vaultItems
-          };
-          const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 2));
-          const downloadAnchor = document.createElement("a");
-          downloadAnchor.setAttribute("href", dataStr);
-          downloadAnchor.setAttribute("download", `cipherguard_backup_${formatDate(Date.now()).replace(/\//g, "-")}.json`);
-          document.body.appendChild(downloadAnchor);
-          downloadAnchor.click();
-          downloadAnchor.remove();
-          showToast("加密保險箱本地備份檔 (.json) 下載完成！", "success");
-        } catch (err) {
-          showToast("備份匯出時發生未知錯誤。", "error");
-        }
-      });
-    }
-
-    const fileInput = document.getElementById("import-file-input");
-    const importTriggerBtn = document.getElementById("import-trigger-btn");
-    if (importTriggerBtn && fileInput) {
-      importTriggerBtn.addEventListener("click", () => {
-        fileInput.click();
-      });
-    }
-
-    if (fileInput) {
-      fileInput.addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = async function(event) {
-          try {
-            const parsed = JSON.parse(event.target.result);
-            if (!parsed.client || parsed.client !== "CipherGuard" || !Array.isArray(parsed.items)) {
-              showToast("無效的備份檔案規格！", "error");
-              return;
-            }
-
-            const confirm = await customConfirm(
-              "確認要匯入備份嗎？", 
-              `將與現有庫合併，載入共 ${parsed.items.length} 筆憑證。`, 
-              false
-            );
-
-            if (confirm) {
-              const existingIds = new Set(vaultItems.map(item => item.id));
-              
-              parsed.items.forEach(newItem => {
-                if (!existingIds.has(newItem.id)) {
-                  vaultItems.push(newItem);
-                } else {
-                  const idx = vaultItems.findIndex(x => x.id === newItem.id);
-                  if (idx !== -1) vaultItems[idx] = newItem;
-                }
-              });
-
-              showToast(`還原匯入完成！成功載入 ${parsed.items.length} 筆憑證。`, "success");
-              renderVaultList();
-              await syncVaultToCloud();
-              const navVaultBtn = document.getElementById("nav-vault");
-              if (navVaultBtn) navVaultBtn.click();
-            }
-          } catch (err) {
-            showToast("解析備份檔案時出錯，檔案可能已損毀。", "error");
-          }
-          fileInput.value = ""; 
-        };
-        reader.readAsText(file);
-      });
-    }
-
-    const clearVaultBtn = document.getElementById("clear-vault-btn");
-    if (clearVaultBtn) {
-      clearVaultBtn.addEventListener("click", async () => {
-        const confirm = await customConfirm(
-          "確定要永久清除整座保險箱嗎？", 
-          "這項動作將抹除雲端及本地端所有憑證紀錄。請萬分小心！", 
-          true
-        );
-
-        if (confirm) {
-          vaultItems = [];
-          showToast("保險箱已被徹底清空銷毀！", "error");
-          renderVaultList();
-          await syncVaultToCloud();
-          const navVaultBtn = document.getElementById("nav-vault");
-          if (navVaultBtn) navVaultBtn.click();
-        }
-      });
-    }
-
-    const deleteAccountBtn = document.getElementById("delete-account-btn");
-    if (deleteAccountBtn) {
-      deleteAccountBtn.addEventListener("click", async () => {
-        const activeEmail = cloudEmailInput ? cloudEmailInput.value.trim() : "";
-        
-        const confirm1 = await customConfirm(
-          "確定要永久註銷帳戶嗎？", 
-          `此操作將永久刪除您在 [ ${activeEmail} ] 下儲存的所有資料，並從雲端及本機徹底註銷此帳戶！`, 
-          true
-        );
-
-        if (!confirm1) return;
-
-        const confirm2 = await customConfirm(
-          "最後警告：此動作無法還原！", 
-          "您將無法再用原主密碼解鎖或復原此帳戶。所有雲端備份金鑰都將被銷毀。確定要繼續嗎？", 
-          true
-        );
-
-        if (!confirm2) return;
-
-        const syncStatus = document.getElementById("sync-status");
-        if (syncStatus) syncStatus.innerHTML = `<i data-lucide="refresh-cw" class="w-3.5 h-3.5 animate-spin text-red-400 shrink-0"></i> <span class="truncate">正在雲端註銷帳戶中...</span>`;
-        lucide.createIcons();
-
-        try {
-          if (isFirebaseReady && currentEmailHash) {
-            if (authPromise) await authPromise;
-            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', currentEmailHash);
-            await executeWithRetry(async () => {
-              await deleteDoc(docRef);
-            });
-          }
-
-          if (currentEmailHash) {
-            SafeStorage.removeItem(`sandbox_vault_${currentEmailHash}`);
-            const currentList = await getGlobalRegistry();
-            const updatedList = currentList.filter(item => item.hash !== currentEmailHash);
-            await syncGlobalRegistryToCloud(updatedList);
-          }
-
-          SafeStorage.removeItem("cipherguard_remembered_email");
-          SafeStorage.removeItem("cipherguard_remembered_password");
-          const rememberMeCheckbox = document.getElementById("remember-me-checkbox");
-          if (rememberMeCheckbox) rememberMeCheckbox.checked = false;
-
-          showToast("您的帳戶已徹底被註銷並刪除！", "success");
-
-          masterPassword = "";
-          currentEmailHash = "";
-          isUnlocked = false;
-          vaultItems = [];
-          
-          if (masterInput) masterInput.value = "";
-          if (cloudEmailInput) cloudEmailInput.value = "";
-          
-          const userProfileType = document.getElementById("user-profile-type");
-          const userDisplayId = document.getElementById("user-display-id");
-          if (userProfileType) userProfileType.textContent = "線上加密帳戶";
-          if (userDisplayId) {
-            userDisplayId.textContent = "無綁定雲端";
-            userDisplayId.title = "未登入";
-          }
-
-          const lockScreen = document.getElementById("lock-screen");
-          const appContainer = document.getElementById("app-container");
-          if (appContainer) appContainer.classList.add("opacity-0");
-          if (lockScreen) {
-            lockScreen.classList.remove("hidden");
-            setTimeout(() => {
-              lockScreen.classList.remove("opacity-0", "scale-105");
-              renderRememberedAccounts();
-            }, 50);
-          }
-
-        } catch (err) {
-          console.error("徹底銷毀帳戶失敗:", err);
-          showToast("註銷帳戶失敗，請檢查網路連線後重試。", "error");
-        }
-      });
-    }
-
-    const changeMasterTriggerBtn = document.getElementById("change-master-trigger-btn");
-    if (changeMasterTriggerBtn) {
-      changeMasterTriggerBtn.addEventListener("click", () => {
-        if (changeMasterForm) changeMasterForm.reset();
-        openChangeMasterModal();
-      });
-    }
-
-    const closeChangeMasterBtn = document.getElementById("close-change-master-btn");
-    if (closeChangeMasterBtn) closeChangeMasterBtn.addEventListener("click", closeChangeMasterModal);
-
-    const cancelChangeMasterBtn = document.getElementById("cancel-change-master-btn");
-    if (cancelChangeMasterBtn) cancelChangeMasterBtn.addEventListener("click", closeChangeMasterModal);
-
+    // 修改主密碼事件監聽
     if (changeMasterForm) {
       changeMasterForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-
-        const oldMaster = document.getElementById("old-master-input").value;
-        const newMaster = document.getElementById("new-master-input").value;
-        const confirmNew = document.getElementById("confirm-new-master-input").value;
+        const oldMaster = oldMasterInput ? oldMasterInput.value : "";
+        const newMaster = newMasterInput ? newMasterInput.value : "";
+        const confirmNew = confirmNewMasterInput ? confirmNewMasterInput.value : "";
 
         if (oldMaster !== masterPassword) {
           showToast("目前的主密碼輸入錯誤！", "error");
@@ -2612,120 +1670,7 @@
       });
     }
 
-    // =======================================================
-    // =======================================================
-
-    const addItemBtn = document.getElementById("add-item-btn");
-    if (addItemBtn) {
-      addItemBtn.addEventListener("click", () => {
-        const modalTitle = document.getElementById("modal-title");
-        if (modalTitle) modalTitle.textContent = "新增憑證資料";
-        if (itemForm) itemForm.reset();
-        const itemId = document.getElementById("item-id");
-        if (itemId) itemId.value = "";
-        updateModalPwdStrengthBar("");
-        openModal();
-      });
-    }
-
-    const closeModalBtn = document.getElementById("close-modal-btn");
-    if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
-
-    const cancelModalBtn = document.getElementById("cancel-modal-btn");
-    if (cancelModalBtn) cancelModalBtn.addEventListener("click", closeModal);
-
-    const modalGenPasswordBtn = document.getElementById("modal-gen-password-btn");
-    if (modalGenPasswordBtn) {
-      modalGenPasswordBtn.addEventListener("click", () => {
-        const length = 18; 
-        const randomPass = generateSecurePassword(length, true, true, true, true);
-        const passInput = document.getElementById("item-password");
-        if (passInput) passInput.value = randomPass;
-        updateModalPwdStrengthBar(randomPass);
-        showToast("已成功產生高強度密碼！", "success");
-      });
-    }
-
-    const itemPassword = document.getElementById("item-password");
-    if (itemPassword) {
-      itemPassword.addEventListener("input", (e) => {
-        updateModalPwdStrengthBar(e.target.value);
-      });
-    }
-
-    const navButtons = {
-      vault: document.getElementById("nav-vault"),
-      generator: document.getElementById("nav-generator"),
-      audit: document.getElementById("nav-audit"),
-      settings: document.getElementById("nav-settings")
-    };
-
-    if (navButtons.vault) navButtons.vault.addEventListener("click", () => switchPanel("vault"));
-    if (navButtons.generator) navButtons.generator.addEventListener("click", () => switchPanel("generator"));
-    if (navButtons.audit) navButtons.audit.addEventListener("click", () => switchPanel("audit"));
-    if (navButtons.settings) navButtons.settings.addEventListener("click", () => switchPanel("settings"));
-
-    const categoryBtns = document.querySelectorAll(".category-filter-btn");
-    categoryBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        currentCategoryFilter = btn.getAttribute("data-filter");
-        categoryBtns.forEach(b => {
-          const bFilter = b.getAttribute("data-filter");
-          if (bFilter === currentCategoryFilter) {
-            b.className = "category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-300 bg-slate-800/30 transition";
-          } else {
-            b.className = "category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition";
-          }
-        });
-        switchPanel("vault");
-      });
-    });
-
-    const searchQueryInput = document.getElementById("search-input");
-    if (searchQueryInput) searchQueryInput.addEventListener("input", renderVaultList);
-
-    const sortSelect = document.getElementById("sort-select");
-    if (sortSelect) sortSelect.addEventListener("change", renderVaultList);
-
-    const confirmCancel = document.getElementById("confirm-cancel");
-    if (confirmCancel) confirmCancel.addEventListener("click", () => closeConfirmModal(false));
-
-    const confirmOk = document.getElementById("confirm-ok");
-    if (confirmOk) confirmOk.addEventListener("click", () => closeConfirmModal(true));
-
-    const renameModal = document.getElementById("rename-modal");
-    const renameForm = document.getElementById("rename-form");
-
-    window.openRenameModal = function(oldEmail) {
-      const renameOldEmail = document.getElementById("rename-old-email");
-      const renameDisplayOld = document.getElementById("rename-display-old");
-      const renameNewEmail = document.getElementById("rename-new-email");
-      const renameMasterPassword = document.getElementById("rename-master-password");
-
-      if (renameOldEmail) renameOldEmail.value = oldEmail;
-      if (renameDisplayOld) renameDisplayOld.value = oldEmail;
-      if (renameNewEmail) renameNewEmail.value = "";
-      if (renameMasterPassword) renameMasterPassword.value = "";
-      
-      if (renameModal) {
-        renameModal.classList.remove("hidden");
-        setTimeout(() => {
-          renameModal.classList.remove("opacity-0");
-          renameModal.firstElementChild.classList.remove("scale-95");
-        }, 50);
-      }
-    };
-
-    function closeRenameModal() {
-      if (renameModal) {
-        renameModal.classList.add("opacity-0");
-        renameModal.firstElementChild.classList.add("scale-95");
-        setTimeout(() => {
-          renameModal.classList.add("hidden");
-        }, 300);
-      }
-    }
-
+    // 徹底註銷帳戶與安全信箱遷移
     const renameCancelBtn = document.getElementById("rename-cancel-btn");
     if (renameCancelBtn) renameCancelBtn.addEventListener("click", closeRenameModal);
 
@@ -2870,6 +1815,36 @@
       lucide.createIcons();
     }
 
+    window.openRenameModal = function(oldEmail) {
+      const renameOldEmail = document.getElementById("rename-old-email");
+      const renameDisplayOld = document.getElementById("rename-display-old");
+      const renameNewEmail = document.getElementById("rename-new-email");
+      const renameMasterPassword = document.getElementById("rename-master-password");
+
+      if (renameOldEmail) renameOldEmail.value = oldEmail;
+      if (renameDisplayOld) renameDisplayOld.value = oldEmail;
+      if (renameNewEmail) renameNewEmail.value = "";
+      if (renameMasterPassword) renameMasterPassword.value = "";
+      
+      if (renameModal) {
+        renameModal.classList.remove("hidden");
+        setTimeout(() => {
+          renameModal.classList.remove("opacity-0");
+          renameModal.firstElementChild.classList.remove("scale-95");
+        }, 50);
+      }
+    };
+
+    function closeRenameModal() {
+      if (renameModal) {
+        renameModal.classList.add("opacity-0");
+        renameModal.firstElementChild.classList.add("scale-95");
+        setTimeout(() => {
+          renameModal.classList.add("hidden");
+        }, 300);
+      }
+    }
+
     window.removeAccountFromRegistry = async function(email, hash) {
       const confirmOption = await customConfirm(
         "解除記住或徹底註銷帳戶？", 
@@ -2909,6 +1884,365 @@
       }
     };
 
+    // =======================================================
+    // 5. 導出控制綁定與側邊導覽
+    // =======================================================
+    const deleteAccountBtn = document.getElementById("delete-account-btn");
+    if (deleteAccountBtn) {
+      deleteAccountBtn.addEventListener("click", async () => {
+        const activeEmail = cloudEmailInput ? cloudEmailInput.value.trim() : "";
+        
+        const confirm1 = await customConfirm(
+          "確定要永久註銷帳戶嗎？", 
+          `此操作將永久刪除您在 [ ${activeEmail} ] 下儲存的所有資料，並從雲端及本機徹底註銷此帳戶！`, 
+          true
+        );
+
+        if (!confirm1) return;
+
+        const confirm2 = await customConfirm(
+          "最後警告：此動作無法還原！", 
+          "您將無法再用原主密碼解鎖或復原此帳戶。所有雲端備份金鑰都將被銷毀。確定要繼續嗎？", 
+          true
+        );
+
+        if (!confirm2) return;
+
+        const syncStatus = document.getElementById("sync-status");
+        if (syncStatus) syncStatus.innerHTML = `<i data-lucide="refresh-cw" class="w-3.5 h-3.5 animate-spin text-red-400 shrink-0"></i> <span class="truncate">正在雲端註銷帳戶中...</span>`;
+        lucide.createIcons();
+
+        try {
+          if (isFirebaseReady && currentEmailHash) {
+            if (authPromise) await authPromise;
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', currentEmailHash);
+            await executeWithRetry(async () => {
+              await deleteDoc(docRef);
+            });
+          }
+
+          if (currentEmailHash) {
+            SafeStorage.removeItem(`sandbox_vault_${currentEmailHash}`);
+            const currentList = await getGlobalRegistry();
+            const updatedList = currentList.filter(item => item.hash !== currentEmailHash);
+            await syncGlobalRegistryToCloud(updatedList);
+          }
+
+          SafeStorage.removeItem("cipherguard_remembered_email");
+          SafeStorage.removeItem("cipherguard_remembered_password");
+          const rememberMeCheckbox = document.getElementById("remember-me-checkbox");
+          if (rememberMeCheckbox) rememberMeCheckbox.checked = false;
+
+          showToast("您的帳戶已徹底被註銷並刪除！", "success");
+
+          masterPassword = "";
+          currentEmailHash = "";
+          isUnlocked = false;
+          vaultItems = [];
+          
+          if (masterInput) masterInput.value = "";
+          if (cloudEmailInput) cloudEmailInput.value = "";
+          
+          const userProfileType = document.getElementById("user-profile-type");
+          const userDisplayId = document.getElementById("user-display-id");
+          if (userProfileType) userProfileType.textContent = "線上加密帳戶";
+          if (userDisplayId) {
+            userDisplayId.textContent = "無綁定雲端";
+            userDisplayId.title = "未登入";
+          }
+
+          const lockScreen = document.getElementById("lock-screen");
+          const appContainer = document.getElementById("app-container");
+          if (appContainer) appContainer.classList.add("opacity-0");
+          if (lockScreen) {
+            lockScreen.classList.remove("hidden");
+            setTimeout(() => {
+              lockScreen.classList.remove("opacity-0", "scale-105");
+              renderRememberedAccounts();
+            }, 50);
+          }
+
+        } catch (err) {
+          console.error("徹底銷毀帳戶失敗:", err);
+          showToast("註銷帳戶失敗，請檢查網路連線後重試。", "error");
+        }
+      });
+    }
+
+    const addItemBtn = document.getElementById("add-item-btn");
+    if (addItemBtn) {
+      addItemBtn.addEventListener("click", () => {
+        const modalTitle = document.getElementById("modal-title");
+        if (modalTitle) modalTitle.textContent = "新增憑證資料";
+        if (itemForm) itemForm.reset();
+        const itemId = document.getElementById("item-id");
+        if (itemId) itemId.value = "";
+        updateModalPwdStrengthBar("");
+        openModal();
+      });
+    }
+
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
+
+    const cancelModalBtn = document.getElementById("cancel-modal-btn");
+    if (cancelModalBtn) cancelModalBtn.addEventListener("click", closeModal);
+
+    const modalGenPasswordBtn = document.getElementById("modal-gen-password-btn");
+    if (modalGenPasswordBtn) {
+      modalGenPasswordBtn.addEventListener("click", () => {
+        const length = 18; 
+        const randomPass = generateSecurePassword(length, true, true, true, true);
+        const passInput = document.getElementById("item-password");
+        if (passInput) passInput.value = randomPass;
+        updateModalPwdStrengthBar(randomPass);
+        showToast("已成功產生高強度密碼！", "success");
+      });
+    }
+
+    const itemPassword = document.getElementById("item-password");
+    if (itemPassword) {
+      itemPassword.addEventListener("input", (e) => {
+        updateModalPwdStrengthBar(e.target.value);
+      });
+    }
+
+    const navButtons = {
+      vault: document.getElementById("nav-vault"),
+      generator: document.getElementById("nav-generator"),
+      audit: document.getElementById("nav-audit"),
+      settings: document.getElementById("nav-settings")
+    };
+
+    if (navButtons.vault) navButtons.vault.addEventListener("click", () => switchPanel("vault"));
+    if (navButtons.generator) navButtons.generator.addEventListener("click", () => switchPanel("generator"));
+    if (navButtons.audit) navButtons.audit.addEventListener("click", () => switchPanel("audit"));
+    if (navButtons.settings) navButtons.settings.addEventListener("click", () => switchPanel("settings"));
+
+    const categoryBtns = document.querySelectorAll(".category-filter-btn");
+    categoryBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        currentCategoryFilter = btn.getAttribute("data-filter");
+        categoryBtns.forEach(b => {
+          const bFilter = b.getAttribute("data-filter");
+          if (bFilter === currentCategoryFilter) {
+            b.className = "category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-300 bg-slate-800/30 transition";
+          } else {
+            b.className = "category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition";
+          }
+        });
+        switchPanel("vault");
+      });
+    });
+
+    const searchQueryInput = document.getElementById("search-input");
+    if (searchQueryInput) searchQueryInput.addEventListener("input", renderVaultList);
+
+    const sortSelect = document.getElementById("sort-select");
+    if (sortSelect) sortSelect.addEventListener("change", renderVaultList);
+
+    const confirmCancel = document.getElementById("confirm-cancel");
+    if (confirmCancel) confirmCancel.addEventListener("click", () => closeConfirmModal(false));
+
+    const confirmOk = document.getElementById("confirm-ok");
+    if (confirmOk) confirmOk.addEventListener("click", () => closeConfirmModal(true));
+
+    if (itemForm) {
+      itemForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const id = document.getElementById("item-id").value;
+        const title = document.getElementById("item-title").value.trim();
+        const username = document.getElementById("item-username").value.trim();
+        const category = document.getElementById("item-category").value;
+        const rawPassword = document.getElementById("item-password").value;
+        const website = document.getElementById("item-website").value.trim();
+        const notes = document.getElementById("item-notes").value.trim();
+
+        const encryptedPassword = simpleEncrypt(rawPassword, masterPassword);
+
+        if (id) {
+          const index = vaultItems.findIndex(i => i.id === id);
+          if (index !== -1) {
+            vaultItems[index] = {
+              ...vaultItems[index],
+              title,
+              username,
+              category,
+              password: encryptedPassword,
+              website,
+              notes
+            };
+            showToast("憑證修改成功！", "success");
+          }
+        } else {
+          const newItem = {
+            id: "item-" + Date.now(),
+            title,
+            username,
+            category,
+            password: encryptedPassword,
+            website,
+            notes,
+            createdAt: Date.now()
+          };
+          vaultItems.push(newItem);
+          showToast("成功建立新密碼憑證！", "success");
+
+          currentCategoryFilter = "all";
+          const searchInputEl = document.getElementById("search-input");
+          if (searchInputEl) searchInputEl.value = "";
+          
+          const catBtns = document.querySelectorAll(".category-filter-btn");
+          catBtns.forEach(b => {
+            const bFilter = b.getAttribute("data-filter");
+            if (bFilter === "all") {
+              b.className = "category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-300 bg-slate-800/30 transition";
+            } else {
+              b.className = "category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition";
+            }
+          });
+        }
+
+        closeModal();
+        renderVaultList();
+        await syncVaultToCloud();
+      });
+    }
+
+    const toggleModalPassword = document.getElementById("toggle-modal-password");
+    if (toggleModalPassword) {
+      toggleModalPassword.addEventListener("click", () => {
+        const modalPassInput = document.getElementById("item-password");
+        if (modalPassInput) {
+          if (modalPassInput.type === "password") {
+            modalPassInput.type = "text";
+            toggleModalPassword.innerHTML = `<i data-lucide="eye-off" class="w-5 h-5"></i>`;
+          } else {
+            modalPassInput.type = "password";
+            toggleModalPassword.innerHTML = `<i data-lucide="eye" class="w-5 h-5"></i>`;
+          }
+        }
+        lucide.createIcons();
+      });
+    }
+
+    if (lengthSlider) {
+      lengthSlider.addEventListener("input", (e) => {
+        if (lengthVal) lengthVal.textContent = e.target.value;
+        runMainGenerator();
+      });
+    }
+
+    const changeMasterTriggerBtn = document.getElementById("change-master-trigger-btn");
+    if (changeMasterTriggerBtn) {
+      changeMasterTriggerBtn.addEventListener("click", () => {
+        if (changeMasterForm) changeMasterForm.reset();
+        openChangeMasterModal();
+      });
+    }
+
+    const exportBtn = document.getElementById("export-btn");
+    if (exportBtn) {
+      exportBtn.addEventListener("click", () => {
+        if (vaultItems.length === 0) {
+          showToast("保險箱目前沒有資料可以匯出備份。", "warning");
+          return;
+        }
+        try {
+          const exportData = {
+            client: "CipherGuard",
+            exportedAt: Date.now(),
+            items: vaultItems
+          };
+          const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 2));
+          const downloadAnchor = document.createElement("a");
+          downloadAnchor.setAttribute("href", dataStr);
+          downloadAnchor.setAttribute("download", `cipherguard_backup_${formatDate(Date.now()).replace(/\//g, "-")}.json`);
+          document.body.appendChild(downloadAnchor);
+          downloadAnchor.click();
+          downloadAnchor.remove();
+          showToast("加密保險箱本地備份檔 (.json) 下載完成！", "success");
+        } catch (err) {
+          showToast("備份匯出時發生未知錯誤。", "error");
+        }
+      });
+    }
+
+    const fileInput = document.getElementById("import-file-input");
+    const importTriggerBtn = document.getElementById("import-trigger-btn");
+    if (importTriggerBtn && fileInput) {
+      importTriggerBtn.addEventListener("click", () => {
+        fileInput.click();
+      });
+    }
+
+    if (fileInput) {
+      fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async function(event) {
+          try {
+            const parsed = JSON.parse(event.target.result);
+            if (!parsed.client || parsed.client !== "CipherGuard" || !Array.isArray(parsed.items)) {
+              showToast("無效的備份檔案規格！", "error");
+              return;
+            }
+
+            const confirm = await customConfirm(
+              "確認要匯入備份嗎？", 
+              `將與現有庫合併，載入共 ${parsed.items.length} 筆憑證。`, 
+              false
+            );
+
+            if (confirm) {
+              const existingIds = new Set(vaultItems.map(item => item.id));
+              
+              parsed.items.forEach(newItem => {
+                if (!existingIds.has(newItem.id)) {
+                  vaultItems.push(newItem);
+                } else {
+                  const idx = vaultItems.findIndex(x => x.id === newItem.id);
+                  if (idx !== -1) vaultItems[idx] = newItem;
+                }
+              });
+
+              showToast(`還原匯入完成！成功載入 ${parsed.items.length} 筆憑證。`, "success");
+              renderVaultList();
+              await syncVaultToCloud();
+              const navVaultBtn = document.getElementById("nav-vault");
+              if (navVaultBtn) navVaultBtn.click();
+            }
+          } catch (err) {
+            showToast("解析備份檔案時出錯，檔案可能已損毀。", "error");
+          }
+          fileInput.value = ""; 
+        };
+        reader.readAsText(file);
+      });
+    }
+
+    const clearVaultBtn = document.getElementById("clear-vault-btn");
+    if (clearVaultBtn) {
+      clearVaultBtn.addEventListener("click", async () => {
+        const confirm = await customConfirm(
+          "確定要永久清除整座保險箱嗎？", 
+          "這項動作將抹除雲端及本地端所有憑證紀錄。請萬分小心！", 
+          true
+        );
+
+        if (confirm) {
+          vaultItems = [];
+          showToast("保險箱已被徹底清空銷毀！", "error");
+          renderVaultList();
+          await syncVaultToCloud();
+          const navVaultBtn = document.getElementById("nav-vault");
+          if (navVaultBtn) navVaultBtn.click();
+        }
+      });
+    }
+
     function switchPanel(activeKey) {
       const panels = {
         vault: document.getElementById("panel-vault"),
@@ -2940,16 +2274,14 @@
       lucide.createIcons();
     }
 
+    // 將核心功能掛載至 window 範圍內以確保 inline HTML 屬性 (onclick/onsubmit) 能正確呼叫
     window.quickLoadAccount = quickLoadAccount;
-
-    // =======================================================
-    // 5. 掛載全域 Window 函式
-    // =======================================================
     window.openEditModal = openEditModal;
     window.deleteItem = deleteItem;
     window.copyToClipboard = copyToClipboard;
     window.toggleCardPasswordVisibility = toggleCardPasswordVisibility;
     window.quickRepairPassword = quickRepairPassword;
+
   </script>
 </body>
 </html>
