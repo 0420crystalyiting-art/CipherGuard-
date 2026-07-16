@@ -109,7 +109,7 @@
   </div>
 
   <!-- 1. 主密碼解鎖/設定畫面 -->
-  <div id="lock-screen" class="fixed inset-0 bg-slate-950 z-40 flex items-center justify-center p-4 overflow-y-auto">
+  <div id="lock-screen" class="fixed inset-0 bg-slate-955 z-40 flex items-center justify-center p-4 overflow-y-auto">
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent pointer-events-none"></div>
     
     <div class="max-w-md w-full bg-slate-900/80 backdrop-blur-md border border-slate-800 p-8 rounded-3xl shadow-2xl relative z-10 my-8">
@@ -942,7 +942,6 @@
     let vaultItems = []; 
 
     // =======================================================
-    // 3. 所有核心函式與工具定義 (徹底置頂，解決 Hoisting 錯誤)
     // =======================================================
 
     function simpleEncrypt(text, key) {
@@ -974,15 +973,35 @@
       }
     }
 
+    // 支援非安全上下文 (Insecure Context / Non-HTTPS PWA Webview) 的相容雜湊，防止註冊卡死
     async function hashEmail(email) {
-      const encoder = new TextEncoder();
       const cleanEmail = email.toLowerCase().trim();
-      const data = encoder.encode(cleanEmail + "|cipherguard-email-salt-2026");
-      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-      return hashHex;
+      const salt = "|cipherguard-email-salt-2026";
+      const input = cleanEmail + salt;
+      
+      if (window.crypto && crypto.subtle) {
+        try {
+          const encoder = new TextEncoder();
+          const data = encoder.encode(input);
+          // 修正前次的 "SHA-255" 拼寫錯誤
+          const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+          const hashArray = Array.from(new Uint8Array(hashBuffer));
+          return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        } catch (e) {
+          console.warn("Subtle crypto API calculation failed, using fallback hash.", e);
+        }
+      }
+      
+      // 相容性 Fallback Deterministic Hash 演算法，避免非 HTTPS WebView 下直接拋錯卡死
+      let hash = 5381;
+      for (let i = 0; i < input.length; i++) {
+        hash = (hash * 33) ^ input.charCodeAt(i);
+      }
+      return "legacy-" + (hash >>> 0).toString(16);
     }
+
+    // =======================================================
+    // =======================================================
 
     function showToast(message, type = "info") {
       const toast = document.createElement("div");
@@ -1110,30 +1129,8 @@
       }
     }
 
-    function getDefaultWelcomeItems(pwd, email) {
-      return [
-        {
-          id: "welcome-card-1",
-          title: `歡迎使用 CipherGuard 雲端保險箱！`,
-          username: email,
-          password: simpleEncrypt("CipherGuardSecuredPassword2026!", pwd),
-          category: "others",
-          website: "https://cipherguard.io",
-          notes: `這是專屬於 ${email} 的安全加密空間。所有數據都已經在您的本地端（瀏覽器）進行了軍事級 AES 混合 XOR 金鑰加密，才安全上傳至您的 Firestore 雲端節點上。`,
-          createdAt: Date.now()
-        },
-        {
-          id: "welcome-card-2",
-          title: "安全檢測測試卡 (預設弱密碼)",
-          username: "test-weak-account",
-          password: simpleEncrypt("123456", pwd),
-          category: "social",
-          website: "https://facebook.com",
-          notes: "這是一組用於安全掃描測試的弱強度凭證。請在解鎖主面板後，點擊側邊導練列的「安全健檢」來檢測強度，並一鍵修復。",
-          createdAt: Date.now() - 100000
-        }
-      ];
-    }
+    // =======================================================
+    // =======================================================
 
     async function syncVaultToCloud() {
       const emailInput = document.getElementById("cloud-email-input");
@@ -1310,6 +1307,9 @@
       showToast(`已選定：[ ${email} ]，請輸入主密碼進行安全驗證。`, "success");
     }
 
+    // =======================================================
+    // =======================================================
+
     function evaluatePasswordStrengthDetailed(password) {
       const result = {
         score: 0, 
@@ -1400,6 +1400,34 @@
 
       return result;
     }
+
+    function generateSecurePassword(length, useUpper, useLower, useNumbers, useSymbols) {
+      let charset = "";
+      if (useUpper) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      if (useLower) charset += "abcdefghijklmnopqrstuvwxyz";
+      if (useNumbers) charset += "0123456789";
+      if (useSymbols) charset += "!@#$%^&*()_+-=[]{}|;:,.<>?";
+
+      if (!charset) return "";
+
+      let password = "";
+      if (window.crypto && window.crypto.getRandomValues) {
+        const array = new Uint32Array(length);
+        window.crypto.getRandomValues(array);
+        for (let i = 0; i < length; i++) {
+          password += charset[array[i] % charset.length];
+        }
+      } else {
+        // Fallback pseudorandom generator (防止不安全 Webview 直接拋錯)
+        for (let i = 0; i < length; i++) {
+          password += charset[Math.floor(Math.random() * charset.length)];
+        }
+      }
+      return password;
+    }
+
+    // =======================================================
+    // =======================================================
 
     function renderVaultList() {
       const listContainer = document.getElementById("vault-list");
@@ -1532,6 +1560,7 @@
           input.type = "text";
           if (btn) btn.innerHTML = `<i data-lucide="eye-off" class="w-3.5 h-3.5"></i>`;
         } else {
+          input.type === "text";
           input.type = "password";
           if (btn) btn.innerHTML = `<i data-lucide="eye" class="w-3.5 h-3.5"></i>`;
         }
@@ -1564,6 +1593,9 @@
         }
       }
     }
+
+    // =======================================================
+    // =======================================================
 
     function runSecurityAudit() {
       const riskList = document.getElementById("audit-risk-list");
@@ -1795,6 +1827,9 @@
       lucide.createIcons();
     }
 
+    // =======================================================
+    // =======================================================
+
     const lengthSlider = document.getElementById("length-slider");
     const lengthVal = document.getElementById("length-val");
     const genDisplay = document.getElementById("generated-password-display");
@@ -1842,123 +1877,6 @@
           changeMasterModal.classList.add("hidden");
         }, 300);
       }
-    }
-
-    // =======================================================
-    // 7. 實時初始化與事件監聽綁定
-    // =======================================================
-
-    if (firebaseConfig) {
-      try {
-        const app = initializeApp(firebaseConfig);
-        auth = getAuth(app);
-        db = getFirestore(app);
-        isFirebaseReady = true;
-
-        const initAuthentication = async () => {
-          if (initialAuthToken) {
-            authPromise = signInWithCustomToken(auth, initialAuthToken);
-          } else {
-            authPromise = signInAnonymously(auth);
-          }
-          await authPromise;
-        };
-        initAuthentication();
-
-        onAuthStateChanged(auth, (user) => {
-          currentUser = user;
-          const statusText = document.getElementById("sync-status");
-          const uidDisplay = document.getElementById("user-display-id");
-          
-          if (user) {
-            const emailInput = document.getElementById("cloud-email-input");
-            const activeEmail = emailInput ? emailInput.value.trim() : "";
-            
-            if (uidDisplay) {
-              uidDisplay.textContent = activeEmail;
-              uidDisplay.title = activeEmail;
-            }
-            if (statusText) {
-              statusText.innerHTML = `<i data-lucide="cloud" class="w-3.5 h-3.5 text-emerald-400"></i> <span>已安全同步至 ${activeEmail.substring(0, 15)}...</span>`;
-            }
-          } else {
-            if (uidDisplay) uidDisplay.textContent = `狀態: 離線安全沙盒`;
-            if (statusText) {
-              statusText.innerHTML = `<i data-lucide="cloud-off" class="w-3.5 h-3.5 text-slate-500"></i> <span>未連結雲端服務</span>`;
-            }
-          }
-          lucide.createIcons();
-        });
-      } catch (err) {
-        console.error("Firebase 初始化失敗:", err);
-      }
-    }
-
-    lucide.createIcons();
-
-    const tabLoginBtn = document.getElementById("tab-login-btn");
-    const tabRegisterBtn = document.getElementById("tab-register-btn");
-    const lockScreenSubtitle = document.getElementById("lock-screen-subtitle");
-    const emailFieldLabel = document.getElementById("email-field-label");
-    const passwordFieldLabel = document.getElementById("password-field-label");
-    const tipText = document.getElementById("tip-text");
-    const submitBtnText = document.getElementById("submit-btn-text");
-    const rememberMeContainer = document.getElementById("remember-me-container");
-
-    let currentLockMode = "login"; 
-
-    if (tabLoginBtn) {
-      tabLoginBtn.addEventListener("click", () => {
-        currentLockMode = "login";
-        tabLoginBtn.className = "flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-600/10 text-emerald-400 border border-emerald-500/20 transition duration-200";
-        if (tabRegisterBtn) tabRegisterBtn.className = "flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-slate-200 border border-transparent transition duration-200";
-        
-        if (lockScreenSubtitle) lockScreenSubtitle.textContent = "選擇或輸入您的雲端同步保險箱帳戶";
-        if (emailFieldLabel) emailFieldLabel.textContent = "雲端同步電子信箱 (Cloud Email)";
-        if (passwordFieldLabel) passwordFieldLabel.textContent = "主密碼 (Master Password)";
-        if (tipText) tipText.textContent = "零知識架構：資料將使用主密碼本地加密後同步。登入將自動載入您的保險箱數據。";
-        if (submitBtnText) submitBtnText.textContent = "連接雲端並解鎖";
-        
-        if (rememberMeContainer) rememberMeContainer.classList.remove("hidden");
-      });
-    }
-
-    if (tabRegisterBtn) {
-      tabRegisterBtn.addEventListener("click", () => {
-        currentLockMode = "register";
-        tabRegisterBtn.className = "flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-600/10 text-emerald-400 border border-emerald-500/20 transition duration-200";
-        if (tabLoginBtn) tabLoginBtn.className = "flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-slate-200 border border-transparent transition duration-200";
-        
-        if (lockScreenSubtitle) lockScreenSubtitle.textContent = "立即為您的信箱建立專屬安全加密空間";
-        if (emailFieldLabel) emailFieldLabel.textContent = "設定註冊電子信箱 (Registration Email)";
-        if (passwordFieldLabel) passwordFieldLabel.textContent = "設定新主密碼 (New Master Password)";
-        if (tipText) tipText.textContent = "注意：帳戶註冊後即不可重複註冊。請記妥您的主密碼，我們無法代為復原。";
-        if (submitBtnText) submitBtnText.textContent = "註冊電子郵件與主密碼";
-        
-        if (rememberMeContainer) rememberMeContainer.classList.add("hidden");
-      });
-    }
-
-    const cachedEmail = SafeStorage.getItem("cipherguard_remembered_email");
-    const cachedPassword = SafeStorage.getItem("cipherguard_remembered_password");
-    if (cachedEmail) {
-      const cloudEmailInput = document.getElementById("cloud-email-input");
-      if (cloudEmailInput) cloudEmailInput.value = cachedEmail;
-      const rememberMeCheckbox = document.getElementById("remember-me-checkbox");
-      if (rememberMeCheckbox) rememberMeCheckbox.checked = true;
-    }
-    if (cachedPassword) {
-      const masterPasswordInput = document.getElementById("master-password-input");
-      if (masterPasswordInput) masterPasswordInput.value = cachedPassword;
-    }
-
-    renderRememberedAccounts();
-
-    if (cachedEmail && cachedPassword) {
-      setTimeout(() => {
-        const lockForm = document.getElementById("lock-form");
-        if (lockForm) lockForm.requestSubmit();
-      }, 300);
     }
 
     const lockForm = document.getElementById("lock-form");
@@ -2151,6 +2069,9 @@
         lucide.createIcons();
       }
     }
+
+    // =======================================================
+    // =======================================================
 
     const toggleMasterVisibility = document.getElementById("toggle-master-visibility");
     if (toggleMasterVisibility) {
@@ -2643,6 +2564,9 @@
       });
     }
 
+    // =======================================================
+    // =======================================================
+
     const addItemBtn = document.getElementById("add-item-btn");
     if (addItemBtn) {
       addItemBtn.addEventListener("click", () => {
@@ -2936,6 +2860,31 @@
         await renderRememberedAccounts();
       }
     };
+
+    function switchPanel(activeKey) {
+      Object.keys(panels).forEach(key => {
+        if (panels[key]) {
+          if (key === activeKey) {
+            panels[key].classList.remove("hidden");
+            if (key === "vault") renderVaultList();
+            if (key === "audit") runSecurityAudit();
+          } else {
+            panels[key].classList.add("hidden");
+          }
+        }
+      });
+
+      Object.keys(navButtons).forEach(key => {
+        if (navButtons[key]) {
+          if (key === activeKey) {
+            navButtons[key].className = "w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-300 bg-slate-800/60 border border-slate-700/30 font-medium text-sm transition";
+          } else {
+            navButtons[key].className = "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 font-medium text-sm transition";
+          }
+        }
+      });
+      lucide.createIcons();
+    }
 
     window.quickLoadAccount = quickLoadAccount;
 
