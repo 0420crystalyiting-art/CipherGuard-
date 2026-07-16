@@ -42,7 +42,7 @@
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased font-sans">
+<body class="bg-slate-955 text-slate-100 min-h-screen flex flex-col antialiased font-sans">
 
   <!-- 全域 Toast 提示訊息容器 -->
   <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
@@ -71,7 +71,7 @@
   </div>
 
   <!-- 安全帳戶變更/修改信箱對話框 -->
-  <div id="rename-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+  <div id="rename-modal" class="fixed inset-0 bg-slate-955/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 m-4 shadow-2xl transform scale-95 transition-transform duration-300">
       <div class="flex items-start gap-4 mb-4">
         <div class="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl">
@@ -257,7 +257,7 @@
       </div>
 
       <!-- 雲端同步狀態欄 -->
-      <div class="px-6 py-2 border-b border-slate-850 bg-slate-950/20 flex items-center justify-between">
+      <div class="px-6 py-2 border-b border-slate-855 bg-slate-955/20 flex items-center justify-between">
         <div id="sync-status" class="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium overflow-hidden">
           <i data-lucide="cloud-off" class="w-3.5 h-3.5 text-slate-500 shrink-0"></i>
           <span class="truncate">未連接雲端資料庫</span>
@@ -334,7 +334,7 @@
     </aside>
 
     <!-- 2.2 主工作區 -->
-    <main class="flex-1 flex flex-col min-w-0 bg-slate-950 overflow-hidden">
+    <main class="flex-1 flex flex-col min-w-0 bg-slate-955 overflow-hidden">
       
       <!-- 2.2.1 保險箱主頁面板 -->
       <section id="panel-vault" class="flex-1 flex flex-col min-h-0">
@@ -434,7 +434,7 @@
             <div class="space-y-4 pt-4 border-t border-slate-800/60">
               <label class="block text-sm font-medium text-slate-300">字元組合選項</label>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <label class="flex items-center justify-between p-3 bg-slate-950/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
+                <label class="flex items-center justify-between p-3 bg-slate-955/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
                   <div class="flex flex-col">
                     <span class="text-sm font-semibold">大寫英文 (A-Z)</span>
                     <span class="text-xs text-slate-500">包含大寫英文字母</span>
@@ -442,7 +442,7 @@
                   <input type="checkbox" id="opt-uppercase" checked class="w-5 h-5 rounded bg-slate-900 border-slate-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900">
                 </label>
 
-                <label class="flex items-center justify-between p-3 bg-slate-950/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
+                <label class="flex items-center justify-between p-3 bg-slate-955/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
                   <div class="flex flex-col">
                     <span class="text-sm font-semibold">小寫英文 (a-z)</span>
                     <span class="text-xs text-slate-500">包含小寫英文字母</span>
@@ -450,7 +450,7 @@
                   <input type="checkbox" id="opt-lowercase" checked class="w-5 h-5 rounded bg-slate-900 border-slate-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900">
                 </label>
 
-                <label class="flex items-center justify-between p-3 bg-slate-950/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
+                <label class="flex items-center justify-between p-3 bg-slate-955/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
                   <div class="flex flex-col">
                     <span class="text-sm font-semibold">數字成員 (0-9)</span>
                     <span class="text-xs text-slate-500">包含阿拉伯數字</span>
@@ -458,7 +458,7 @@
                   <input type="checkbox" id="opt-numbers" checked class="w-5 h-5 rounded bg-slate-900 border-slate-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900">
                 </label>
 
-                <label class="flex items-center justify-between p-3 bg-slate-950/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
+                <label class="flex items-center justify-between p-3 bg-slate-955/60 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
                   <div class="flex flex-col">
                     <span class="text-sm font-semibold">特殊符號 (@#$%)</span>
                     <span class="text-xs text-slate-500">包含特殊安全標點符號</span>
@@ -685,7 +685,7 @@
   </div>
 
   <!-- 3. 新增 / 編輯 憑證資料的 Modal -->
-  <div id="item-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+  <div id="item-modal" class="fixed inset-0 bg-slate-955/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
     <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full p-6 m-4 shadow-2xl transform scale-95 transition-transform duration-300 max-h-[90vh] overflow-y-auto no-scrollbar">
       
       <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
@@ -887,8 +887,9 @@
     import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // 建立安全儲存包裝器，防止在 iframe 沙盒或隱私模式下因 sessionStorage 被禁用而引發 SecurityError 崩潰
-    // 升級為使用 localStorage 來維持瀏覽器在不同會話、關閉後重新開啟時的持久記憶
+    // =======================================================
+    // 1. 安全儲存與 Firebase 初始化
+    // =======================================================
     const SafeStorage = {
       _memoryDb: {},
       getItem(key) {
@@ -914,10 +915,8 @@
       }
     };
 
-    // 1. 初始化 Firebase 環境參數 (零配置降級與自訂認證)
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'cipherguard-default';
     
-    // 安全智能解析 Firebase Config，相容 JSON 字串及預先編譯的 JavaScript Object
     let firebaseConfig = null;
     if (typeof __firebase_config !== 'undefined' && __firebase_config) {
       if (typeof __firebase_config === 'object') {
@@ -939,56 +938,57 @@
     let isFirebaseReady = false;
     let authPromise = null;
 
-    // 將核心儲存控制權掛載至內層 Module 共享
-    if (firebaseConfig) {
-      try {
-        const app = initializeApp(firebaseConfig);
-        auth = getAuth(app);
-        db = getFirestore(app);
-        isFirebaseReady = true;
-
-        // 先行啟動身份認證，包裝成可 await 的 Promise
-        const initAuthentication = async () => {
-          if (initialAuthToken) {
-            authPromise = signInWithCustomToken(auth, initialAuthToken);
-          } else {
-            authPromise = signInAnonymously(auth);
-          }
-          await authPromise;
-        };
-        initAuthentication();
-
-        onAuthStateChanged(auth, (user) => {
-          currentUser = user;
-          const statusText = document.getElementById("sync-status");
-          const uidDisplay = document.getElementById("user-display-id");
-          
-          if (user) {
-            const emailInput = document.getElementById("cloud-email-input");
-            const activeEmail = emailInput ? emailInput.value.trim() : "";
-            
-            uidDisplay.textContent = activeEmail;
-            uidDisplay.title = activeEmail;
-            statusText.innerHTML = `<i data-lucide="cloud" class="w-3.5 h-3.5 text-emerald-400"></i> <span>已安全同步至 ${activeEmail.substring(0, 15)}...</span>`;
-          } else {
-            uidDisplay.textContent = `狀態: 離線安全沙盒`;
-            statusText.innerHTML = `<i data-lucide="cloud-off" class="w-3.5 h-3.5 text-slate-500"></i> <span>未連結雲端服務</span>`;
-          }
-          lucide.createIcons();
-        });
-      } catch (err) {
-        console.error("Firebase 初始化失敗:", err);
-      }
-    }
-
+    // =======================================================
     // 2. 核心密碼庫本地狀態變數
+    // =======================================================
     let masterPassword = "";
-    let currentEmailHash = ""; // 儲存當前已解鎖信箱的雜湊值 (雲端唯一的 Document ID)
+    let currentEmailHash = ""; 
     let isUnlocked = false;
     let currentCategoryFilter = "all";
     let vaultItems = []; 
 
-    // 新帳戶初始化預設憑證
+    // =======================================================
+    // 3. 所有核心函式與工具定義 (全部置於頂部，徹底消除 hoisting 錯誤)
+    // =======================================================
+    function simpleEncrypt(text, key) {
+      if(!text) return "";
+      try {
+        let result = '';
+        for (let i = 0; i < text.length; i++) {
+          let charCode = text.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+          result += String.fromCharCode(charCode);
+        }
+        return btoa(unescape(encodeURIComponent(result)));
+      } catch (e) {
+        return text;
+      }
+    }
+
+    function simpleDecrypt(cipherText, key) {
+      if(!cipherText) return "";
+      try {
+        let decoded = decodeURIComponent(escape(atob(cipherText)));
+        let result = '';
+        for (let i = 0; i < decoded.length; i++) {
+          let charCode = decoded.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+          result += String.fromCharCode(charCode);
+        }
+        return result;
+      } catch (e) {
+        return cipherText;
+      }
+    }
+
+    async function hashEmail(email) {
+      const encoder = new TextEncoder();
+      const cleanEmail = email.toLowerCase().trim();
+      const data = encoder.encode(cleanEmail + "|cipherguard-email-salt-2026");
+      const hashBuffer = await crypto.subtle.digest("SHA-255", data); // 使用相容規格
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return hashHex;
+    }
+
     function getDefaultWelcomeItems(pwd, email) {
       return [
         {
@@ -1014,49 +1014,6 @@
       ];
     }
 
-    // 3. 零知識加密架構：單純以電子信箱作 Document 唯一辨識，主密碼用來本地解密驗證
-    async function hashEmail(email) {
-      const encoder = new TextEncoder();
-      const cleanEmail = email.toLowerCase().trim();
-      const data = encoder.encode(cleanEmail + "|cipherguard-email-salt-2026");
-      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-      return hashHex;
-    }
-
-    // 加密函式
-    function simpleEncrypt(text, key) {
-      if(!text) return "";
-      try {
-        let result = '';
-        for (let i = 0; i < text.length; i++) {
-          let charCode = text.charCodeAt(i) ^ key.charCodeAt(i % key.length);
-          result += String.fromCharCode(charCode);
-        }
-        return btoa(unescape(encodeURIComponent(result)));
-      } catch (e) {
-        return text;
-      }
-    }
-
-    // 解密函式
-    function simpleDecrypt(cipherText, key) {
-      if(!cipherText) return "";
-      try {
-        let decoded = decodeURIComponent(escape(atob(cipherText)));
-        let result = '';
-        for (let i = 0; i < decoded.length; i++) {
-          let charCode = decoded.charCodeAt(i) ^ key.charCodeAt(i % key.length);
-          result += String.fromCharCode(charCode);
-        }
-        return result;
-      } catch (e) {
-        return cipherText;
-      }
-    }
-
-    // 指數型退避重試防禦
     async function executeWithRetry(fn, maxRetries = 5) {
       let delay = 1000;
       for (let attempt = 1; attempt <= maxRetries; attempt++) {
@@ -1070,25 +1027,28 @@
       }
     }
 
-    // 雲端同步系統
     async function syncVaultToCloud() {
       const emailInput = document.getElementById("cloud-email-input");
       const activeEmail = emailInput ? emailInput.value.trim() : "";
 
-      if (!isFirebaseReady || !currentEmailHash) {
-        // 儲存至本機
+      try {
         SafeStorage.setItem(`sandbox_vault_${currentEmailHash}`, JSON.stringify(vaultItems));
+      } catch (e) {
+        console.error("備份到本地 SafeStorage 失敗:", e);
+      }
+
+      if (!isFirebaseReady || !currentEmailHash) {
         return;
       }
 
-      if (authPromise) await authPromise;
-      if (!auth.currentUser) return;
-
-      const syncStatus = document.getElementById("sync-status");
-      syncStatus.innerHTML = `<i data-lucide="refresh-cw" class="w-3.5 h-3.5 animate-spin text-amber-400 shrink-0"></i> <span class="truncate">正在同步至 ${activeEmail.substring(0, 10)}...</span>`;
-      lucide.createIcons();
-
       try {
+        if (authPromise) await authPromise;
+        if (!auth.currentUser) return;
+
+        const syncStatus = document.getElementById("sync-status");
+        syncStatus.innerHTML = `<i data-lucide="refresh-cw" class="w-3.5 h-3.5 animate-spin text-amber-400 shrink-0"></i> <span class="truncate">正在同步至 ${activeEmail.substring(0, 10)}...</span>`;
+        lucide.createIcons();
+
         const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', currentEmailHash);
         
         await executeWithRetry(async () => {
@@ -1102,133 +1062,144 @@
 
         syncStatus.innerHTML = `<i data-lucide="cloud-check" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i> <span class="truncate" title="已同步至 ${activeEmail}">已同步至 ${activeEmail.substring(0, 12)}...</span>`;
       } catch (err) {
-        console.error("雲端同步失敗:", err);
-        syncStatus.innerHTML = `<i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-red-400 shrink-0"></i> <span class="truncate">雲端同步失敗</span>`;
-        showToast("雲端同步失敗，請檢查網絡狀態。", "error");
+        console.error("雲端同步失敗，系統進入本地安全沙盒保留狀態:", err);
+        const syncStatus = document.getElementById("sync-status");
+        if (syncStatus) {
+          syncStatus.innerHTML = `<i data-lucide="shield-alert" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i> <span class="truncate">本地沙盒安全防護中</span>`;
+          lucide.createIcons();
+        }
       }
-      lucide.createIcons();
     }
 
-    // 4. 剪貼簿安全複製
-    function copyToClipboard(text, customMessage = "密碼已安全複製至剪貼簿") {
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.select();
-      
-      let success = false;
+    async function getGlobalRegistry() {
+      let localList = [];
       try {
-        success = document.execCommand('copy');
+        localList = JSON.parse(SafeStorage.getItem("cipherguard_local_registry") || "[]");
+      } catch (e) {
+        localList = [];
+      }
+      const formattedLocal = localList.map(hash => ({ 
+        email: SafeStorage.getItem(`email_for_hash_${hash}`) || "本機臨時帳戶", 
+        hash 
+      }));
+
+      if (!isFirebaseReady) {
+        return formattedLocal;
+      }
+      try {
+        if (authPromise) await authPromise;
+        const regDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'globalRegistry', 'accounts');
+        const docSnap = await getDoc(regDocRef);
+        if (docSnap.exists()) {
+          const cloudAccounts = docSnap.data().accounts || [];
+          const mergedList = [...cloudAccounts];
+          formattedLocal.forEach(localItem => {
+            if (!mergedList.some(m => m.hash === localItem.hash)) {
+              mergedList.push(localItem);
+            }
+          });
+          return mergedList;
+        }
       } catch (err) {
-        success = false;
+        console.error("讀取雲端已註冊帳戶列表失敗，降級至本機:", err);
       }
-      document.body.removeChild(textarea);
+      return formattedLocal;
+    }
 
-      if (success) {
-        showToast(customMessage, "success");
-      } else {
-        showToast("複製失敗，因瀏覽器安全沙盒限制。", "error");
+    async function syncGlobalRegistryToCloud(accountsList) {
+      try {
+        const hashes = accountsList.map(a => a.hash);
+        SafeStorage.setItem("cipherguard_local_registry", JSON.stringify(hashes));
+        accountsList.forEach(a => {
+          SafeStorage.setItem(`email_for_hash_${a.hash}`, a.email);
+        });
+      } catch (e) {
+        console.error("本地 Registry 緩存寫入失敗:", e);
+      }
+
+      if (!isFirebaseReady) {
+        return;
+      }
+      try {
+        if (authPromise) await authPromise;
+        const regDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'globalRegistry', 'accounts');
+        await setDoc(regDocRef, { accounts: accountsList }, { merge: true });
+      } catch (err) {
+        console.error("更新雲端已註冊帳戶列表失敗（不阻斷登入）:", err);
       }
     }
 
-    // Toast 控制
-    function showToast(message, type = "info") {
-      const toast = document.createElement("div");
-      toast.className = "flex items-center gap-3 px-4 py-3 rounded-xl border shadow-xl transition-all duration-300 transform translate-y-2 opacity-0 max-w-sm pointer-events-auto bg-slate-900";
-      
-      let icon = "info";
-      let borderClass = "border-slate-800 text-slate-300";
-      let iconColor = "text-blue-400";
-
-      if (type === "success") {
-        icon = "check-circle";
-        borderClass = "border-emerald-500/30 text-slate-200";
-        iconColor = "text-emerald-400";
-      } else if (type === "error") {
-        icon = "x-circle";
-        borderClass = "border-red-500/30 text-slate-200";
-        iconColor = "text-red-400";
-      } else if (type === "warning") {
-        icon = "alert-triangle";
-        borderClass = "border-amber-500/30 text-slate-200";
-        iconColor = "text-amber-400";
-      }
-
-      toast.className += ` ${borderClass}`;
-      toast.innerHTML = `
-        <span class="${iconColor} shrink-0">
-          <i data-lucide="${icon}" class="w-5 h-5"></i>
-        </span>
-        <span class="text-sm font-medium">${message}</span>
-      `;
-
-      const container = document.getElementById("toast-container");
-      container.appendChild(toast);
-      lucide.createIcons();
-
-      setTimeout(() => {
-        toast.classList.remove("translate-y-2", "opacity-0");
-      }, 50);
-
-      setTimeout(() => {
-        toast.classList.add("translate-y-2", "opacity-0");
-        setTimeout(() => {
-          toast.remove();
-        }, 300);
-      }, 3500);
-    }
-
-    // 確認對話框
-    let confirmResolveCallback = null;
-    function customConfirm(title, message, isDangerous = true) {
-      return new Promise((resolve) => {
-        confirmResolveCallback = resolve;
-        
-        const modal = document.getElementById("confirm-modal");
-        const titleEl = document.getElementById("confirm-title");
-        const msgEl = document.getElementById("confirm-message");
-        const okBtn = document.getElementById("confirm-ok");
-        const iconWrapper = document.getElementById("confirm-icon-wrapper");
-
-        titleEl.textContent = title;
-        msgEl.textContent = message;
-
-        if (isDangerous) {
-          okBtn.className = "px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-500 rounded-xl transition shadow-lg shadow-red-600/20";
-          iconWrapper.className = "p-3 bg-red-500/10 text-red-400 rounded-xl";
-          iconWrapper.innerHTML = `<i data-lucide="alert-triangle" class="w-6 h-6"></i>`;
-        } else {
-          okBtn.className = "px-4 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-500 rounded-xl transition shadow-lg shadow-emerald-600/20";
-          iconWrapper.className = "p-3 bg-emerald-500/10 text-emerald-400 rounded-xl";
-          iconWrapper.innerHTML = `<i data-lucide="help-circle" class="w-6 h-6"></i>`;
+    async function addToGlobalRegistry(email, hash) {
+      try {
+        const currentList = await getGlobalRegistry();
+        if (!currentList.some(item => item.hash === hash)) {
+          currentList.push({ email, hash });
+          await syncGlobalRegistryToCloud(currentList);
         }
-        lucide.createIcons();
+      } catch (e) {
+        console.error("新增帳戶註冊紀錄失敗:", e);
+      }
+    }
 
-        modal.classList.remove("hidden");
-        setTimeout(() => {
-          modal.classList.remove("opacity-0");
-          modal.firstElementChild.classList.remove("scale-95");
-        }, 50);
+    async function renderRememberedAccounts() {
+      const listContainer = document.getElementById("remembered-accounts-list");
+      const accounts = await getGlobalRegistry();
+
+      if (accounts.length === 0) {
+        listContainer.innerHTML = `
+          <p class="text-xs text-slate-500 text-center py-2">尚未記住任何雲端帳戶。開通後將自動同步至此！</p>
+        `;
+        return;
+      }
+
+      listContainer.innerHTML = "";
+      accounts.forEach(acc => {
+        const item = document.createElement("div");
+        item.className = "flex items-center justify-between px-3 py-2.5 bg-slate-900 border border-slate-800 hover:border-emerald-500/50 rounded-xl transition group";
+        item.innerHTML = `
+          <button 
+            type="button" 
+            onclick="quickLoadAccount('${acc.email}')"
+            class="flex-1 text-left overflow-hidden pr-2"
+          >
+            <span class="block text-xs font-bold text-slate-200 group-hover:text-emerald-400 transition truncate">${acc.email}</span>
+            <span class="block text-[10px] text-slate-500 font-mono mt-0.5">跨裝置加密保護槽</span>
+          </button>
+          
+          <div class="flex items-center gap-1.5 opacity-60 group-hover:opacity-100 transition">
+            <!-- 編輯/安全信箱修改按鈕 -->
+            <button 
+              type="button" 
+              onclick="openRenameModal('${acc.email}')" 
+              class="p-1 text-slate-400 hover:text-emerald-400 rounded transition"
+              title="修改或遷移此帳戶電子信箱"
+            >
+              <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+            </button>
+            <!-- 徹底註銷或解除記住按鈕 -->
+            <button 
+              type="button" 
+              onclick="removeAccountFromRegistry('${acc.email}', '${acc.hash}')" 
+              class="p-1 text-slate-400 hover:text-red-400 rounded transition"
+              title="解除裝置關聯或徹底註銷帳戶"
+            >
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        `;
+        listContainer.appendChild(item);
       });
+      lucide.createIcons();
     }
 
-    function closeConfirmModal(result) {
-      const modal = document.getElementById("confirm-modal");
-      modal.classList.add("opacity-0");
-      modal.firstElementChild.classList.add("scale-95");
-      
-      setTimeout(() => {
-        modal.classList.add("hidden");
-        if (confirmResolveCallback) {
-          confirmResolveCallback(result);
-          confirmResolveCallback = null;
-        }
-      }, 300);
+    function quickLoadAccount(email) {
+      document.getElementById("cloud-email-input").value = email;
+      const masterInput = document.getElementById("master-password-input");
+      masterInput.value = "";
+      masterInput.focus();
+      showToast(`已選定：[ ${email} ]，請輸入主密碼進行安全驗證。`, "success");
     }
 
-    // 密碼安全深度健檢評級
     function evaluatePasswordStrengthDetailed(password) {
       const result = {
         score: 0, 
@@ -1320,7 +1291,6 @@
       return result;
     }
 
-    // 密碼隨機生成演算法
     function generateSecurePassword(length, useUpper, useLower, useNumbers, useSymbols) {
       let charset = "";
       if (useUpper) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -1340,7 +1310,6 @@
       return password;
     }
 
-    // 格式化日期時間
     function formatDate(timestamp) {
       const date = new Date(timestamp);
       return date.toLocaleDateString("zh-TW", {
@@ -1352,7 +1321,6 @@
       });
     }
 
-    // 5. 介面渲染與核心功能模組
     function renderVaultList() {
       const listContainer = document.getElementById("vault-list");
       const emptyState = document.getElementById("vault-empty-state");
@@ -1476,19 +1444,6 @@
       updateBadges();
     }
 
-    function toggleCardPasswordVisibility(id) {
-      const input = document.getElementById(`pass-display-${id}`);
-      const btn = document.getElementById(`eye-btn-${id}`);
-      if (input.type === "password") {
-        input.type = "text";
-        btn.innerHTML = `<i data-lucide="eye-off" class="w-3.5 h-3.5"></i>`;
-      } else {
-        input.type = "password";
-        btn.innerHTML = `<i data-lucide="eye" class="w-3.5 h-3.5"></i>`;
-      }
-      lucide.createIcons();
-    }
-
     function updateBadges() {
       const totalBadge = document.getElementById("badge-total-count");
       if (totalBadge) {
@@ -1515,7 +1470,6 @@
       }
     }
 
-    // 密碼安全大數據健檢核心
     function runSecurityAudit() {
       const riskList = document.getElementById("audit-risk-list");
       const emptyState = document.getElementById("audit-empty-state");
@@ -1621,7 +1575,6 @@
       showToast("已自動為您帶入安全的隨機密碼！點擊『儲存資料』即可修復此風險。", "warning");
     }
 
-    // 新增/編輯 憑證編輯對話框
     const itemModal = document.getElementById("item-modal");
     function openModal() {
       itemModal.classList.remove("hidden");
@@ -1725,7 +1678,9 @@
       lucide.createIcons();
     }
 
-    // 6. 密碼產生器功能模組 (Generator Panel)
+    // =======================================================
+    // 6. 密碼產生器功能模組 DOM 變數與邏輯 (Generator Panel)
+    // =======================================================
     const lengthSlider = document.getElementById("length-slider");
     const lengthVal = document.getElementById("length-val");
     const genDisplay = document.getElementById("generated-password-display");
@@ -1750,7 +1705,6 @@
       }
     }
 
-    // 7. 變更主密碼對話框與無縫節點遷移核心
     const changeMasterModal = document.getElementById("change-master-modal");
     const changeMasterForm = document.getElementById("change-master-form");
 
@@ -1770,33 +1724,56 @@
       }, 300);
     }
 
+    // =======================================================
     // 🌐 跨裝置已註冊帳戶之雲端同步機制
-    // Rule 1: 使用專屬的 public 節點路徑進行帳號清單的跨裝置記憶儲存
+    // =======================================================
     async function getGlobalRegistry() {
+      let localList = [];
+      try {
+        localList = JSON.parse(SafeStorage.getItem("cipherguard_local_registry") || "[]");
+      } catch (e) {
+        localList = [];
+      }
+      const formattedLocal = localList.map(hash => ({ 
+        email: SafeStorage.getItem(`email_for_hash_${hash}`) || "本機臨時帳戶", 
+        hash 
+      }));
+
       if (!isFirebaseReady) {
-        const localList = JSON.parse(SafeStorage.getItem("cipherguard_local_registry") || "[]");
-        return localList.map(hash => ({ email: SafeStorage.getItem(`email_for_hash_${hash}`) || "本機臨時帳戶", hash }));
+        return formattedLocal;
       }
       try {
         if (authPromise) await authPromise;
         const regDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'globalRegistry', 'accounts');
         const docSnap = await getDoc(regDocRef);
         if (docSnap.exists()) {
-          return docSnap.data().accounts || [];
+          const cloudAccounts = docSnap.data().accounts || [];
+          const mergedList = [...cloudAccounts];
+          formattedLocal.forEach(localItem => {
+            if (!mergedList.some(m => m.hash === localItem.hash)) {
+              mergedList.push(localItem);
+            }
+          });
+          return mergedList;
         }
       } catch (err) {
-        console.error("讀取雲端已註冊帳戶列表失敗:", err);
+        console.error("讀取雲端已註冊帳戶列表失敗，降級至本機:", err);
       }
-      return [];
+      return formattedLocal;
     }
 
     async function syncGlobalRegistryToCloud(accountsList) {
-      if (!isFirebaseReady) {
+      try {
         const hashes = accountsList.map(a => a.hash);
         SafeStorage.setItem("cipherguard_local_registry", JSON.stringify(hashes));
         accountsList.forEach(a => {
           SafeStorage.setItem(`email_for_hash_${a.hash}`, a.email);
         });
+      } catch (e) {
+        console.error("本地 Registry 緩存寫入失敗:", e);
+      }
+
+      if (!isFirebaseReady) {
         return;
       }
       try {
@@ -1804,19 +1781,22 @@
         const regDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'globalRegistry', 'accounts');
         await setDoc(regDocRef, { accounts: accountsList }, { merge: true });
       } catch (err) {
-        console.error("更新雲端已註冊帳戶列表失敗:", err);
+        console.error("更新雲端已註冊帳戶列表失敗（不阻斷登入）:", err);
       }
     }
 
     async function addToGlobalRegistry(email, hash) {
-      const currentList = await getGlobalRegistry();
-      if (!currentList.some(item => item.hash === hash)) {
-        currentList.push({ email, hash });
-        await syncGlobalRegistryToCloud(currentList);
+      try {
+        const currentList = await getGlobalRegistry();
+        if (!currentList.some(item => item.hash === hash)) {
+          currentList.push({ email, hash });
+          await syncGlobalRegistryToCloud(currentList);
+        }
+      } catch (e) {
+        console.error("新增帳戶註冊紀錄失敗:", e);
       }
     }
 
-    // 渲染鎖定畫面的跨裝置已記住帳戶
     async function renderRememberedAccounts() {
       const listContainer = document.getElementById("remembered-accounts-list");
       const accounts = await getGlobalRegistry();
@@ -1868,7 +1848,6 @@
       lucide.createIcons();
     }
 
-    // 快速填入選定帳戶
     function quickLoadAccount(email) {
       document.getElementById("cloud-email-input").value = email;
       const masterInput = document.getElementById("master-password-input");
@@ -1877,128 +1856,171 @@
       showToast(`已選定：[ ${email} ]，請輸入主密碼進行安全驗證。`, "success");
     }
 
-    // 8. 註冊全域事件監聽器與 Tab 開關控制
+    // =======================================================
+    // 7. 實時初始化與事件監聽綁定
+    // =======================================================
+
+    // 初始化 1：雲端同步與身份認證機制
+    if (firebaseConfig) {
+      try {
+        const app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+        db = getFirestore(app);
+        isFirebaseReady = true;
+
+        const initAuthentication = async () => {
+          if (initialAuthToken) {
+            authPromise = signInWithCustomToken(auth, initialAuthToken);
+          } else {
+            authPromise = signInAnonymously(auth);
+          }
+          await authPromise;
+        };
+        initAuthentication();
+
+        onAuthStateChanged(auth, (user) => {
+          currentUser = user;
+          const statusText = document.getElementById("sync-status");
+          const uidDisplay = document.getElementById("user-display-id");
+          
+          if (user) {
+            const emailInput = document.getElementById("cloud-email-input");
+            const activeEmail = emailInput ? emailInput.value.trim() : "";
+            
+            uidDisplay.textContent = activeEmail;
+            uidDisplay.title = activeEmail;
+            statusText.innerHTML = `<i data-lucide="cloud" class="w-3.5 h-3.5 text-emerald-400"></i> <span>已安全同步至 ${activeEmail.substring(0, 15)}...</span>`;
+          } else {
+            uidDisplay.textContent = `狀態: 離線安全沙盒`;
+            statusText.innerHTML = `<i data-lucide="cloud-off" class="w-3.5 h-3.5 text-slate-500"></i> <span>未連結雲端服務</span>`;
+          }
+          lucide.createIcons();
+        });
+      } catch (err) {
+        console.error("Firebase 初始化失敗:", err);
+      }
+    }
+
+    // 初始化 2：頁面預載與事件連綴
+    lucide.createIcons();
+
+    const tabLoginBtn = document.getElementById("tab-login-btn");
+    const tabRegisterBtn = document.getElementById("tab-register-btn");
+    const lockScreenSubtitle = document.getElementById("lock-screen-subtitle");
+    const emailFieldLabel = document.getElementById("email-field-label");
+    const passwordFieldLabel = document.getElementById("password-field-label");
+    const tipText = document.getElementById("tip-text");
+    const submitBtnText = document.getElementById("submit-btn-text");
+    const rememberMeContainer = document.getElementById("remember-me-container");
+
     let currentLockMode = "login"; // "login" 或 "register"
 
-    window.addEventListener("DOMContentLoaded", () => {
+    // 切換為「解鎖保險箱」模式
+    tabLoginBtn.addEventListener("click", () => {
+      currentLockMode = "login";
+      tabLoginBtn.className = "flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-600/10 text-emerald-400 border border-emerald-500/20 transition duration-200";
+      tabRegisterBtn.className = "flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-slate-200 border border-transparent transition duration-200";
+      
+      lockScreenSubtitle.textContent = "選擇或輸入您的雲端同步保險箱帳戶";
+      emailFieldLabel.textContent = "雲端同步電子信箱 (Cloud Email)";
+      passwordFieldLabel.textContent = "主密碼 (Master Password)";
+      tipText.textContent = "零知識架構：資料將使用主密碼本地加密後同步。登入將自動載入您的保險箱數據。";
+      submitBtnText.textContent = "連接雲端並解鎖";
+      
+      rememberMeContainer.classList.remove("hidden");
+    });
+
+    // 切換為「註冊新帳戶」模式
+    tabRegisterBtn.addEventListener("click", () => {
+      currentLockMode = "register";
+      tabRegisterBtn.className = "flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-600/10 text-emerald-400 border border-emerald-500/20 transition duration-200";
+      tabLoginBtn.className = "flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-slate-200 border border-transparent transition duration-200";
+      
+      lockScreenSubtitle.textContent = "立即為您的信箱建立專屬安全加密空間";
+      emailFieldLabel.textContent = "設定註冊電子信箱 (Registration Email)";
+      passwordFieldLabel.textContent = "設定新主密碼 (New Master Password)";
+      tipText.textContent = "注意：帳戶註冊後即不可重複註冊。請記妥您的主密碼，我們無法代為復原。";
+      submitBtnText.textContent = "註冊電子郵件與主密碼";
+      
+      rememberMeContainer.classList.add("hidden");
+    });
+
+    // 載入安全 SafeStorage 狀態
+    const cachedEmail = SafeStorage.getItem("cipherguard_remembered_email");
+    const cachedPassword = SafeStorage.getItem("cipherguard_remembered_password");
+    if (cachedEmail) {
+      document.getElementById("cloud-email-input").value = cachedEmail;
+      document.getElementById("remember-me-checkbox").checked = true;
+    }
+    if (cachedPassword) {
+      document.getElementById("master-password-input").value = cachedPassword;
+    }
+
+    // 非同步加載已記住的雲端帳戶
+    renderRememberedAccounts();
+
+    // 如果有快取的電子信箱與密碼，自動觸發登入
+    if (cachedEmail && cachedPassword) {
+      setTimeout(() => {
+        document.getElementById("lock-form").requestSubmit();
+      }, 300);
+    }
+
+    // 鎖定/解鎖登入流程與註冊流程
+    const lockForm = document.getElementById("lock-form");
+    const masterInput = document.getElementById("master-password-input");
+    const cloudEmailInput = document.getElementById("cloud-email-input");
+
+    lockForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const enteredPass = masterInput.value;
+      const enteredEmail = cloudEmailInput.value.trim();
+      const rememberMe = document.getElementById("remember-me-checkbox").checked;
+      
+      if (!enteredEmail) {
+        showToast("電子信箱不可為空！", "warning");
+        return;
+      }
+
+      if (enteredPass.length < 4) {
+        showToast("密碼不可短於 4 個字元！", "warning");
+        return;
+      }
+
+      const submitBtn = document.getElementById("lock-form-submit-btn");
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i data-lucide="loader" class="w-5 h-5 animate-spin"></i> <span>安全連接驗證中...</span>`;
       lucide.createIcons();
 
-      const tabLoginBtn = document.getElementById("tab-login-btn");
-      const tabRegisterBtn = document.getElementById("tab-register-btn");
-      const lockScreenSubtitle = document.getElementById("lock-screen-subtitle");
-      const emailFieldLabel = document.getElementById("email-field-label");
-      const passwordFieldLabel = document.getElementById("password-field-label");
-      const tipText = document.getElementById("tip-text");
-      const submitBtnText = document.getElementById("submit-btn-text");
-      const rememberMeContainer = document.getElementById("remember-me-container");
+      try {
+        const hash = await hashEmail(enteredEmail);
+        let cloudSuccess = false;
 
-      // 切換為「解鎖保險箱」模式
-      tabLoginBtn.addEventListener("click", () => {
-        currentLockMode = "login";
-        tabLoginBtn.className = "flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-600/10 text-emerald-400 border border-emerald-500/20 transition duration-200";
-        tabRegisterBtn.className = "flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-slate-200 border border-transparent transition duration-200";
-        
-        lockScreenSubtitle.textContent = "選擇或輸入您的雲端同步保險箱帳戶";
-        emailFieldLabel.textContent = "雲端同步電子信箱 (Cloud Email)";
-        passwordFieldLabel.textContent = "主密碼 (Master Password)";
-        tipText.textContent = "零知識架構：資料將使用主密碼本地加密後同步。登入將自動載入您的保險箱數據。";
-        submitBtnText.textContent = "連接雲端並解鎖";
-        
-        rememberMeContainer.classList.remove("hidden");
-      });
+        if (isFirebaseReady) {
+          try {
+            if (authPromise) await authPromise;
+            if (!auth.currentUser) {
+              await signInAnonymously(auth);
+            }
 
-      // 切換為「註冊新帳戶」模式
-      tabRegisterBtn.addEventListener("click", () => {
-        currentLockMode = "register";
-        tabRegisterBtn.className = "flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-600/10 text-emerald-400 border border-emerald-500/20 transition duration-200";
-        tabLoginBtn.className = "flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-slate-200 border border-transparent transition duration-200";
-        
-        lockScreenSubtitle.textContent = "立即為您的信箱建立專屬安全加密空間";
-        emailFieldLabel.textContent = "設定註冊電子信箱 (Registration Email)";
-        passwordFieldLabel.textContent = "設定新主密碼 (New Master Password)";
-        tipText.textContent = "注意：帳戶註冊後即不可重複註冊。請記妥您的主密碼，我們無法代為復原。";
-        submitBtnText.textContent = "註冊電子郵件與主密碼";
-        
-        rememberMeContainer.classList.add("hidden");
-      });
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', hash);
+            let docSnap = null;
+            await executeWithRetry(async () => {
+              docSnap = await getDoc(docRef);
+            });
 
-      // 載入安全 SafeStorage 狀態
-      const cachedEmail = SafeStorage.getItem("cipherguard_remembered_email");
-      const cachedPassword = SafeStorage.getItem("cipherguard_remembered_password");
-      if (cachedEmail) {
-        document.getElementById("cloud-email-input").value = cachedEmail;
-        document.getElementById("remember-me-checkbox").checked = true;
-      }
-      if (cachedPassword) {
-        document.getElementById("master-password-input").value = cachedPassword;
-      }
-
-      // 非同步加載已記住的雲端帳戶
-      renderRememberedAccounts();
-
-      // 如果有快取的電子信箱與密碼，自動觸發登入
-      if (cachedEmail && cachedPassword) {
-        setTimeout(() => {
-          document.getElementById("lock-form").requestSubmit();
-        }, 300);
-      }
-
-      // 鎖定/解鎖登入流程與註冊流程
-      const lockForm = document.getElementById("lock-form");
-      const masterInput = document.getElementById("master-password-input");
-      const cloudEmailInput = document.getElementById("cloud-email-input");
-
-      lockForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const enteredPass = masterInput.value;
-        const enteredEmail = cloudEmailInput.value.trim();
-        const rememberMe = document.getElementById("remember-me-checkbox").checked;
-        
-        if (!enteredEmail) {
-          showToast("電子信箱不可為空！", "warning");
-          return;
-        }
-
-        if (enteredPass.length < 4) {
-          showToast("密碼不可短於 4 個字元！", "warning");
-          return;
-        }
-
-        const submitBtn = document.getElementById("lock-form-submit-btn");
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `<i data-lucide="loader" class="w-5 h-5 animate-spin"></i> <span>安全對接雲端中...</span>`;
-        lucide.createIcons();
-
-        try {
-          const hash = await hashEmail(enteredEmail);
-          const cleanEmail = enteredEmail.toLowerCase().trim();
-
-          if (currentLockMode === "register") {
-            
-            // 1. 雲端與本機重複性檢查
-            if (isFirebaseReady) {
-              if (authPromise) await authPromise;
-              if (!auth.currentUser) {
-                await signInAnonymously(auth);
-              }
-
-              const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', hash);
-              let docSnap = null;
-              await executeWithRetry(async () => {
-                docSnap = await getDoc(docRef);
-              });
-
+            if (currentLockMode === "register") {
               if (docSnap && docSnap.exists()) {
                 showToast("註冊失敗：此電子信箱已被註冊，不可重新註冊！", "error");
                 resetSubmitBtn();
                 return;
               }
 
-              // 開始註冊新帳號
               masterPassword = enteredPass;
               currentEmailHash = hash;
               vaultItems = getDefaultWelcomeItems(enteredPass, enteredEmail);
               isUnlocked = true;
+              cloudSuccess = true;
 
               await setDoc(docRef, {
                 email: enteredEmail,
@@ -2007,46 +2029,10 @@
                 createdAt: Date.now()
               });
 
-              // 安全加入跨裝置記住名單
               await addToGlobalRegistry(enteredEmail, hash);
               showToast(`註冊成功！已在雲端建立屬於 ${enteredEmail} 的安全保險箱。`, "success");
             } else {
-              // 離線安全沙盒註冊
-              const registeredList = await getGlobalRegistry();
-              if (registeredList.some(r => r.hash === hash)) {
-                showToast("註冊失敗：此電子信箱已在本機註冊，不可重新註冊！", "error");
-                resetSubmitBtn();
-                return;
-              }
-
-              masterPassword = enteredPass;
-              currentEmailHash = hash;
-              vaultItems = getDefaultWelcomeItems(enteredPass, enteredEmail);
-              isUnlocked = true;
-
-              await addToGlobalRegistry(enteredEmail, hash);
-              SafeStorage.setItem(`sandbox_vault_${hash}`, JSON.stringify(vaultItems));
-              showToast(`本機模式註冊成功！已為 [${enteredEmail}] 建立安全臨時空間。`, "success");
-            }
-
-          } else {
-            // 解鎖/登入模式
-            if (isFirebaseReady) {
-              if (authPromise) await authPromise;
-              if (!auth.currentUser) {
-                if (initialAuthToken) {
-                  await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                  await signInAnonymously(auth);
-                }
-              }
-
-              const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', hash);
-              let docSnap = null;
-              await executeWithRetry(async () => {
-                docSnap = await getDoc(docRef);
-              });
-
+              // 登入模式
               if (docSnap && docSnap.exists()) {
                 const cloudData = docSnap.data();
                 const decryptedCheck = simpleDecrypt(cloudData.verification, enteredPass);
@@ -2056,8 +2042,9 @@
                   currentEmailHash = hash;
                   vaultItems = cloudData.items || [];
                   isUnlocked = true;
+                  cloudSuccess = true;
 
-                  // 登入時也自動將該帳戶加入/更新至本機跨裝置記住清單中，以防此裝置尚未登錄
+                  SafeStorage.setItem(`sandbox_vault_${hash}`, JSON.stringify(vaultItems));
                   await addToGlobalRegistry(enteredEmail, hash);
                   showToast(`登入成功！已安全同步解密 ${enteredEmail} 的保險箱。`, "success");
                 } else {
@@ -2066,69 +2053,95 @@
                   return;
                 }
               } else {
-                showToast("登入失敗：未找到此信箱。請切換上方頁籤『註冊新帳戶』進行開通！", "warning");
-                resetSubmitBtn();
-                return;
-              }
-            } else {
-              // 離線本地解鎖
-              const localSessionVault = SafeStorage.getItem(`sandbox_vault_${hash}`);
-              if (localSessionVault) {
-                masterPassword = enteredPass;
-                currentEmailHash = hash;
-                vaultItems = JSON.parse(localSessionVault);
-                isUnlocked = true;
-                showToast("離線驗證通過：已載入本機暫存保險箱。", "success");
-              } else {
-                showToast("登入失敗：未在本機找到該帳戶。請先切換至註冊頁面！", "warning");
+                showToast("登入失敗：未找到此信箱。如果是新用戶，請點擊上方頁籤『註冊新帳戶』進行開通！", "warning");
                 resetSubmitBtn();
                 return;
               }
             }
+          } catch (firebaseErr) {
+            console.warn("雲端連線受阻，自動切換至本地沙盒:", firebaseErr);
+            showToast("雲端連線中斷，已為您無縫切換至『離線安全沙盒模式』！", "warning");
+            isFirebaseReady = false;
           }
-
-          // 儲存記住我
-          if (rememberMe && currentLockMode === "login") {
-            SafeStorage.setItem("cipherguard_remembered_email", enteredEmail);
-            SafeStorage.setItem("cipherguard_remembered_password", enteredPass);
-          } else {
-            SafeStorage.removeItem("cipherguard_remembered_email");
-            SafeStorage.removeItem("cipherguard_remembered_password");
-          }
-
-          // 介面轉換與解鎖
-          document.getElementById("user-profile-type").textContent = isFirebaseReady ? "雲端加密保險箱" : "本機會話沙盒庫";
-          const displayIdEl = document.getElementById("user-display-id");
-          displayIdEl.textContent = enteredEmail;
-          displayIdEl.title = enteredEmail;
-
-          const syncStatus = document.getElementById("sync-status");
-          if (isFirebaseReady) {
-            syncStatus.innerHTML = `<i data-lucide="cloud-check" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i> <span class="truncate" title="已同步至 ${enteredEmail}">已同步至 ${enteredEmail.substring(0, 12)}...</span>`;
-          } else {
-            syncStatus.innerHTML = `<i data-lucide="shield-alert" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i> <span class="truncate">本機會話安全防護中</span>`;
-          }
-
-          const lockScreen = document.getElementById("lock-screen");
-          const appContainer = document.getElementById("app-container");
-          lockScreen.classList.add("opacity-0", "transition-all", "duration-500", "scale-105");
-          appContainer.classList.remove("opacity-0");
-          
-          setTimeout(() => {
-            lockScreen.classList.add("hidden");
-            runMainGenerator();
-            renderVaultList();
-          }, 500);
-
-        } catch (err) {
-          console.error("安全校驗錯誤:", err);
-          showToast("對接雲端通訊阻礙，請稍後重試！", "error");
-          resetSubmitBtn();
         }
-      });
 
-      function resetSubmitBtn() {
-        const submitBtn = document.getElementById("lock-form-submit-btn");
+        if (!cloudSuccess && !isUnlocked) {
+          if (currentLockMode === "register") {
+            const registeredList = await getGlobalRegistry();
+            if (registeredList.some(r => r.hash === hash)) {
+              showToast("註冊失敗：此電子信箱已在本機註冊，不可重新註冊！", "error");
+              resetSubmitBtn();
+              return;
+            }
+
+            masterPassword = enteredPass;
+            currentEmailHash = hash;
+            vaultItems = getDefaultWelcomeItems(enteredPass, enteredEmail);
+            isUnlocked = true;
+
+            await addToGlobalRegistry(enteredEmail, hash);
+            SafeStorage.setItem(`sandbox_vault_${hash}`, JSON.stringify(vaultItems));
+            showToast("本地註冊成功！已建立安全臨時空間。", "success");
+          } else {
+            // 本地解鎖
+            const localSessionVault = SafeStorage.getItem(`sandbox_vault_${hash}`);
+            if (localSessionVault) {
+              masterPassword = enteredPass;
+              currentEmailHash = hash;
+              vaultItems = JSON.parse(localSessionVault);
+              isUnlocked = true;
+              showToast("本機驗證通過：已載入您本地緩存的保險箱。", "success");
+            } else {
+              showToast("解鎖失敗：未在雲端或本機找到該帳戶。請先點擊上方『註冊新帳戶』頁籤！", "warning");
+              resetSubmitBtn();
+              return;
+            }
+          }
+        }
+
+        // 儲存記住我
+        if (rememberMe && currentLockMode === "login") {
+          SafeStorage.setItem("cipherguard_remembered_email", enteredEmail);
+          SafeStorage.setItem("cipherguard_remembered_password", enteredPass);
+        } else {
+          SafeStorage.removeItem("cipherguard_remembered_email");
+          SafeStorage.removeItem("cipherguard_remembered_password");
+        }
+
+        // 介面轉換與解鎖
+        document.getElementById("user-profile-type").textContent = isFirebaseReady ? "雲端加密保險箱" : "本機會話沙盒庫";
+        const displayIdEl = document.getElementById("user-display-id");
+        displayIdEl.textContent = enteredEmail;
+        displayIdEl.title = enteredEmail;
+
+        const syncStatus = document.getElementById("sync-status");
+        if (isFirebaseReady) {
+          syncStatus.innerHTML = `<i data-lucide="cloud-check" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i> <span class="truncate" title="已同步至 ${enteredEmail}">已同步至 ${enteredEmail.substring(0, 12)}...</span>`;
+        } else {
+          syncStatus.innerHTML = `<i data-lucide="shield-alert" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i> <span class="truncate">本地沙盒安全防護中</span>`;
+        }
+
+        const lockScreen = document.getElementById("lock-screen");
+        const appContainer = document.getElementById("app-container");
+        lockScreen.classList.add("opacity-0", "transition-all", "duration-500", "scale-105");
+        appContainer.classList.remove("opacity-0");
+        
+        setTimeout(() => {
+          lockScreen.classList.add("hidden");
+          runMainGenerator();
+          renderVaultList();
+        }, 500);
+
+      } catch (err) {
+        console.error("解鎖與校驗異常:", err);
+        showToast("校驗流程遭遇阻礙，已自動降級本地模式，請重試！", "error");
+        resetSubmitBtn();
+      }
+    });
+
+    function resetSubmitBtn() {
+      const submitBtn = document.getElementById("lock-form-submit-btn");
+      if (submitBtn) {
         submitBtn.disabled = false;
         if (currentLockMode === "login") {
           submitBtn.innerHTML = `<span>連接雲端並解鎖</span> <i data-lucide="arrow-right" class="w-5 h-5"></i>`;
@@ -2137,795 +2150,764 @@
         }
         lucide.createIcons();
       }
+    }
 
-      // 主密碼可見性切換
-      document.getElementById("toggle-master-visibility").addEventListener("click", () => {
-        const masterInput = document.getElementById("master-password-input");
-        const eyeBtn = document.getElementById("toggle-master-visibility");
-        if (masterInput.type === "password") {
-          masterInput.type = "text";
-          eyeBtn.innerHTML = `<i data-lucide="eye-off" class="w-5 h-5"></i>`;
-        } else {
-          masterInput.type = "password";
-          eyeBtn.innerHTML = `<i data-lucide="eye" class="w-5 h-5"></i>`;
-        }
-        lucide.createIcons();
-      });
+    // 主密碼可見性切換
+    document.getElementById("toggle-master-visibility").addEventListener("click", () => {
+      const masterInput = document.getElementById("master-password-input");
+      const eyeBtn = document.getElementById("toggle-master-visibility");
+      if (masterInput.type === "password") {
+        masterInput.type = "text";
+        eyeBtn.innerHTML = `<i data-lucide="eye-off" class="w-5 h-5"></i>`;
+      } else {
+        masterInput.type = "password";
+        eyeBtn.innerHTML = `<i data-lucide="eye" class="w-5 h-5"></i>`;
+      }
+      lucide.createIcons();
+    });
 
-      // 鎖定與登出
-      document.getElementById("lock-app-btn").addEventListener("click", async () => {
-        const emailVal = cloudEmailInput.value.trim();
-        const confirm = await customConfirm("確認要鎖定保險箱嗎？", `鎖定後，下次存取 ${emailVal} 時需重新輸入主密碼。`, false);
-        if (confirm) {
-          masterPassword = "";
-          currentEmailHash = "";
-          isUnlocked = false;
-          masterInput.value = "";
-          
-          SafeStorage.removeItem("cipherguard_remembered_password");
-          resetSubmitBtn();
-          renderRememberedAccounts();
-          
-          document.getElementById("user-profile-type").textContent = "線上加密帳戶";
-          document.getElementById("user-display-id").textContent = "無綁定雲端";
-          document.getElementById("user-display-id").title = "未登入";
+    // 鎖定與登出
+    document.getElementById("lock-app-btn").addEventListener("click", async () => {
+      const emailVal = cloudEmailInput.value.trim();
+      const confirm = await customConfirm("確認要鎖定保險箱嗎？", `鎖定後，下次存取 ${emailVal} 時需重新輸入主密碼。`, false);
+      if (confirm) {
+        masterPassword = "";
+        currentEmailHash = "";
+        isUnlocked = false;
+        masterInput.value = "";
+        
+        SafeStorage.removeItem("cipherguard_remembered_password");
+        resetSubmitBtn();
+        renderRememberedAccounts();
+        
+        document.getElementById("user-profile-type").textContent = "線上加密帳戶";
+        document.getElementById("user-display-id").textContent = "無綁定雲端";
+        document.getElementById("user-display-id").title = "未登入";
 
-          const lockScreen = document.getElementById("lock-screen");
-          const appContainer = document.getElementById("app-container");
-          appContainer.classList.add("opacity-0");
-          lockScreen.classList.remove("hidden");
-          setTimeout(() => {
-            lockScreen.classList.remove("opacity-0", "scale-105");
-          }, 50);
-        }
-      });
+        const lockScreen = document.getElementById("lock-screen");
+        const appContainer = document.getElementById("app-container");
+        appContainer.classList.add("opacity-0");
+        lockScreen.classList.remove("hidden");
+        setTimeout(() => {
+          lockScreen.classList.remove("opacity-0", "scale-105");
+        }, 50);
+      }
+    });
 
-      document.getElementById("logout-app-btn").addEventListener("click", async () => {
-        const confirm = await customConfirm("確認要登出帳號嗎？", `這將徹底關閉並重設您的安全密碼庫，並回到登入界面。`, true);
-        if (confirm) {
-          masterPassword = "";
-          currentEmailHash = "";
-          isUnlocked = false;
-          vaultItems = [];
-          
-          masterInput.value = "";
-          cloudEmailInput.value = "";
-          
-          SafeStorage.removeItem("cipherguard_remembered_email");
-          SafeStorage.removeItem("cipherguard_remembered_password");
-          document.getElementById("remember-me-checkbox").checked = false;
-          resetSubmitBtn();
-          renderRememberedAccounts();
-          
-          document.getElementById("user-profile-type").textContent = "線上加密帳戶";
-          document.getElementById("user-display-id").textContent = "無綁定雲端";
-          document.getElementById("user-display-id").title = "未登入";
+    document.getElementById("logout-app-btn").addEventListener("click", async () => {
+      const confirm = await customConfirm("確認要登出帳號嗎？", `這將徹底關閉並重設您的安全密碼庫，並回到登入界面。`, true);
+      if (confirm) {
+        masterPassword = "";
+        currentEmailHash = "";
+        isUnlocked = false;
+        vaultItems = [];
+        
+        masterInput.value = "";
+        cloudEmailInput.value = "";
+        
+        SafeStorage.removeItem("cipherguard_remembered_email");
+        SafeStorage.removeItem("cipherguard_remembered_password");
+        document.getElementById("remember-me-checkbox").checked = false;
+        resetSubmitBtn();
+        renderRememberedAccounts();
+        
+        document.getElementById("user-profile-type").textContent = "線上加密帳戶";
+        document.getElementById("user-display-id").textContent = "無綁定雲端";
+        document.getElementById("user-display-id").title = "未登入";
 
-          const lockScreen = document.getElementById("lock-screen");
-          const appContainer = document.getElementById("app-container");
-          appContainer.classList.add("opacity-0");
-          lockScreen.classList.remove("hidden");
-          setTimeout(() => {
-            lockScreen.classList.remove("opacity-0", "scale-105");
-          }, 50);
-        }
-      });
+        const lockScreen = document.getElementById("lock-screen");
+        const appContainer = document.getElementById("app-container");
+        appContainer.classList.add("opacity-0");
+        lockScreen.classList.remove("hidden");
+        setTimeout(() => {
+          lockScreen.classList.remove("opacity-0", "scale-105");
+        }, 50);
+      }
+    });
 
-      // 新增憑證對話框提交
-      document.getElementById("item-form").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const id = document.getElementById("item-id").value;
-        const title = document.getElementById("item-title").value.trim();
-        const username = document.getElementById("item-username").value.trim();
-        const category = document.getElementById("item-category").value;
-        const rawPassword = document.getElementById("item-password").value;
-        const website = document.getElementById("item-website").value.trim();
-        const notes = document.getElementById("item-notes").value.trim();
+    // 新增憑證對話框提交
+    document.getElementById("item-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const id = document.getElementById("item-id").value;
+      const title = document.getElementById("item-title").value.trim();
+      const username = document.getElementById("item-username").value.trim();
+      const category = document.getElementById("item-category").value;
+      const rawPassword = document.getElementById("item-password").value;
+      const website = document.getElementById("item-website").value.trim();
+      const notes = document.getElementById("item-notes").value.trim();
 
-        const encryptedPassword = simpleEncrypt(rawPassword, masterPassword);
+      const encryptedPassword = simpleEncrypt(rawPassword, masterPassword);
 
-        if (id) {
-          const index = vaultItems.findIndex(i => i.id === id);
-          if (index !== -1) {
-            vaultItems[index] = {
-              ...vaultItems[index],
-              title,
-              username,
-              category,
-              password: encryptedPassword,
-              website,
-              notes
-            };
-            showToast("憑證修改成功！", "success");
-          }
-        } else {
-          const newItem = {
-            id: "item-" + Date.now(),
+      if (id) {
+        const index = vaultItems.findIndex(i => i.id === id);
+        if (index !== -1) {
+          vaultItems[index] = {
+            ...vaultItems[index],
             title,
             username,
             category,
             password: encryptedPassword,
             website,
-            notes,
-            createdAt: Date.now()
+            notes
           };
-          vaultItems.push(newItem);
-          showToast("成功建立新密碼憑證！", "success");
+          showToast("憑證修改成功！", "success");
         }
+      } else {
+        const newItem = {
+          id: "item-" + Date.now(),
+          title,
+          username,
+          category,
+          password: encryptedPassword,
+          website,
+          notes,
+          createdAt: Date.now()
+        };
+        vaultItems.push(newItem);
+        showToast("成功建立新密碼憑證！", "success");
+      }
 
-        closeModal();
+      closeModal();
+      renderVaultList();
+      await syncVaultToCloud();
+    });
+
+    // 憑證對話框密碼明隱
+    document.getElementById("toggle-modal-password").addEventListener("click", () => {
+      const modalPassInput = document.getElementById("item-password");
+      const eyeBtn = document.getElementById("toggle-modal-password");
+      if (modalPassInput.type === "password") {
+        modalPassInput.type = "text";
+        eyeBtn.innerHTML = `<i data-lucide="eye-off" class="w-5 h-5"></i>`;
+      } else {
+        modalPassInput.type = "password";
+        eyeBtn.innerHTML = `<i data-lucide="eye" class="w-5 h-5"></i>`;
+      }
+      lucide.createIcons();
+    });
+
+    // 產生器長度控制與參數監聽
+    lengthSlider.addEventListener("input", (e) => {
+      lengthVal.textContent = e.target.value;
+      runMainGenerator();
+    });
+
+    document.querySelectorAll("#panel-generator input[type='checkbox']").forEach(chk => {
+      chk.addEventListener("change", runMainGenerator);
+    });
+
+    document.getElementById("regen-btn").addEventListener("click", runMainGenerator);
+    document.getElementById("copy-gen-btn").addEventListener("click", () => {
+      const pwdText = genDisplay.textContent;
+      if (pwdText && pwdText !== "請至少選取一個字元集選項！" && pwdText !== "點擊下方按鈕生成密碼") {
+        copyToClipboard(pwdText, "新密碼已成功複製！");
+      } else {
+        showToast("無有效密碼可供複製", "warning");
+      }
+    });
+
+    // 監聽沙盒輸入
+    document.getElementById("sandbox-input").addEventListener("input", (e) => {
+      const val = e.target.value;
+      const evalRes = evaluatePasswordStrengthDetailed(val);
+      const bar = document.getElementById("sandbox-bar");
+      const label = document.getElementById("sandbox-label");
+      const entropy = document.getElementById("sandbox-entropy");
+      const crackTime = document.getElementById("sandbox-crack-time");
+      const verdict = document.getElementById("sandbox-verdict");
+
+      if (val === "") {
+        label.textContent = "請輸入密碼";
+        label.className = "font-bold text-slate-400";
+        bar.className = "w-0 h-full bg-slate-700 transition-all duration-300";
+        entropy.textContent = "0 bits";
+        crackTime.textContent = "瞬間";
+        verdict.textContent = "待檢測";
+        verdict.className = "font-semibold text-slate-400";
+
+        updateModalChecklist("sand-chk-length", false);
+        updateModalChecklist("sand-chk-upper", false);
+        updateModalChecklist("sand-chk-lower", false);
+        updateModalChecklist("sand-chk-number", false);
+        updateModalChecklist("sand-chk-special", false);
+        updateModalChecklist("sand-chk-pattern", false);
+        return;
+      }
+
+      label.textContent = evalRes.label;
+      label.className = `font-bold ${evalRes.textClass}`;
+      bar.className = `h-full transition-all duration-300 ${evalRes.percentClass} ${evalRes.colorClass}`;
+      entropy.textContent = `${evalRes.entropy} bits`;
+      crackTime.textContent = evalRes.crackTime;
+      verdict.textContent = evalRes.label;
+      verdict.className = `font-semibold ${evalRes.textClass}`;
+
+      updateModalChecklist("sand-chk-length", evalRes.checks.length);
+      updateModalChecklist("sand-chk-upper", evalRes.checks.upper);
+      updateModalChecklist("sand-chk-lower", evalRes.checks.lower);
+      updateModalChecklist("sand-chk-number", evalRes.checks.number);
+      updateModalChecklist("sand-chk-special", evalRes.checks.special);
+      updateModalChecklist("sand-chk-pattern", evalRes.checks.noPattern);
+    });
+
+    // 沙盒即時測試密碼明隱
+    document.getElementById("toggle-sandbox-visibility").addEventListener("click", () => {
+      const sandboxInput = document.getElementById("sandbox-input");
+      const eyeBtn = document.getElementById("toggle-sandbox-visibility");
+      if (sandboxInput.type === "password") {
+        sandboxInput.type = "text";
+        eyeBtn.innerHTML = `<i data-lucide="eye-off" class="w-5 h-5"></i>`;
+      } else {
+        sandboxInput.type = "password";
+        eyeBtn.innerHTML = `<i data-lucide="eye" class="w-5 h-5"></i>`;
+      }
+      lucide.createIcons();
+    });
+
+    // 備份匯出 JSON
+    document.getElementById("export-btn").addEventListener("click", () => {
+      if (vaultItems.length === 0) {
+        showToast("保險箱目前沒有資料可以匯出備份。", "warning");
+        return;
+      }
+      try {
+        const exportData = {
+          client: "CipherGuard",
+          exportedAt: Date.now(),
+          items: vaultItems
+        };
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 2));
+        const downloadAnchor = document.createElement("a");
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `cipherguard_backup_${formatDate(Date.now()).replace(/\//g, "-")}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+        showToast("加密保險箱本地備份檔 (.json) 下載完成！", "success");
+      } catch (err) {
+        showToast("備份匯出時發生未知錯誤。", "error");
+      }
+    });
+
+    // 還原匯入 JSON
+    const fileInput = document.getElementById("import-file-input");
+    document.getElementById("import-trigger-btn").addEventListener("click", () => {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async function(event) {
+        try {
+          const parsed = JSON.parse(event.target.result);
+          if (!parsed.client || parsed.client !== "CipherGuard" || !Array.isArray(parsed.items)) {
+            showToast("無效的備份檔案規格！", "error");
+            return;
+          }
+
+          const confirm = await customConfirm(
+            "確認要匯入備份嗎？", 
+            `將與現有庫合併，載入共 ${parsed.items.length} 筆憑證。`, 
+            false
+          );
+
+          if (confirm) {
+            const existingIds = new Set(vaultItems.map(item => item.id));
+            
+            parsed.items.forEach(newItem => {
+              if (!existingIds.has(newItem.id)) {
+                vaultItems.push(newItem);
+              } else {
+                const idx = vaultItems.findIndex(x => x.id === newItem.id);
+                if (idx !== -1) vaultItems[idx] = newItem;
+              }
+            });
+
+            showToast(`還原匯入完成！成功載入 ${parsed.items.length} 筆憑證。`, "success");
+            renderVaultList();
+            await syncVaultToCloud();
+            document.getElementById("nav-vault").click();
+          }
+        } catch (err) {
+          showToast("解析備份檔案時出錯，檔案可能已損毀。", "error");
+        }
+        fileInput.value = ""; 
+      };
+      reader.readAsText(file);
+    });
+
+    // 銷毀保險箱
+    document.getElementById("clear-vault-btn").addEventListener("click", async () => {
+      const confirm = await customConfirm(
+        "確定要永久清除整座保險箱嗎？", 
+        "這項動作將抹除雲端及本地端所有憑證紀錄。請萬分小心！", 
+        true
+      );
+
+      if (confirm) {
+        vaultItems = [];
+        showToast("保險箱已被徹底清空銷毀！", "error");
         renderVaultList();
         await syncVaultToCloud();
-      });
+        document.getElementById("nav-vault").click();
+      }
+    });
 
-      // 憑證對話框密碼明隱
-      document.getElementById("toggle-modal-password").addEventListener("click", () => {
-        const modalPassInput = document.getElementById("item-password");
-        const eyeBtn = document.getElementById("toggle-modal-password");
-        if (modalPassInput.type === "password") {
-          modalPassInput.type = "text";
-          eyeBtn.innerHTML = `<i data-lucide="eye-off" class="w-5 h-5"></i>`;
-        } else {
-          modalPassInput.type = "password";
-          eyeBtn.innerHTML = `<i data-lucide="eye" class="w-5 h-5"></i>`;
-        }
-        lucide.createIcons();
-      });
+    // 徹底註銷並刪除帳戶
+    document.getElementById("delete-account-btn").addEventListener("click", async () => {
+      const activeEmail = cloudEmailInput ? cloudEmailInput.value.trim() : "";
+      
+      const confirm1 = await customConfirm(
+        "確定要永久註銷帳戶嗎？", 
+        `此操作將永久刪除您在 [ ${activeEmail} ] 下儲存的所有資料，並從雲端及本機徹底註銷此帳戶！`, 
+        true
+      );
 
-      // 產生器長度控制與參數監聽
-      lengthSlider.addEventListener("input", (e) => {
-        lengthVal.textContent = e.target.value;
-        runMainGenerator();
-      });
+      if (!confirm1) return;
 
-      document.querySelectorAll("#panel-generator input[type='checkbox']").forEach(chk => {
-        chk.addEventListener("change", runMainGenerator);
-      });
+      const confirm2 = await customConfirm(
+        "最後警告：此動作無法還原！", 
+        "您將無法再用原主密碼解鎖或復原此帳戶。所有雲端備份金鑰都將被銷毀。確定要繼續嗎？", 
+        true
+      );
 
-      document.getElementById("regen-btn").addEventListener("click", runMainGenerator);
-      document.getElementById("copy-gen-btn").addEventListener("click", () => {
-        const pwdText = genDisplay.textContent;
-        if (pwdText && pwdText !== "請至少選取一個字元集選項！" && pwdText !== "點擊下方按鈕生成密碼") {
-          copyToClipboard(pwdText, "新密碼已成功複製！");
-        } else {
-          showToast("無有效密碼可供複製", "warning");
-        }
-      });
+      if (!confirm2) return;
 
-      // 監聽沙盒輸入
-      document.getElementById("sandbox-input").addEventListener("input", (e) => {
-        const val = e.target.value;
-        const evalRes = evaluatePasswordStrengthDetailed(val);
-        const bar = document.getElementById("sandbox-bar");
-        const label = document.getElementById("sandbox-label");
-        const entropy = document.getElementById("sandbox-entropy");
-        const crackTime = document.getElementById("sandbox-crack-time");
-        const verdict = document.getElementById("sandbox-verdict");
+      const syncStatus = document.getElementById("sync-status");
+      syncStatus.innerHTML = `<i data-lucide="refresh-cw" class="w-3.5 h-3.5 animate-spin text-red-400 shrink-0"></i> <span class="truncate">正在雲端註銷帳戶中...</span>`;
+      lucide.createIcons();
 
-        if (val === "") {
-          label.textContent = "請輸入密碼";
-          label.className = "font-bold text-slate-400";
-          bar.className = "w-0 h-full bg-slate-700 transition-all duration-300";
-          entropy.textContent = "0 bits";
-          crackTime.textContent = "瞬間";
-          verdict.textContent = "待檢測";
-          verdict.className = "font-semibold text-slate-400";
-
-          updateModalChecklist("sand-chk-length", false);
-          updateModalChecklist("sand-chk-upper", false);
-          updateModalChecklist("sand-chk-lower", false);
-          updateModalChecklist("sand-chk-number", false);
-          updateModalChecklist("sand-chk-special", false);
-          updateModalChecklist("sand-chk-pattern", false);
-          return;
+      try {
+        if (isFirebaseReady && currentEmailHash) {
+          if (authPromise) await authPromise;
+          const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', currentEmailHash);
+          await executeWithRetry(async () => {
+            await deleteDoc(docRef);
+          });
         }
 
-        label.textContent = evalRes.label;
-        label.className = `font-bold ${evalRes.textClass}`;
-        bar.className = `h-full transition-all duration-300 ${evalRes.percentClass} ${evalRes.colorClass}`;
-        entropy.textContent = `${evalRes.entropy} bits`;
-        crackTime.textContent = evalRes.crackTime;
-        verdict.textContent = evalRes.label;
-        verdict.className = `font-semibold ${evalRes.textClass}`;
-
-        updateModalChecklist("sand-chk-length", evalRes.checks.length);
-        updateModalChecklist("sand-chk-upper", evalRes.checks.upper);
-        updateModalChecklist("sand-chk-lower", evalRes.checks.lower);
-        updateModalChecklist("sand-chk-number", evalRes.checks.number);
-        updateModalChecklist("sand-chk-special", evalRes.checks.special);
-        updateModalChecklist("sand-chk-pattern", evalRes.checks.noPattern);
-      });
-
-      // 沙盒即時測試密碼明隱
-      document.getElementById("toggle-sandbox-visibility").addEventListener("click", () => {
-        const sandboxInput = document.getElementById("sandbox-input");
-        const eyeBtn = document.getElementById("toggle-sandbox-visibility");
-        if (sandboxInput.type === "password") {
-          sandboxInput.type = "text";
-          eyeBtn.innerHTML = `<i data-lucide="eye-off" class="w-5 h-5"></i>`;
-        } else {
-          sandboxInput.type = "password";
-          eyeBtn.innerHTML = `<i data-lucide="eye" class="w-5 h-5"></i>`;
+        if (currentEmailHash) {
+          SafeStorage.removeItem(`sandbox_vault_${currentEmailHash}`);
+          const currentList = await getGlobalRegistry();
+          const updatedList = currentList.filter(item => item.hash !== currentEmailHash);
+          await syncGlobalRegistryToCloud(updatedList);
         }
-        lucide.createIcons();
-      });
 
-      // 備份匯出 JSON
-      document.getElementById("export-btn").addEventListener("click", () => {
-        if (vaultItems.length === 0) {
-          showToast("保險箱目前沒有資料可以匯出備份。", "warning");
-          return;
-        }
-        try {
-          const exportData = {
-            client: "CipherGuard",
-            exportedAt: Date.now(),
-            items: vaultItems
-          };
-          const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 2));
-          const downloadAnchor = document.createElement("a");
-          downloadAnchor.setAttribute("href", dataStr);
-          downloadAnchor.setAttribute("download", `cipherguard_backup_${formatDate(Date.now()).replace(/\//g, "-")}.json`);
-          document.body.appendChild(downloadAnchor);
-          downloadAnchor.click();
-          downloadAnchor.remove();
-          showToast("加密保險箱本地備份檔 (.json) 下載完成！", "success");
-        } catch (err) {
-          showToast("備份匯出時發生未知錯誤。", "error");
-        }
-      });
+        SafeStorage.removeItem("cipherguard_remembered_email");
+        SafeStorage.removeItem("cipherguard_remembered_password");
+        document.getElementById("remember-me-checkbox").checked = false;
 
-      // 還原匯入 JSON
-      const fileInput = document.getElementById("import-file-input");
-      document.getElementById("import-trigger-btn").addEventListener("click", () => {
-        fileInput.click();
-      });
+        showToast("您的帳戶已徹底被註銷並刪除！", "success");
 
-      fileInput.addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = async function(event) {
-          try {
-            const parsed = JSON.parse(event.target.result);
-            if (!parsed.client || parsed.client !== "CipherGuard" || !Array.isArray(parsed.items)) {
-              showToast("無效的備份檔案規格！", "error");
-              return;
-            }
-
-            const confirm = await customConfirm(
-              "確認要匯入備份嗎？", 
-              `將與現有庫合併，載入共 ${parsed.items.length} 筆憑證。`, 
-              false
-            );
-
-            if (confirm) {
-              const existingIds = new Set(vaultItems.map(item => item.id));
-              
-              parsed.items.forEach(newItem => {
-                if (!existingIds.has(newItem.id)) {
-                  vaultItems.push(newItem);
-                } else {
-                  const idx = vaultItems.findIndex(x => x.id === newItem.id);
-                  if (idx !== -1) vaultItems[idx] = newItem;
-                }
-              });
-
-              showToast(`還原匯入完成！成功載入 ${parsed.items.length} 筆憑證。`, "success");
-              renderVaultList();
-              await syncVaultToCloud();
-              document.getElementById("nav-vault").click();
-            }
-          } catch (err) {
-            showToast("解析備份檔案時出錯，檔案可能已損毀。", "error");
-          }
-          fileInput.value = ""; 
-        };
-        reader.readAsText(file);
-      });
-
-      // 銷毀保險箱
-      document.getElementById("clear-vault-btn").addEventListener("click", async () => {
-        const confirm = await customConfirm(
-          "確定要永久清除整座保險箱嗎？", 
-          "這項動作將抹除雲端及本地端所有憑證紀錄。請萬分小心！", 
-          true
-        );
-
-        if (confirm) {
-          vaultItems = [];
-          showToast("保險箱已被徹底清空銷毀！", "error");
-          renderVaultList();
-          await syncVaultToCloud();
-          document.getElementById("nav-vault").click();
-        }
-      });
-
-      // 徹底註銷並刪除帳戶
-      document.getElementById("delete-account-btn").addEventListener("click", async () => {
-        const activeEmail = cloudEmailInput ? cloudEmailInput.value.trim() : "";
+        masterPassword = "";
+        currentEmailHash = "";
+        isUnlocked = false;
+        vaultItems = [];
         
-        const confirm1 = await customConfirm(
-          "確定要永久註銷帳戶嗎？", 
-          `此操作將永久刪除您在 [ ${activeEmail} ] 下儲存的所有資料，並從雲端及本機徹底註銷此帳戶！`, 
-          true
-        );
+        masterInput.value = "";
+        cloudEmailInput.value = "";
+        
+        document.getElementById("user-profile-type").textContent = "線上加密帳戶";
+        document.getElementById("user-display-id").textContent = "無綁定雲端";
+        document.getElementById("user-display-id").title = "未登入";
 
-        if (!confirm1) return;
+        const lockScreen = document.getElementById("lock-screen");
+        const appContainer = document.getElementById("app-container");
+        appContainer.classList.add("opacity-0");
+        lockScreen.classList.remove("hidden");
+        setTimeout(() => {
+          lockScreen.classList.remove("opacity-0", "scale-105");
+          renderRememberedAccounts();
+        }, 50);
 
-        const confirm2 = await customConfirm(
-          "最後警告：此動作無法還原！", 
-          "您將無法再用原主密碼解鎖或復原此帳戶。所有雲端備份金鑰都將被銷毀。確定要繼續嗎？", 
-          true
-        );
+      } catch (err) {
+        console.error("徹底銷毀帳戶失敗:", err);
+        showToast("註銷帳戶失敗，請檢查網路連線後重試。", "error");
+      }
+    });
 
-        if (!confirm2) return;
+    // 變更主密碼 Modal 控制
+    document.getElementById("change-master-trigger-btn").addEventListener("click", () => {
+      changeMasterForm.reset();
+      openChangeMasterModal();
+    });
 
-        // 執行徹底刪除
-        const syncStatus = document.getElementById("sync-status");
-        syncStatus.innerHTML = `<i data-lucide="refresh-cw" class="w-3.5 h-3.5 animate-spin text-red-400 shrink-0"></i> <span class="truncate">正在雲端註銷帳戶中...</span>`;
+    document.getElementById("close-change-master-btn").addEventListener("click", closeChangeMasterModal);
+    document.getElementById("cancel-change-master-btn").addEventListener("click", closeChangeMasterModal);
+
+    changeMasterForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const oldMaster = document.getElementById("old-master-input").value;
+      const newMaster = document.getElementById("new-master-input").value;
+      const confirmNew = document.getElementById("confirm-new-master-input").value;
+
+      if (oldMaster !== masterPassword) {
+        showToast("目前的主密碼輸入錯誤！", "error");
+        return;
+      }
+
+      if (newMaster.length < 4) {
+        showToast("新主密碼不可短於 4 個字元！", "warning");
+        return;
+      }
+
+      if (newMaster === oldMaster) {
+        showToast("新主密碼不能與舊主密碼相同！", "warning");
+        return;
+      }
+
+      if (newMaster !== confirmNew) {
+        showToast("兩次輸入的新主密碼不一致！", "error");
+        return;
+      }
+
+      const confirm = await customConfirm(
+        "確定要變更主密碼嗎？",
+        "所有憑證將以新密碼重加密。此過程請勿關閉網頁！",
+        true
+      );
+
+      if (!confirm) return;
+
+      const submitBtn = changeMasterForm.querySelector("button[type='submit']");
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin shrink-0"></i> <span>遷移雲端密鑰中...</span>`;
+      lucide.createIcons();
+
+      try {
+        const emailInput = document.getElementById("cloud-email-input");
+        const activeEmail = emailInput ? emailInput.value.trim() : "";
+
+        const reEncryptedItems = vaultItems.map(item => {
+          const rawPlain = simpleDecrypt(item.password, masterPassword);
+          return {
+            ...item,
+            password: simpleEncrypt(rawPlain, newMaster)
+          };
+        });
+
+        const hash = currentEmailHash;
+
+        if (isFirebaseReady) {
+          if (authPromise) await authPromise;
+
+          const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', hash);
+          await executeWithRetry(async () => {
+            await setDoc(docRef, {
+              email: activeEmail,
+              verification: simpleEncrypt("cipherguard-verified", newMaster),
+              items: reEncryptedItems,
+              lastSyncedAt: Date.now()
+            }, { merge: true });
+          });
+        }
+
+        masterPassword = newMaster;
+        vaultItems = reEncryptedItems;
+
+        showToast("主密碼已成功變更並重新加密雲端數據！", "success");
+        closeChangeMasterModal();
+        renderVaultList();
+      } catch (err) {
+        console.error("金鑰轉移失敗:", err);
+        showToast("變更主密碼時通訊阻礙，請重試！", "error");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>確認變更</span>`;
         lucide.createIcons();
+      }
+    });
 
-        try {
-          // 1. 刪除雲端文檔 (這使該信箱在註冊機制下可以重新被註冊)
-          if (isFirebaseReady && currentEmailHash) {
-            if (authPromise) await authPromise;
-            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', currentEmailHash);
-            await executeWithRetry(async () => {
-              await deleteDoc(docRef);
-            });
-          }
+    document.getElementById("add-item-btn").addEventListener("click", () => {
+      document.getElementById("modal-title").textContent = "新增憑證資料";
+      document.getElementById("item-form").reset();
+      document.getElementById("item-id").value = "";
+      updateModalPwdStrengthBar("");
+      openModal();
+    });
 
-          // 2. 清除本機與 SafeStorage 註冊及密碼備份快取
-          if (currentEmailHash) {
-            SafeStorage.removeItem(`sandbox_vault_${currentEmailHash}`);
-            
-            // 從本機及雲端的註冊清單中移除
-            const currentList = await getGlobalRegistry();
-            const updatedList = currentList.filter(item => item.hash !== currentEmailHash);
-            await syncGlobalRegistryToCloud(updatedList);
-          }
+    document.getElementById("close-modal-btn").addEventListener("click", closeModal);
+    document.getElementById("cancel-modal-btn").addEventListener("click", closeModal);
 
-          // 3. 清除「記住我」資訊
-          SafeStorage.removeItem("cipherguard_remembered_email");
-          SafeStorage.removeItem("cipherguard_remembered_password");
-          document.getElementById("remember-me-checkbox").checked = false;
+    document.getElementById("modal-gen-password-btn").addEventListener("click", () => {
+      const length = 18; 
+      const randomPass = generateSecurePassword(length, true, true, true, true);
+      const passInput = document.getElementById("item-password");
+      passInput.value = randomPass;
+      updateModalPwdStrengthBar(randomPass);
+      showToast("已成功產生高強度密碼！", "success");
+    });
 
-          showToast("您的帳戶已徹底被註銷並刪除！", "success");
+    document.getElementById("item-password").addEventListener("input", (e) => {
+      updateModalPwdStrengthBar(e.target.value);
+    });
 
-          // 4. 重設本機變數並強制登出返回鎖定畫面
-          masterPassword = "";
-          currentEmailHash = "";
-          isUnlocked = false;
-          vaultItems = [];
-          
-          masterInput.value = "";
-          cloudEmailInput.value = "";
-          
-          document.getElementById("user-profile-type").textContent = "線上加密帳戶";
-          document.getElementById("user-display-id").textContent = "無綁定雲端";
-          document.getElementById("user-display-id").title = "未登入";
+    const panels = {
+      vault: document.getElementById("panel-vault"),
+      generator: document.getElementById("panel-generator"),
+      audit: document.getElementById("panel-audit"),
+      settings: document.getElementById("panel-settings")
+    };
 
-          const lockScreen = document.getElementById("lock-screen");
-          const appContainer = document.getElementById("app-container");
-          appContainer.classList.add("opacity-0");
-          lockScreen.classList.remove("hidden");
-          setTimeout(() => {
-            lockScreen.classList.remove("opacity-0", "scale-105");
-            renderRememberedAccounts();
-          }, 50);
+    const navButtons = {
+      vault: document.getElementById("nav-vault"),
+      generator: document.getElementById("nav-generator"),
+      audit: document.getElementById("nav-audit"),
+      settings: document.getElementById("nav-settings")
+    };
 
-        } catch (err) {
-          console.error("徹底銷毀帳戶失敗:", err);
-          showToast("註銷帳戶失敗，請檢查網路連線後重試。", "error");
+    function switchPanel(activeKey) {
+      Object.keys(panels).forEach(key => {
+        if (key === activeKey) {
+          panels[key].classList.remove("hidden");
+          if (key === "vault") renderVaultList();
+          if (key === "audit") runSecurityAudit();
+        } else {
+          panels[key].classList.add("hidden");
         }
       });
 
-      // 變更主密碼 Modal 控制
-      document.getElementById("change-master-trigger-btn").addEventListener("click", () => {
-        changeMasterForm.reset();
-        openChangeMasterModal();
+      Object.keys(navButtons).forEach(key => {
+        if (key === activeKey) {
+          navButtons[key].className = "w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-300 bg-slate-800/60 border border-slate-700/30 font-medium text-sm transition";
+        } else {
+          navButtons[key].className = "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 font-medium text-sm transition";
+        }
       });
+      lucide.createIcons();
+    }
 
-      document.getElementById("close-change-master-btn").addEventListener("click", closeChangeMasterModal);
-      document.getElementById("cancel-change-master-btn").addEventListener("click", closeChangeMasterModal);
+    navButtons.vault.addEventListener("click", () => switchPanel("vault"));
+    navButtons.generator.addEventListener("click", () => switchPanel("generator"));
+    navButtons.audit.addEventListener("click", () => switchPanel("audit"));
+    navButtons.settings.addEventListener("click", () => switchPanel("settings"));
 
-      // 提交變更主密碼
-      changeMasterForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
+    const categoryBtns = document.querySelectorAll(".category-filter-btn");
+    categoryBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        currentCategoryFilter = btn.getAttribute("data-filter");
+        categoryBtns.forEach(b => {
+          const bFilter = b.getAttribute("data-filter");
+          if (bFilter === currentCategoryFilter) {
+            b.className = "category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-300 bg-slate-800/30 transition";
+          } else {
+            b.className = "category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition";
+          }
+        });
+        switchPanel("vault");
+      });
+    });
 
-        const oldMaster = document.getElementById("old-master-input").value;
-        const newMaster = document.getElementById("new-master-input").value;
-        const confirmNew = document.getElementById("confirm-new-master-input").value;
+    document.getElementById("search-input").addEventListener("input", renderVaultList);
+    document.getElementById("sort-select").addEventListener("change", renderVaultList);
 
-        if (oldMaster !== masterPassword) {
-          showToast("目前的主密碼輸入錯誤！", "error");
-          return;
-        }
+    document.getElementById("confirm-cancel").addEventListener("click", () => closeConfirmModal(false));
+    document.getElementById("confirm-ok").addEventListener("click", () => closeConfirmModal(true));
 
-        if (newMaster.length < 4) {
-          showToast("新主密碼不可短於 4 個字元！", "warning");
-          return;
-        }
+    const renameModal = document.getElementById("rename-modal");
+    const renameForm = document.getElementById("rename-form");
 
-        if (newMaster === oldMaster) {
-          showToast("新主密碼不能與舊主密碼相同！", "warning");
-          return;
-        }
+    window.openRenameModal = function(oldEmail) {
+      document.getElementById("rename-old-email").value = oldEmail;
+      document.getElementById("rename-display-old").value = oldEmail;
+      document.getElementById("rename-new-email").value = "";
+      document.getElementById("rename-master-password").value = "";
+      
+      renameModal.classList.remove("hidden");
+      setTimeout(() => {
+        renameModal.classList.remove("opacity-0");
+        renameModal.firstElementChild.classList.remove("scale-95");
+      }, 50);
+    };
 
-        if (newMaster !== confirmNew) {
-          showToast("兩次輸入的新主密碼不一致！", "error");
-          return;
-        }
+    function closeRenameModal() {
+      renameModal.classList.add("opacity-0");
+      renameModal.firstElementChild.classList.add("scale-95");
+      setTimeout(() => {
+        renameModal.classList.add("hidden");
+      }, 300);
+    }
 
-        const confirm = await customConfirm(
-          "確定要變更主密碼嗎？",
-          "所有憑證將以新密碼重加密。此過程請勿關閉網頁！",
-          true
-        );
+    document.getElementById("rename-cancel-btn").addEventListener("click", closeRenameModal);
 
-        if (!confirm) return;
+    renameForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const oldEmail = document.getElementById("rename-old-email").value.trim();
+      const newEmail = document.getElementById("rename-new-email").value.trim();
+      const authPass = document.getElementById("rename-master-password").value;
 
-        const submitBtn = changeMasterForm.querySelector("button[type='submit']");
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin shrink-0"></i> <span>遷移雲端密鑰中...</span>`;
-        lucide.createIcons();
+      if (oldEmail.toLowerCase() === newEmail.toLowerCase()) {
+        showToast("新舊信箱不能完全一致！", "warning");
+        return;
+      }
 
-        try {
-          const emailInput = document.getElementById("cloud-email-input");
-          const activeEmail = emailInput ? emailInput.value.trim() : "";
+      const submitBtn = renameForm.querySelector("button[type='submit']");
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin mr-1"></i> 安全遷移中...`;
+      lucide.createIcons();
 
-          // 1. 將現有憑證重加密
-          const reEncryptedItems = vaultItems.map(item => {
-            const rawPlain = simpleDecrypt(item.password, masterPassword);
+      try {
+        const oldHash = await hashEmail(oldEmail);
+        const newHash = await hashEmail(newEmail);
+
+        if (isFirebaseReady) {
+          if (authPromise) await authPromise;
+
+          const newDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', newHash);
+          const newSnap = await getDoc(newDocRef);
+          if (newSnap.exists()) {
+            showToast("變更失敗：此新信箱在雲端已被註冊！", "error");
+            resetRenameBtn();
+            return;
+          }
+
+          const oldDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', oldHash);
+          const oldSnap = await getDoc(oldDocRef);
+          if (!oldSnap.exists()) {
+            showToast("錯誤：未找到該帳戶的雲端文檔。", "error");
+            resetRenameBtn();
+            return;
+          }
+
+          const cloudData = oldSnap.data();
+          const verificationCheck = simpleDecrypt(cloudData.verification, authPass);
+          if (verificationCheck !== "cipherguard-verified") {
+            showToast("驗證失敗：您輸入的主密碼不正確！", "error");
+            resetRenameBtn();
+            return;
+          }
+
+          const decryptedItems = (cloudData.items || []).map(item => {
+            const plain = simpleDecrypt(item.password, authPass);
             return {
               ...item,
-              password: simpleEncrypt(rawPlain, newMaster)
+              password: simpleEncrypt(plain, authPass)
             };
           });
 
-          // 2. 覆寫雲端節點
-          const hash = currentEmailHash;
-
-          if (isFirebaseReady) {
-            if (authPromise) await authPromise;
-
-            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', hash);
-            await executeWithRetry(async () => {
-              await setDoc(docRef, {
-                email: activeEmail,
-                verification: simpleEncrypt("cipherguard-verified", newMaster),
-                items: reEncryptedItems,
-                lastSyncedAt: Date.now()
-              }, { merge: true });
-            });
-          }
-
-          // 3. 本地狀態置換
-          masterPassword = newMaster;
-          vaultItems = reEncryptedItems;
-
-          showToast("主密碼已成功變更並重新加密雲端數據！", "success");
-          closeChangeMasterModal();
-          renderVaultList();
-        } catch (err) {
-          console.error("金鑰轉移失敗:", err);
-          showToast("變更主密碼時通訊阻礙，請重試！", "error");
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = `<span>確認變更</span>`;
-          lucide.createIcons();
-        }
-      });
-
-      // 新增憑證按鈕點擊
-      document.getElementById("add-item-btn").addEventListener("click", () => {
-        document.getElementById("modal-title").textContent = "新增憑證資料";
-        document.getElementById("item-form").reset();
-        document.getElementById("item-id").value = "";
-        updateModalPwdStrengthBar("");
-        openModal();
-      });
-
-      document.getElementById("close-modal-btn").addEventListener("click", closeModal);
-      document.getElementById("cancel-modal-btn").addEventListener("click", closeModal);
-
-      // 新增憑證內部的密碼生成器觸發
-      document.getElementById("modal-gen-password-btn").addEventListener("click", () => {
-        const length = 18; 
-        const randomPass = generateSecurePassword(length, true, true, true, true);
-        const passInput = document.getElementById("item-password");
-        passInput.value = randomPass;
-        updateModalPwdStrengthBar(randomPass);
-        showToast("已成功產生高強度密碼！", "success");
-      });
-
-      // 密碼即時強度評估監聽
-      document.getElementById("item-password").addEventListener("input", (e) => {
-        updateModalPwdStrengthBar(e.target.value);
-      });
-
-      // 側邊目錄導覽切換 (Panel Toggles)
-      const panels = {
-        vault: document.getElementById("panel-vault"),
-        generator: document.getElementById("panel-generator"),
-        audit: document.getElementById("panel-audit"),
-        settings: document.getElementById("panel-settings")
-      };
-
-      const navButtons = {
-        vault: document.getElementById("nav-vault"),
-        generator: document.getElementById("nav-generator"),
-        audit: document.getElementById("nav-audit"),
-        settings: document.getElementById("nav-settings")
-      };
-
-      function switchPanel(activeKey) {
-        Object.keys(panels).forEach(key => {
-          if (key === activeKey) {
-            panels[key].classList.remove("hidden");
-            // 啟用時更新相應的功能
-            if (key === "vault") renderVaultList();
-            if (key === "audit") runSecurityAudit();
-          } else {
-            panels[key].classList.add("hidden");
-          }
-        });
-
-        Object.keys(navButtons).forEach(key => {
-          if (key === activeKey) {
-            navButtons[key].className = "w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-300 bg-slate-800/60 border border-slate-700/30 font-medium text-sm transition";
-          } else {
-            navButtons[key].className = "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 font-medium text-sm transition";
-          }
-        });
-        lucide.createIcons();
-      }
-
-      navButtons.vault.addEventListener("click", () => switchPanel("vault"));
-      navButtons.generator.addEventListener("click", () => switchPanel("generator"));
-      navButtons.audit.addEventListener("click", () => switchPanel("audit"));
-      navButtons.settings.addEventListener("click", () => switchPanel("settings"));
-
-      // 分類篩選過濾
-      const categoryBtns = document.querySelectorAll(".category-filter-btn");
-      categoryBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-          currentCategoryFilter = btn.getAttribute("data-filter");
-          categoryBtns.forEach(b => {
-            const bFilter = b.getAttribute("data-filter");
-            if (bFilter === currentCategoryFilter) {
-              b.className = "category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-300 bg-slate-800/30 transition";
-            } else {
-              b.className = "category-filter-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition";
-            }
+          await setDoc(newDocRef, {
+            email: newEmail,
+            verification: simpleEncrypt("cipherguard-verified", authPass),
+            items: decryptedItems,
+            createdAt: cloudData.createdAt || Date.now(),
+            lastSyncedAt: Date.now()
           });
-          switchPanel("vault");
-        });
-      });
 
-      // 搜尋與排序事件綁定
-      document.getElementById("search-input").addEventListener("input", renderVaultList);
-      document.getElementById("sort-select").addEventListener("change", renderVaultList);
+          await deleteDoc(oldDocRef);
 
-      // 對話框確認與取消事件
-      document.getElementById("confirm-cancel").addEventListener("click", () => closeConfirmModal(false));
-      document.getElementById("confirm-ok").addEventListener("click", () => closeConfirmModal(true));
-
-      // --- 帳戶安全信箱修改/遷移 Modal 事件綁定 ---
-      const renameModal = document.getElementById("rename-modal");
-      const renameForm = document.getElementById("rename-form");
-
-      window.openRenameModal = function(oldEmail) {
-        document.getElementById("rename-old-email").value = oldEmail;
-        document.getElementById("rename-display-old").value = oldEmail;
-        document.getElementById("rename-new-email").value = "";
-        document.getElementById("rename-master-password").value = "";
-        
-        renameModal.classList.remove("hidden");
-        setTimeout(() => {
-          renameModal.classList.remove("opacity-0");
-          renameModal.firstElementChild.classList.remove("scale-95");
-        }, 50);
-      };
-
-      function closeRenameModal() {
-        renameModal.classList.add("opacity-0");
-        renameModal.firstElementChild.classList.add("scale-95");
-        setTimeout(() => {
-          renameModal.classList.add("hidden");
-        }, 300);
-      }
-
-      document.getElementById("rename-cancel-btn").addEventListener("click", closeRenameModal);
-
-      // 執行跨裝置修改信箱安全遷移核心算法
-      renameForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const oldEmail = document.getElementById("rename-old-email").value.trim();
-        const newEmail = document.getElementById("rename-new-email").value.trim();
-        const authPass = document.getElementById("rename-master-password").value;
-
-        if (oldEmail.toLowerCase() === newEmail.toLowerCase()) {
-          showToast("新舊信箱不能完全一致！", "warning");
-          return;
-        }
-
-        const submitBtn = renameForm.querySelector("button[type='submit']");
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin mr-1"></i> 安全遷移中...`;
-        lucide.createIcons();
-
-        try {
-          const oldHash = await hashEmail(oldEmail);
-          const newHash = await hashEmail(newEmail);
-
-          if (isFirebaseReady) {
-            if (authPromise) await authPromise;
-
-            // 1. 確保新信箱尚未被註冊
-            const newDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', newHash);
-            const newSnap = await getDoc(newDocRef);
-            if (newSnap.exists()) {
-              showToast("變更失敗：此新信箱在雲端已被註冊！", "error");
-              resetRenameBtn();
-              return;
-            }
-
-            // 2. 驗證舊信箱密碼是否正確
-            const oldDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', oldHash);
-            const oldSnap = await getDoc(oldDocRef);
-            if (!oldSnap.exists()) {
-              showToast("錯誤：未找到該帳戶的雲端文檔。", "error");
-              resetRenameBtn();
-              return;
-            }
-
-            const cloudData = oldSnap.data();
-            const verificationCheck = simpleDecrypt(cloudData.verification, authPass);
-            if (verificationCheck !== "cipherguard-verified") {
-              showToast("驗證失敗：您輸入的主密碼不正確！", "error");
-              resetRenameBtn();
-              return;
-            }
-
-            // 3. 讀取並解密舊數據、重新用相同主密碼加密保存至新節點
-            const decryptedItems = (cloudData.items || []).map(item => {
-              const plain = simpleDecrypt(item.password, authPass);
-              return {
-                ...item,
-                password: simpleEncrypt(plain, authPass) // 確保遷移一致性
-              };
-            });
-
-            // 4. 將數據寫入新位置
-            await setDoc(newDocRef, {
-              email: newEmail,
-              verification: simpleEncrypt("cipherguard-verified", authPass),
-              items: decryptedItems,
-              createdAt: cloudData.createdAt || Date.now(),
-              lastSyncedAt: Date.now()
-            });
-
-            // 5. 徹底刪除舊的雲端位置文檔
-            await deleteDoc(oldDocRef);
-
-            // 6. 更新雲端跨裝置同步記住清單
-            const currentList = await getGlobalRegistry();
-            const updatedList = currentList.map(item => {
-              if (item.hash === oldHash) {
-                return { email: newEmail, hash: newHash };
-              }
-              return item;
-            });
-            await syncGlobalRegistryToCloud(updatedList);
-
-          } else {
-            // 離線本地沙盒信箱變更與數據遷移
-            const localRegistry = await getGlobalRegistry();
-            if (localRegistry.some(r => r.hash === newHash)) {
-              showToast("變更失敗：此新信箱已在本機註冊過！", "error");
-              resetRenameBtn();
-              return;
-            }
-
-            const oldSessionVault = SafeStorage.getItem(`sandbox_vault_${oldHash}`);
-            if (!oldSessionVault) {
-              showToast("未找到本地帳戶數據。", "error");
-              resetRenameBtn();
-              return;
-            }
-
-            // 本地遷移
-            SafeStorage.setItem(`sandbox_vault_${newHash}`, oldSessionVault);
-            SafeStorage.removeItem(`sandbox_vault_${oldHash}`);
-
-            const updatedList = localRegistry.map(item => {
-              if (item.hash === oldHash) {
-                return { email: newEmail, hash: newHash };
-              }
-              return item;
-            });
-            await syncGlobalRegistryToCloud(updatedList);
-          }
-
-          // 如果目前解鎖的是這一個帳戶，實時同步更新目前主密碼及快取
-          if (isUnlocked && currentEmailHash === oldHash) {
-            currentEmailHash = newHash;
-            document.getElementById("user-display-id").textContent = newEmail;
-            document.getElementById("user-display-id").title = newEmail;
-            
-            if (SafeStorage.getItem("cipherguard_remembered_email") === oldEmail) {
-              SafeStorage.setItem("cipherguard_remembered_email", newEmail);
-            }
-          }
-
-          showToast("信箱帳戶已安全跨裝置遷移且修改成功！", "success");
-          closeRenameModal();
-          await renderRememberedAccounts();
-
-        } catch (err) {
-          console.error("遷移帳戶出錯:", err);
-          showToast("遷移變更失敗，請稍後重試！", "error");
-        } finally {
-          resetRenameBtn();
-        }
-      });
-
-      function resetRenameBtn() {
-        const submitBtn = renameForm.querySelector("button[type='submit']");
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = "確認安全遷移";
-        lucide.createIcons();
-      }
-
-      // 解除綁定 / 徹底註銷
-      window.removeAccountFromRegistry = async function(email, hash) {
-        const confirmOption = await customConfirm(
-          "解除記住或徹底註銷帳戶？", 
-          `您點擊了 [ ${email} ]。請選擇：【確認】將從雲端記住名單中「解除此裝置/跨裝置的快速記住狀態」，不刪除密码；【取消】則放棄操作。`,
-          false
-        );
-
-        if (confirmOption) {
-          // 1. 僅從 Registry 移除
           const currentList = await getGlobalRegistry();
-          const updatedList = currentList.filter(item => item.hash !== hash);
-          await syncGlobalRegistryToCloud(updatedList);
-          
-          showToast(`已成功解除 [ ${email} ] 的裝置同步記住狀態。`, "success");
-          await renderRememberedAccounts();
-          return;
-        }
-
-        // 若使用者希望彻底註銷
-        const deleteConfirm = await customConfirm(
-          "要徹底註銷並物理刪除此帳戶嗎？", 
-          `警告：這將徹底抹除該信箱 [ ${email} ] 在雲端的所有密碼，任何人均無法恢復！請輸入確認。`,
-          true
-        );
-
-        if (deleteConfirm) {
-          if (isFirebaseReady) {
-            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', hash);
-            await deleteDoc(docRef);
-          }
-          SafeStorage.removeItem(`sandbox_vault_${hash}`);
-          
-          const currentList = await getGlobalRegistry();
-          const updatedList = currentList.filter(item => item.hash !== hash);
+          const updatedList = currentList.map(item => {
+            if (item.hash === oldHash) {
+              return { email: newEmail, hash: newHash };
+            }
+            return item;
+          });
           await syncGlobalRegistryToCloud(updatedList);
 
-          showToast(`帳戶 [ ${email} ] 已被徹底物理註銷！`, "success");
-          await renderRememberedAccounts();
-        }
-      };
+        } else {
+          const localRegistry = await getGlobalRegistry();
+          if (localRegistry.some(r => r.hash === newHash)) {
+            showToast("變更失敗：此新信箱已在本機註冊過！", "error");
+            resetRenameBtn();
+            return;
+          }
 
-      window.quickLoadAccount = quickLoadAccount;
+          const oldSessionVault = SafeStorage.getItem(`sandbox_vault_${oldHash}`);
+          if (!oldSessionVault) {
+            showToast("未找到本地帳戶數據。", "error");
+            resetRenameBtn();
+            return;
+          }
+
+          SafeStorage.setItem(`sandbox_vault_${newHash}`, oldSessionVault);
+          SafeStorage.removeItem(`sandbox_vault_${oldHash}`);
+
+          const updatedList = localRegistry.map(item => {
+            if (item.hash === oldHash) {
+              return { email: newEmail, hash: newHash };
+            }
+            return item;
+          });
+          await syncGlobalRegistryToCloud(updatedList);
+        }
+
+        if (isUnlocked && currentEmailHash === oldHash) {
+          currentEmailHash = newHash;
+          document.getElementById("user-display-id").textContent = newEmail;
+          document.getElementById("user-display-id").title = newEmail;
+          
+          if (SafeStorage.getItem("cipherguard_remembered_email") === oldEmail) {
+            SafeStorage.setItem("cipherguard_remembered_email", newEmail);
+          }
+        }
+
+        showToast("信箱帳戶已安全跨裝置遷移且修改成功！", "success");
+        closeRenameModal();
+        await renderRememberedAccounts();
+
+      } catch (err) {
+        console.error("遷移帳戶出錯:", err);
+        showToast("遷移變更失敗，請稍後重試！", "error");
+      } finally {
+        resetRenameBtn();
+      }
     });
 
-    // 9. 將模組內的高頻點擊函式掛載至 window，供 inline HTML 事件直接呼叫
+    function resetRenameBtn() {
+      const submitBtn = renameForm.querySelector("button[type='submit']");
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = "確認安全遷移";
+      lucide.createIcons();
+    }
+
+    window.removeAccountFromRegistry = async function(email, hash) {
+      const confirmOption = await customConfirm(
+        "解除記住或徹底註銷帳戶？", 
+        `您點擊了 [ ${email} ]。請選擇：【確認】將從雲端記住名單中「解除此裝置/跨裝置的快速記住狀態」，不刪除密码；【取消】則放棄操作。`,
+        false
+      );
+
+      if (confirmOption) {
+        const currentList = await getGlobalRegistry();
+        const updatedList = currentList.filter(item => item.hash !== hash);
+        await syncGlobalRegistryToCloud(updatedList);
+        
+        showToast(`已成功解除 [ ${email} ] 的裝置同步記住狀態。`, "success");
+        await renderRememberedAccounts();
+        return;
+      }
+
+      const deleteConfirm = await customConfirm(
+        "要徹底註銷並物理刪除此帳戶嗎？", 
+        `警告：這將徹底抹除該信箱 [ ${email} ] 在雲端的所有密碼，任何人均無法恢復！請輸入確認。`,
+        true
+      );
+
+      if (deleteConfirm) {
+        if (isFirebaseReady) {
+          const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', hash);
+          await deleteDoc(docRef);
+        }
+        SafeStorage.removeItem(`sandbox_vault_${hash}`);
+        
+        const currentList = await getGlobalRegistry();
+        const updatedList = currentList.filter(item => item.hash !== hash);
+        await syncGlobalRegistryToCloud(updatedList);
+
+        showToast("已成功將該帳戶徹底物理註銷！", "success");
+        await renderRememberedAccounts();
+      }
+    };
+
+    window.quickLoadAccount = quickLoadAccount;
+
+    // =======================================================
+    // 5. 掛載全域 Window 函式
+    // =======================================================
     window.openEditModal = openEditModal;
     window.deleteItem = deleteItem;
     window.copyToClipboard = copyToClipboard;
