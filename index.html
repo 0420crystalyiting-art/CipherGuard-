@@ -70,6 +70,44 @@
     </div>
   </div>
 
+  <!-- 安全帳戶變更/修改信箱對話框 -->
+  <div id="rename-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 m-4 shadow-2xl transform scale-95 transition-transform duration-300">
+      <div class="flex items-start gap-4 mb-4">
+        <div class="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl">
+          <i data-lucide="user-cog" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-slate-100">安全修改與遷移電子信箱</h3>
+          <p class="text-slate-400 text-xs mt-1">此動作將安全遷移您現存的所有加密密碼至新信箱節點，並在所有裝置中更新。</p>
+        </div>
+      </div>
+      <form id="rename-form" class="space-y-4">
+        <input type="hidden" id="rename-old-email">
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">目前欲變更的帳戶</label>
+          <input type="text" id="rename-display-old" disabled class="w-full px-4 py-2 bg-slate-950 border border-slate-800 text-slate-500 text-sm rounded-xl outline-none">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">輸入新的電子信箱 (New Email)</label>
+          <input type="email" id="rename-new-email" required placeholder="example@gmail.com" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 text-slate-100 text-sm rounded-xl focus:outline-none focus:border-emerald-500 transition">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">驗證該帳戶的主密碼 (Master Password)</label>
+          <input type="password" id="rename-master-password" required placeholder="請輸入主密碼進行授權" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 text-slate-100 text-sm rounded-xl focus:outline-none focus:border-emerald-500 transition">
+        </div>
+        <div class="flex justify-end gap-3 pt-2">
+          <button type="button" id="rename-cancel-btn" class="px-4 py-2 text-sm font-medium text-slate-400 hover:text-slate-200 bg-slate-800 hover:bg-slate-700 rounded-xl transition">
+            取消
+          </button>
+          <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-500 rounded-xl transition">
+            確認安全遷移
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- 1. 主密碼解鎖/設定畫面 -->
   <div id="lock-screen" class="fixed inset-0 bg-slate-950 z-40 flex items-center justify-center p-4 overflow-y-auto">
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent pointer-events-none"></div>
@@ -99,6 +137,22 @@
         >
           註冊新帳戶
         </button>
+      </div>
+
+      <!-- 跨裝置同步已記住帳戶面板 -->
+      <div id="remembered-accounts-section" class="mb-5 bg-slate-950/50 border border-slate-800/80 rounded-2xl p-4">
+        <label class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2.5 flex items-center justify-between">
+          <span class="flex items-center gap-1.5">
+            <i data-lucide="users" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span>🌐 跨裝置同步已記住帳戶</span>
+          </span>
+          <span class="text-[9px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded-md font-mono">Synced</span>
+        </label>
+        
+        <!-- 動態渲染的已記住帳戶清單 -->
+        <div id="remembered-accounts-list" class="space-y-2 max-h-36 overflow-y-auto no-scrollbar">
+          <p class="text-xs text-slate-500 text-center py-2">尚未記住任何雲端帳戶。開通後將自動同步至此！</p>
+        </div>
       </div>
 
       <form id="lock-form" class="space-y-4">
@@ -152,7 +206,7 @@
               id="remember-me-checkbox" 
               class="w-4.5 h-4.5 rounded bg-slate-950 border-slate-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900 transition"
             >
-            <span class="text-xs text-slate-400 font-medium">記住我的登入資訊 (此瀏覽器會話)</span>
+            <span class="text-xs text-slate-400 font-medium">記住我的登入資訊 (此瀏覽器)</span>
           </label>
         </div>
 
@@ -590,7 +644,7 @@
             </div>
 
             <!-- 修改主密碼按鈕控制 -->
-            <div class="pt-4 border-t border-slate-850">
+            <div class="pt-4 border-t border-slate-855">
               <button id="change-master-trigger-btn" class="w-full p-4 bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 rounded-xl flex items-center gap-4 text-left transition group">
                 <div class="p-3 bg-amber-500/10 text-amber-400 group-hover:bg-amber-500/20 rounded-xl transition">
                   <i data-lucide="key-round" class="w-6 h-6"></i>
@@ -834,25 +888,26 @@
     import { getFirestore, doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     // 建立安全儲存包裝器，防止在 iframe 沙盒或隱私模式下因 sessionStorage 被禁用而引發 SecurityError 崩潰
+    // 升級為使用 localStorage 來維持瀏覽器在不同會話、關閉後重新開啟時的持久記憶
     const SafeStorage = {
       _memoryDb: {},
       getItem(key) {
         try {
-          return sessionStorage.getItem(key);
+          return localStorage.getItem(key);
         } catch (e) {
           return this._memoryDb[key] || null;
         }
       },
       setItem(key, value) {
         try {
-          sessionStorage.setItem(key, value);
+          localStorage.setItem(key, value);
         } catch (e) {
           this._memoryDb[key] = String(value);
         }
       },
       removeItem(key) {
         try {
-          sessionStorage.removeItem(key);
+          localStorage.removeItem(key);
         } catch (e) {
           delete this._memoryDb[key];
         }
@@ -1715,18 +1770,111 @@
       }, 300);
     }
 
-    // 記憶本機已註冊的雜湊集合，確保沙盒離線模式下信箱與密碼也不可重新註冊
-    function isEmailHashRegisteredLocally(hash) {
-      const list = JSON.parse(SafeStorage.getItem("cipherguard_local_registry") || "[]");
-      return list.includes(hash);
+    // 🌐 跨裝置已註冊帳戶之雲端同步機制
+    // Rule 1: 使用專屬的 public 節點路徑進行帳號清單的跨裝置記憶儲存
+    async function getGlobalRegistry() {
+      if (!isFirebaseReady) {
+        const localList = JSON.parse(SafeStorage.getItem("cipherguard_local_registry") || "[]");
+        return localList.map(hash => ({ email: SafeStorage.getItem(`email_for_hash_${hash}`) || "本機臨時帳戶", hash }));
+      }
+      try {
+        if (authPromise) await authPromise;
+        const regDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'globalRegistry', 'accounts');
+        const docSnap = await getDoc(regDocRef);
+        if (docSnap.exists()) {
+          return docSnap.data().accounts || [];
+        }
+      } catch (err) {
+        console.error("讀取雲端已註冊帳戶列表失敗:", err);
+      }
+      return [];
     }
 
-    function registerEmailHashLocally(hash) {
-      const list = JSON.parse(SafeStorage.getItem("cipherguard_local_registry") || "[]");
-      if (!list.includes(hash)) {
-        list.push(hash);
-        SafeStorage.setItem("cipherguard_local_registry", JSON.stringify(list));
+    async function syncGlobalRegistryToCloud(accountsList) {
+      if (!isFirebaseReady) {
+        const hashes = accountsList.map(a => a.hash);
+        SafeStorage.setItem("cipherguard_local_registry", JSON.stringify(hashes));
+        accountsList.forEach(a => {
+          SafeStorage.setItem(`email_for_hash_${a.hash}`, a.email);
+        });
+        return;
       }
+      try {
+        if (authPromise) await authPromise;
+        const regDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'globalRegistry', 'accounts');
+        await setDoc(regDocRef, { accounts: accountsList }, { merge: true });
+      } catch (err) {
+        console.error("更新雲端已註冊帳戶列表失敗:", err);
+      }
+    }
+
+    async function addToGlobalRegistry(email, hash) {
+      const currentList = await getGlobalRegistry();
+      if (!currentList.some(item => item.hash === hash)) {
+        currentList.push({ email, hash });
+        await syncGlobalRegistryToCloud(currentList);
+      }
+    }
+
+    // 渲染鎖定畫面的跨裝置已記住帳戶
+    async function renderRememberedAccounts() {
+      const listContainer = document.getElementById("remembered-accounts-list");
+      const accounts = await getGlobalRegistry();
+
+      if (accounts.length === 0) {
+        listContainer.innerHTML = `
+          <p class="text-xs text-slate-500 text-center py-2">尚未記住任何雲端帳戶。開通後將自動同步至此！</p>
+        `;
+        return;
+      }
+
+      listContainer.innerHTML = "";
+      accounts.forEach(acc => {
+        const item = document.createElement("div");
+        item.className = "flex items-center justify-between px-3 py-2.5 bg-slate-900 border border-slate-800 hover:border-emerald-500/50 rounded-xl transition group";
+        item.innerHTML = `
+          <button 
+            type="button" 
+            onclick="quickLoadAccount('${acc.email}')"
+            class="flex-1 text-left overflow-hidden pr-2"
+          >
+            <span class="block text-xs font-bold text-slate-200 group-hover:text-emerald-400 transition truncate">${acc.email}</span>
+            <span class="block text-[10px] text-slate-500 font-mono mt-0.5">跨裝置加密保護槽</span>
+          </button>
+          
+          <div class="flex items-center gap-1.5 opacity-60 group-hover:opacity-100 transition">
+            <!-- 編輯/安全信箱修改按鈕 -->
+            <button 
+              type="button" 
+              onclick="openRenameModal('${acc.email}')" 
+              class="p-1 text-slate-400 hover:text-emerald-400 rounded transition"
+              title="修改或遷移此帳戶電子信箱"
+            >
+              <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+            </button>
+            <!-- 徹底註銷或解除記住按鈕 -->
+            <button 
+              type="button" 
+              onclick="removeAccountFromRegistry('${acc.email}', '${acc.hash}')" 
+              class="p-1 text-slate-400 hover:text-red-400 rounded transition"
+              title="解除裝置關聯或徹底註銷帳戶"
+            >
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        `;
+        listContainer.appendChild(item);
+      });
+      lucide.createIcons();
+    }
+
+    // 快速填入選定帳戶
+    function quickLoadAccount(email) {
+      document.getElementById("cloud-email-input").value = email;
+      const masterInput = document.getElementById("master-password-input");
+      masterInput.value = "";
+      masterInput.focus();
+      showToast(`已選定：[ ${email} ]，請輸入主密碼進行安全驗證。`, "success");
     }
 
     // 8. 註冊全域事件監聽器與 Tab 開關控制
@@ -1785,6 +1933,9 @@
         document.getElementById("master-password-input").value = cachedPassword;
       }
 
+      // 非同步加載已記住的雲端帳戶
+      renderRememberedAccounts();
+
       // 如果有快取的電子信箱與密碼，自動觸發登入
       if (cachedEmail && cachedPassword) {
         setTimeout(() => {
@@ -1824,14 +1975,7 @@
 
           if (currentLockMode === "register") {
             
-            // 1. 離線與本機雜湊註冊紀錄檢查
-            if (isEmailHashRegisteredLocally(hash) || SafeStorage.getItem(`sandbox_vault_${hash}`)) {
-              showToast("註冊失敗：此電子信箱已在本機註冊，不可重新註冊！", "error");
-              resetSubmitBtn();
-              return;
-            }
-
-            // 2. 線上 Firebase 實體資料重複性檢查
+            // 1. 雲端與本機重複性檢查
             if (isFirebaseReady) {
               if (authPromise) await authPromise;
               if (!auth.currentUser) {
@@ -1850,7 +1994,7 @@
                 return;
               }
 
-              // 確認沒有被註冊，開始建立雲端文件並註冊
+              // 開始註冊新帳號
               masterPassword = enteredPass;
               currentEmailHash = hash;
               vaultItems = getDefaultWelcomeItems(enteredPass, enteredEmail);
@@ -1863,21 +2007,30 @@
                 createdAt: Date.now()
               });
 
-              registerEmailHashLocally(hash);
+              // 安全加入跨裝置記住名單
+              await addToGlobalRegistry(enteredEmail, hash);
               showToast(`註冊成功！已在雲端建立屬於 ${enteredEmail} 的安全保險箱。`, "success");
             } else {
-              // 3. 無 Firebase 環境下的本機沙盒註冊
+              // 離線安全沙盒註冊
+              const registeredList = await getGlobalRegistry();
+              if (registeredList.some(r => r.hash === hash)) {
+                showToast("註冊失敗：此電子信箱已在本機註冊，不可重新註冊！", "error");
+                resetSubmitBtn();
+                return;
+              }
+
               masterPassword = enteredPass;
               currentEmailHash = hash;
               vaultItems = getDefaultWelcomeItems(enteredPass, enteredEmail);
               isUnlocked = true;
 
-              registerEmailHashLocally(hash);
+              await addToGlobalRegistry(enteredEmail, hash);
               SafeStorage.setItem(`sandbox_vault_${hash}`, JSON.stringify(vaultItems));
-              showToast(`本機模式註冊成功！已為 [${enteredEmail}] 建立臨時加密空間，注意此瀏覽器不可重新註冊！`, "success");
+              showToast(`本機模式註冊成功！已為 [${enteredEmail}] 建立安全臨時空間。`, "success");
             }
 
           } else {
+            // 解鎖/登入模式
             if (isFirebaseReady) {
               if (authPromise) await authPromise;
               if (!auth.currentUser) {
@@ -1903,20 +2056,22 @@
                   currentEmailHash = hash;
                   vaultItems = cloudData.items || [];
                   isUnlocked = true;
-                  showToast(`登入成功！已成功解密 ${enteredEmail} 的雲端保險箱。`, "success");
+
+                  // 登入時也自動將該帳戶加入/更新至本機跨裝置記住清單中，以防此裝置尚未登錄
+                  await addToGlobalRegistry(enteredEmail, hash);
+                  showToast(`登入成功！已安全同步解密 ${enteredEmail} 的保險箱。`, "success");
                 } else {
                   showToast("驗證失敗：此信箱之主密碼不正確！", "error");
                   resetSubmitBtn();
                   return;
                 }
               } else {
-                // 非預設帳戶，提示引導
-                showToast("登入失敗：未在此信箱下找到現存保險箱。請點擊上方『註冊新帳戶』進行開通！", "warning");
+                showToast("登入失敗：未找到此信箱。請切換上方頁籤『註冊新帳戶』進行開通！", "warning");
                 resetSubmitBtn();
                 return;
               }
             } else {
-              // 離線登入處理
+              // 離線本地解鎖
               const localSessionVault = SafeStorage.getItem(`sandbox_vault_${hash}`);
               if (localSessionVault) {
                 masterPassword = enteredPass;
@@ -1925,8 +2080,7 @@
                 isUnlocked = true;
                 showToast("離線驗證通過：已載入本機暫存保險箱。", "success");
               } else {
-                // 尚未註冊
-                showToast("登入失敗：未在此信箱下找到現存保險箱。請點擊上方『註冊新帳戶』進行開通！", "warning");
+                showToast("登入失敗：未在本機找到該帳戶。請先切換至註冊頁面！", "warning");
                 resetSubmitBtn();
                 return;
               }
@@ -1968,7 +2122,7 @@
 
         } catch (err) {
           console.error("安全校驗錯誤:", err);
-          showToast("對接伺服器時發生阻礙，請稍後重試！", "error");
+          showToast("對接雲端通訊阻礙，請稍後重試！", "error");
           resetSubmitBtn();
         }
       });
@@ -2010,6 +2164,7 @@
           
           SafeStorage.removeItem("cipherguard_remembered_password");
           resetSubmitBtn();
+          renderRememberedAccounts();
           
           document.getElementById("user-profile-type").textContent = "線上加密帳戶";
           document.getElementById("user-display-id").textContent = "無綁定雲端";
@@ -2040,6 +2195,7 @@
           SafeStorage.removeItem("cipherguard_remembered_password");
           document.getElementById("remember-me-checkbox").checked = false;
           resetSubmitBtn();
+          renderRememberedAccounts();
           
           document.getElementById("user-profile-type").textContent = "線上加密帳戶";
           document.getElementById("user-display-id").textContent = "無綁定雲端";
@@ -2325,10 +2481,10 @@
           if (currentEmailHash) {
             SafeStorage.removeItem(`sandbox_vault_${currentEmailHash}`);
             
-            // 從本機已註冊的雜湊清單中移除
-            const localRegistry = JSON.parse(SafeStorage.getItem("cipherguard_local_registry") || "[]");
-            const filteredRegistry = localRegistry.filter(h => h !== currentEmailHash);
-            SafeStorage.setItem("cipherguard_local_registry", JSON.stringify(filteredRegistry));
+            // 從本機及雲端的註冊清單中移除
+            const currentList = await getGlobalRegistry();
+            const updatedList = currentList.filter(item => item.hash !== currentEmailHash);
+            await syncGlobalRegistryToCloud(updatedList);
           }
 
           // 3. 清除「記住我」資訊
@@ -2357,6 +2513,7 @@
           lockScreen.classList.remove("hidden");
           setTimeout(() => {
             lockScreen.classList.remove("opacity-0", "scale-105");
+            renderRememberedAccounts();
           }, 50);
 
         } catch (err) {
@@ -2555,6 +2712,217 @@
       // 對話框確認與取消事件
       document.getElementById("confirm-cancel").addEventListener("click", () => closeConfirmModal(false));
       document.getElementById("confirm-ok").addEventListener("click", () => closeConfirmModal(true));
+
+      // --- 帳戶安全信箱修改/遷移 Modal 事件綁定 ---
+      const renameModal = document.getElementById("rename-modal");
+      const renameForm = document.getElementById("rename-form");
+
+      window.openRenameModal = function(oldEmail) {
+        document.getElementById("rename-old-email").value = oldEmail;
+        document.getElementById("rename-display-old").value = oldEmail;
+        document.getElementById("rename-new-email").value = "";
+        document.getElementById("rename-master-password").value = "";
+        
+        renameModal.classList.remove("hidden");
+        setTimeout(() => {
+          renameModal.classList.remove("opacity-0");
+          renameModal.firstElementChild.classList.remove("scale-95");
+        }, 50);
+      };
+
+      function closeRenameModal() {
+        renameModal.classList.add("opacity-0");
+        renameModal.firstElementChild.classList.add("scale-95");
+        setTimeout(() => {
+          renameModal.classList.add("hidden");
+        }, 300);
+      }
+
+      document.getElementById("rename-cancel-btn").addEventListener("click", closeRenameModal);
+
+      // 執行跨裝置修改信箱安全遷移核心算法
+      renameForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const oldEmail = document.getElementById("rename-old-email").value.trim();
+        const newEmail = document.getElementById("rename-new-email").value.trim();
+        const authPass = document.getElementById("rename-master-password").value;
+
+        if (oldEmail.toLowerCase() === newEmail.toLowerCase()) {
+          showToast("新舊信箱不能完全一致！", "warning");
+          return;
+        }
+
+        const submitBtn = renameForm.querySelector("button[type='submit']");
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin mr-1"></i> 安全遷移中...`;
+        lucide.createIcons();
+
+        try {
+          const oldHash = await hashEmail(oldEmail);
+          const newHash = await hashEmail(newEmail);
+
+          if (isFirebaseReady) {
+            if (authPromise) await authPromise;
+
+            // 1. 確保新信箱尚未被註冊
+            const newDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', newHash);
+            const newSnap = await getDoc(newDocRef);
+            if (newSnap.exists()) {
+              showToast("變更失敗：此新信箱在雲端已被註冊！", "error");
+              resetRenameBtn();
+              return;
+            }
+
+            // 2. 驗證舊信箱密碼是否正確
+            const oldDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', oldHash);
+            const oldSnap = await getDoc(oldDocRef);
+            if (!oldSnap.exists()) {
+              showToast("錯誤：未找到該帳戶的雲端文檔。", "error");
+              resetRenameBtn();
+              return;
+            }
+
+            const cloudData = oldSnap.data();
+            const verificationCheck = simpleDecrypt(cloudData.verification, authPass);
+            if (verificationCheck !== "cipherguard-verified") {
+              showToast("驗證失敗：您輸入的主密碼不正確！", "error");
+              resetRenameBtn();
+              return;
+            }
+
+            // 3. 讀取並解密舊數據、重新用相同主密碼加密保存至新節點
+            const decryptedItems = (cloudData.items || []).map(item => {
+              const plain = simpleDecrypt(item.password, authPass);
+              return {
+                ...item,
+                password: simpleEncrypt(plain, authPass) // 確保遷移一致性
+              };
+            });
+
+            // 4. 將數據寫入新位置
+            await setDoc(newDocRef, {
+              email: newEmail,
+              verification: simpleEncrypt("cipherguard-verified", authPass),
+              items: decryptedItems,
+              createdAt: cloudData.createdAt || Date.now(),
+              lastSyncedAt: Date.now()
+            });
+
+            // 5. 徹底刪除舊的雲端位置文檔
+            await deleteDoc(oldDocRef);
+
+            // 6. 更新雲端跨裝置同步記住清單
+            const currentList = await getGlobalRegistry();
+            const updatedList = currentList.map(item => {
+              if (item.hash === oldHash) {
+                return { email: newEmail, hash: newHash };
+              }
+              return item;
+            });
+            await syncGlobalRegistryToCloud(updatedList);
+
+          } else {
+            // 離線本地沙盒信箱變更與數據遷移
+            const localRegistry = await getGlobalRegistry();
+            if (localRegistry.some(r => r.hash === newHash)) {
+              showToast("變更失敗：此新信箱已在本機註冊過！", "error");
+              resetRenameBtn();
+              return;
+            }
+
+            const oldSessionVault = SafeStorage.getItem(`sandbox_vault_${oldHash}`);
+            if (!oldSessionVault) {
+              showToast("未找到本地帳戶數據。", "error");
+              resetRenameBtn();
+              return;
+            }
+
+            // 本地遷移
+            SafeStorage.setItem(`sandbox_vault_${newHash}`, oldSessionVault);
+            SafeStorage.removeItem(`sandbox_vault_${oldHash}`);
+
+            const updatedList = localRegistry.map(item => {
+              if (item.hash === oldHash) {
+                return { email: newEmail, hash: newHash };
+              }
+              return item;
+            });
+            await syncGlobalRegistryToCloud(updatedList);
+          }
+
+          // 如果目前解鎖的是這一個帳戶，實時同步更新目前主密碼及快取
+          if (isUnlocked && currentEmailHash === oldHash) {
+            currentEmailHash = newHash;
+            document.getElementById("user-display-id").textContent = newEmail;
+            document.getElementById("user-display-id").title = newEmail;
+            
+            if (SafeStorage.getItem("cipherguard_remembered_email") === oldEmail) {
+              SafeStorage.setItem("cipherguard_remembered_email", newEmail);
+            }
+          }
+
+          showToast("信箱帳戶已安全跨裝置遷移且修改成功！", "success");
+          closeRenameModal();
+          await renderRememberedAccounts();
+
+        } catch (err) {
+          console.error("遷移帳戶出錯:", err);
+          showToast("遷移變更失敗，請稍後重試！", "error");
+        } finally {
+          resetRenameBtn();
+        }
+      });
+
+      function resetRenameBtn() {
+        const submitBtn = renameForm.querySelector("button[type='submit']");
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = "確認安全遷移";
+        lucide.createIcons();
+      }
+
+      // 解除綁定 / 徹底註銷
+      window.removeAccountFromRegistry = async function(email, hash) {
+        const confirmOption = await customConfirm(
+          "解除記住或徹底註銷帳戶？", 
+          `您點擊了 [ ${email} ]。請選擇：【確認】將從雲端記住名單中「解除此裝置/跨裝置的快速記住狀態」，不刪除密码；【取消】則放棄操作。`,
+          false
+        );
+
+        if (confirmOption) {
+          // 1. 僅從 Registry 移除
+          const currentList = await getGlobalRegistry();
+          const updatedList = currentList.filter(item => item.hash !== hash);
+          await syncGlobalRegistryToCloud(updatedList);
+          
+          showToast(`已成功解除 [ ${email} ] 的裝置同步記住狀態。`, "success");
+          await renderRememberedAccounts();
+          return;
+        }
+
+        // 若使用者希望彻底註銷
+        const deleteConfirm = await customConfirm(
+          "要徹底註銷並物理刪除此帳戶嗎？", 
+          `警告：這將徹底抹除該信箱 [ ${email} ] 在雲端的所有密碼，任何人均無法恢復！請輸入確認。`,
+          true
+        );
+
+        if (deleteConfirm) {
+          if (isFirebaseReady) {
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'vaults', hash);
+            await deleteDoc(docRef);
+          }
+          SafeStorage.removeItem(`sandbox_vault_${hash}`);
+          
+          const currentList = await getGlobalRegistry();
+          const updatedList = currentList.filter(item => item.hash !== hash);
+          await syncGlobalRegistryToCloud(updatedList);
+
+          showToast(`帳戶 [ ${email} ] 已被徹底物理註銷！`, "success");
+          await renderRememberedAccounts();
+        }
+      };
+
+      window.quickLoadAccount = quickLoadAccount;
     });
 
     // 9. 將模組內的高頻點擊函式掛載至 window，供 inline HTML 事件直接呼叫
